@@ -320,13 +320,11 @@ def save_model(model, optimizer, opt, epoch, save_file):
 
 
 def log_torch_mem():
-    # MB 단위로 변환
     used  = torch.cuda.memory_allocated()  / 1024**2
     reserved = torch.cuda.memory_reserved() / 1024**2
     logging.info(f"torch.cuda ▶ allocated={used:6.1f}MB, reserved={reserved:6.1f}MB")
 
 def log_nvidia_smi(gpu_id=0):
-    # nvidia-smi로 “사용 중 / 전체” 메모리 조회
     cmd = [
         "nvidia-smi",
         f"--query-gpu=memory.used,memory.total",
