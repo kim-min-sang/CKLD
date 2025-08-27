@@ -14,25 +14,17 @@ class UncertainPredScoreSelector(Selector):
                     y_test = None, \
                     total_wrong = 0, \
                     max_count = None):
-        # offset indicates where to start in test samples.
-        # we will sort prediction scores of all test samples
         offset = 0
         self.sample_indices = []
         if args.classifier not in ['svm', 'gbdt']:
-            # e.g., 'mlp' and other neural network models:
             self.classifier = self.classifier.cuda()
             X_test_tensor = torch.from_numpy(X_test).float().cuda()
-            # malware에 대한 예측 스코어
             pred_scores = self.classifier.predict_proba(X_test_tensor)[:, 1].cpu().detach().numpy()
         elif args.classifier == 'svm':
             pred_scores = self.classifier.predict_proba(X_test)[:, 1]
         else:
-            # 'gbdt':
             pred_scores = self.classifier.predict_proba(X_test)
-        # sort abs(score-0.5) from smallest to largest
-        # sorted_conf 이게 낮을수록 uncertainity 한것임
         sorted_conf = sort_index(pred_scores, offset)
-        # sample_scores 이게 높을수록 uncertainity 한것임
         self.sample_scores = {index: 0.5-val for index, val in sorted_conf}
         if adaptive == False:
             if len(sorted_conf) >= total_count:
