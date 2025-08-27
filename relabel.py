@@ -271,7 +271,6 @@ def main():
         print(e)
         import traceback
         traceback.print_exc()
-        print("훈련중 에러 발생 3초 후 다시 시작합니다...")
         time.sleep(3)
         return False
 
@@ -315,8 +314,6 @@ def main():
     """
     Set up the selector.
     """
-    # what does al mean? #? I guess al means after learning
-    # local_pseudo_loss, encoder_retrain = True, else = False
     if args.al == True:
         strategy = 'strategy'
         if args.rand == True: # False
