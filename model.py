@@ -108,7 +108,7 @@ class SimpleEncClassifier(nn.Module):
         return base.from_list(cmap_name, color_list, N)
     
     def eval_plot(self, x_tensor_cuda, y_bin, epoch, args):
-        with torch.no_grad(): # 이건 추후에 수정해줬음... 이거때매 androzoo 22% 22% 였을수도
+        with torch.no_grad(): 
             x_tensor = x_tensor_cuda
             #1
             x_encoded_tensor = self.encode(x_tensor)
@@ -242,11 +242,6 @@ class EncKldCustomMlpEnsemble6(nn.Module):
                     break
             
             
-            #2
-            #z_encoded = self.encoder_model(x_tensor.cuda())
-            #self.pre_encoded = self.pre_encoder_model(x_tensor.cuda())
-            #z = z.detach().cpu().float().numpy()
-
             #markers = ['o' if y == 0 else 'X' for y in y_bin]
             N = len(np.unique(y_bin))
             for i in range(0, kld_encoded.shape[1], 2):
@@ -280,14 +275,12 @@ class EncKldCustomMlpEnsemble6(nn.Module):
         kld_encoded, _, z_mean, z_log_var, c_encoded = self.encode(x, is_all_return = True)
         z_concat = torch.cat((c_encoded, kld_encoded), dim=1)
         mlp_out = self.mlp_model(z_concat)
-        # 보정 값
         #mlp_out = torch.clamp(mlp_out, min=1e-5, max=1 - 1e-5)
         return mlp_out
         
         
     def predict(self, x):
-        # predict에 no_grad를 해도 되는 이유는
-        # mlp 관련해서 역전파 하는 것은 mlp_out을 통하지, predict를 통하진 않으므로 가능하다.
+
         with torch.no_grad():
             mlp_out = self.predict_proba(x)
             preds = mlp_out.max(1)[1]
@@ -306,13 +299,6 @@ class EncKldCustomMlpEnsemble6(nn.Module):
         self.pre_encoded = self.pre_encoder_model(x)
         z_mean = self.z_mean_fc(self.pre_encoded)
         z_log_var = self.z_log_var_fc(self.pre_encoded)
-        #3_2
-        #z_log_var = F.softplus(z_log_var)
-        #kld_weights = self.get_kld_weights(c_encoded, x)
-        
-        #r = random.randint(1,100)
-        #if r == 100:
-        #    print(f"kld_weights is {kld_weights.shape}\n{kld_weights}")
         self.encoded = self.reparameterize(z_mean, z_log_var, self.kld_dev_scale)
 
         return self.encoded, z_mean, z_log_var
@@ -451,7 +437,6 @@ class CAEKldEnsembleMlp(nn.Module):
                 #plt.show()
                 
                 directory_path = "./maps/cade_kld/"+ str(x_encoded.shape[1]) + "/epoch_" + str(epoch)
-                # 디렉토리 생성
                 if not os.path.exists(directory_path):
                     os.makedirs(directory_path)
                 
@@ -499,7 +484,6 @@ class CAEKldEnsembleMlp(nn.Module):
         kld_encoded, _, z_mean, z_log_var, c_encoded = self.encode(x, is_all_return = True)
         z_concat = torch.cat((c_encoded, kld_encoded), dim=1)
         mlp_out = self.mlp_model(z_concat)
-        # 보정 값
         mlp_out = torch.clamp(mlp_out, min=1e-5, max=1 - 1e-5)
         return mlp_out
         
@@ -644,7 +628,6 @@ class CAEMlp(nn.Module):
                 #plt.show()
                 
                 directory_path = "./maps/cade/"+ str(x_encoded.shape[1]) + "/epoch_" + str(epoch)
-                # 디렉토리 생성
                 if not os.path.exists(directory_path):
                     os.makedirs(directory_path)
                 
@@ -666,7 +649,6 @@ class CAEMlp(nn.Module):
     def predict_proba(self, x):
         c_encoded = self.encode(x)
         mlp_out = self.mlp_model(c_encoded)
-        # 보정 값
         mlp_out = torch.clamp(mlp_out, min=1e-5, max=1 - 1e-5)
         return mlp_out
         
@@ -774,7 +756,6 @@ class TripletMlp(nn.Module):
                 #plt.show()
                 
                 directory_path = "./maps/triplet/"+ str(x_encoded.shape[1]) + "/epoch_" + str(epoch)
-                # 디렉토리 생성
                 if not os.path.exists(directory_path):
                     os.makedirs(directory_path)
                 
@@ -794,7 +775,6 @@ class TripletMlp(nn.Module):
     def predict_proba(self, x):
         c_encoded = self.encode(x)
         mlp_out = self.mlp_model(c_encoded)
-        # 보정 값
         mlp_out = torch.clamp(mlp_out, min=1e-5, max=1 - 1e-5)
         return mlp_out
     
@@ -964,7 +944,6 @@ class TripletKldEnsembleMlp(nn.Module):
         kld_encoded, _, z_mean, z_log_var, c_encoded = self.encode(x, is_all_return = True)
         z_concat = torch.cat((c_encoded, kld_encoded), dim=1)
         mlp_out = self.mlp_model(z_concat)
-        # 보정 값
         mlp_out = torch.clamp(mlp_out, min=1e-5, max=1 - 1e-5)
         return mlp_out
         
