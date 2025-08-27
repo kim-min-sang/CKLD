@@ -144,10 +144,6 @@ class TripletMseKldEnsembleXentLoss(nn.Module):
         """
         
         Triplet = TripletLoss(reduce = self.reduce)
-        # labels만 Input하고 왜 y_bin_batch는 input을 안하냐?
-        # 사실 labels는 필요 없다. 이미 triplet으로 나눠져 있는 dataset이기 때문에.
-        # 흠.. 그리고.. 그 뭐야.. margin_btw는 필요 없네. 그냥 최대한 멀리 떨어지게 하였다.
-        # 최대한 멀리가 아니라 margin 만큼이겠지.
         supcon_loss = Triplet(c_encoded, labels = labels, margin = margin, weight = weight, split = split)
 
         mse_loss = torch.nn.functional.mse_loss(x, x_recon, reduction = self.reduce)
@@ -177,7 +173,6 @@ class TripletMseKldEnsembleXentLoss(nn.Module):
             if torch.isnan(gap_loss):
                 gap_loss = torch.tensor(0.0, requires_grad=True).cuda()
         except Exception as e:
-            #print("if torch.isnan(gap_loss) error!!!")
             pass
             
         try:
@@ -188,8 +183,6 @@ class TripletMseKldEnsembleXentLoss(nn.Module):
             pass
         
         loss = cae_lambda * supcon_loss + mse_lambda * mse_loss + 1 * kld_loss + xent_lambda * xent_bin_loss + gap_loss
-        #loss = cae_lambda * supcon_loss + mse_lambda * mse_loss + 1 * kld_loss + xent_lambda * xent_bin_loss
-        #loss = 1 * supcon_loss + 0 * mse_loss + 1 * kld_loss + 100 * xent_bin_loss
         
         
         
@@ -248,7 +241,6 @@ class TripletMseXentLoss(nn.Module):
             xent_bin_loss = xent_bin_loss.mean()
         
         loss = cae_lambda * supcon_loss + mse_lambda * mse_loss + xent_lambda * xent_bin_loss
-        #loss = 1 * supcon_loss + 0 * mse_loss + 1 * kld_loss + 100 * xent_bin_loss
         
         
         
@@ -266,7 +258,6 @@ class TripletMseXentLoss(nn.Module):
 class TripletXentLoss(nn.Module):
     def __init__(self, reduce = 'mean', sample_reduce = 'mean'):
         super(TripletXentLoss, self).__init__()
-        # reduce: whether use 'mean' reduction or keep sample loss
         self.reduce = reduce
         self.sample_reduce = sample_reduce
 
@@ -303,10 +294,6 @@ class TripletXentLoss(nn.Module):
             xent_bin_loss = xent_bin_loss.mean()
         
         loss = triplet_lambda * supcon_loss + xent_lambda * xent_bin_loss
-        #loss = 1 * supcon_loss + 0 * mse_loss + 1 * kld_loss + 100 * xent_bin_loss
-        
-        
-        
         
         del Triplet
         torch.cuda.empty_cache()
@@ -354,10 +341,6 @@ class TripletKldEnsembleXentLoss(nn.Module):
         """
         
         Triplet = TripletLoss(reduce = self.reduce)
-        # labels만 Input하고 왜 y_bin_batch는 input을 안하냐?
-        # 사실 labels는 필요 없다. 이미 triplet으로 나눠져 있는 dataset이기 때문에.
-        # 흠.. 그리고.. 그 뭐야.. margin_btw는 필요 없네. 그냥 최대한 멀리 떨어지게 하였다.
-        # 최대한 멀리가 아니라 margin 만큼이겠지.
         supcon_loss = Triplet(c_encoded, labels = labels, margin = margin, weight = weight, split = split)
 
         KldCustom = KldCustomEnsemble6Loss(reduce = self.reduce, sample_reduce = self.sample_reduce)
