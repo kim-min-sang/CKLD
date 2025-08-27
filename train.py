@@ -362,15 +362,9 @@ def train_encoder_one_epoch(args, encoder, train_loader, optimizer, epoch, X_tra
                 
         elif args.loss_func == 'triplet-mse-kld-ensemble-xent':
             features, x_origin, x_recon, z_mean, z_log_var, c_encoded, y_pred = encoder(x_batch)
-            # features: hidden vector of shape [bsz, n_feature_dim].
-            # print(f"features shape {features.shape}") # why is this size 128? not 2? becuase enc-mlp returns (enc, enc, mlp)
-
-            # 앙상블에서 가능한 편차 전해주기
             two_x = kld_func.find_exponent_of_two(c_encoded.shape[1])
             kld_dev_scale = math.sqrt(1/2) ** (two_x)
             
-            # (2) calculate loss
-            # Our own version of the supervised contrastive learning loss
             TripletMseKldEnsembleXent = TripletMseKldEnsembleXentLoss().cuda() # reduce = mean
             
             loss, supcon_loss, mse_loss, kld_loss, xent_loss, gap_loss = TripletMseKldEnsembleXent(args.cae_lambda, args.xent_lambda, args.mse_lambda, \
