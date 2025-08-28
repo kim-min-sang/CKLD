@@ -183,7 +183,7 @@ class TripletSampler(Sampler):
                 step = len(self.index_to_label) % self.length_of_single_pass
             start_batch_indices = perm_indices[k: k + step]
             k += step
-            start_batch_labels = self.index_to_label[start_batch_indices] # anchor 채우기
+            start_batch_labels = self.index_to_label[start_batch_indices]
             ### labels from smallest to the largest
             start_batch_indices, start_batch_labels = sort_based_on_labels(start_batch_indices, start_batch_labels)
             #logging.debug(f'start_batch_labels {start_batch_labels}')
@@ -197,12 +197,12 @@ class TripletSampler(Sampler):
             # label counts sort labels from smallest to the largest
             for label, count in label_counts:
                 t = self.labels_to_indices[label]
-                idx_list[i : i + count] = c_f.safe_random_choice(t, size=count) # positive 채우기 
+                idx_list[i : i + count] = c_f.safe_random_choice(t, size=count)
                 i += count
             # sample the last share with different labels
             for anchor_label, count in label_counts:
                 negative_list = self.not_labels_to_indices[anchor_label]
-                negative = c_f.safe_random_choice(negative_list, size=count) # negative 채우기
+                negative = c_f.safe_random_choice(negative_list, size=count)
                 idx_list[i : i + count] = negative
                 i += count
             #logging.debug(f'bcnt: {bcnt}')
