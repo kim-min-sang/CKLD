@@ -1,11 +1,3 @@
-#! /bin/bash
-
-#SBATCH -t 03:00:00
-
-#SBATCH -n 1
-
-#SBATCH -c 8
-
 OPT=adam
 SCH=step
 DECAY=0.95
@@ -21,34 +13,30 @@ modeldim="512-384-256-128"
 S='triplet'
 B=1536
 
-
 ###############################################################
+
+# CNT=100 # used only active learning
 
 OPT=adam
 E=150
 LR=0.0005
 
-ENCODER='triplet-mlp'
-CLASSIFIER='triplet-mlp'
-#ENCODER='triplet-kld-ensemble-mlp'
-#CLASSIFIER='triplet-kld-ensemble-mlp'
+#ENCODER='triplet-mlp'
+#CLASSIFIER='triplet-mlp'
+ENCODER='triplet-kld-ensemble-mlp'
+CLASSIFIER='triplet-kld-ensemble-mlp'
 
-LOSS='triplet-xent'
-#LOSS='triplet-kld-ensemble-xent'
+#LOSS='triplet-xent'
+LOSS='triplet-kld-ensemble-xent'
 
-MID_TYPE=''
-KLD_SCALE=2.0
+CENTROID_TYPE='' # used only active learning
+# KLD_SCALE=2.0 # used only active learning
 
 CSV_NAME="1"
 
 SLP=0
 
 ###############################################################
-
-
-
-
-
 
 TS=$(date "+%m.%d-%H.%M.%S")
 
@@ -60,7 +48,7 @@ nohup python -u relabel.py	                                \
             --margin 10                                     \
             --margin-between-b-and-m 2                      \
             --is-enc-kld-custom-mid 1                       \
-            --mid-type ${MID_TYPE}                          \
+            --centroid-type ${CENTROID_TYPE}                \
             --kld-scale ${KLD_SCALE}                        \
             --is-valid 0                                    \
             --data ${DATA}                                  \
@@ -85,14 +73,13 @@ nohup python -u relabel.py	                                \
             --lr_decay_epochs "10,500,10"                   \
             --epochs ${E}                                   \
             --encoder-retrain                               \
-            --cae-lambda 1                                \
             --triplet-lambda 1                              \
             --xent-lambda 100                               \
             --display-interval 180                          \
             --al                                            \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${MID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}${CSV_NAME}.csv \
-            --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${MID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
-            >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${MID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
+            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}${CSV_NAME}.csv \
+            --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
+            >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
 wait

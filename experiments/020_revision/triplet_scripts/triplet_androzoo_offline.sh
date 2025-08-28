@@ -36,7 +36,7 @@ CLASSIFIER='triplet-kld-ensemble-mlp'
 #LOSS='triplet-xent'
 LOSS='triplet-kld-ensemble-xent'
 
-MID_TYPE=''
+CENTROID_TYPE=''
 KLD_SCALE=2.0
 
 CSV_NAME="1"
@@ -56,7 +56,7 @@ nohup python -u relabel.py	                                \
             --margin 10                                     \
             --margin-between-b-and-m 2                      \
             --is-enc-kld-custom-mid 1                       \
-            --mid-type ${MID_TYPE}                          \
+            --centroid-type ${CENTROID_TYPE}                          \
             --kld-scale ${KLD_SCALE}                        \
             --is-valid 0                                    \
             --data ${DATA}                                  \
@@ -88,8 +88,8 @@ nohup python -u relabel.py	                                \
             --al                                            \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${MID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}${CSV_NAME}.csv \
-            --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${MID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
-            >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${MID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
+            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}${CSV_NAME}.csv \
+            --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
+            >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
 
 wait

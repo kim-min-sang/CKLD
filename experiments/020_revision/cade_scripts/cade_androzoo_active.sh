@@ -42,7 +42,7 @@ CLASSIFIER='cae-mlp'
 LOSS='triplet-mse-xent'
 #LOSS='triplet-mse-kld-ensemble-xent'
 
-MID_TYPE='bin'
+CENTROID_TYPE='bin'
 KLD_SCALE=3.0
 
 CSV_NAME="1"
@@ -64,7 +64,7 @@ nohup python -u relabel.py	                                \
             --margin-between-b-and-m 2                      \
             --kld-scale ${KLD_SCALE}                        \
             --is-enc-kld-custom-mid 1                       \
-            --mid-type ${MID_TYPE}                          \
+            --centroid-type ${CENTROID_TYPE}                          \
             --is-valid 0                                    \
             --data ${DATA}                                  \
             --benign_zero                                   \
@@ -99,8 +99,8 @@ nohup python -u relabel.py	                                \
             --count ${CNT}                                  \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${MID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}${CSV_NAME}.csv \
-            --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${MID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log \
-            >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${MID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log 2>&1 &
+            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}${CSV_NAME}.csv \
+            --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log \
+            >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log 2>&1 &
 
 wait

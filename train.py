@@ -299,7 +299,7 @@ def train_encoder_one_epoch(args, encoder, train_loader, optimizer, epoch, X_tra
             y_train_tensor = y_train_tensor.to(device)
             y_train_binary_tensor = y_train_binary_tensor.to(device)
             z_hc = encoder.encode_c(X_train_tensor)
-            mids_for_y_class, mids_y, y_unique = kld_func.get_mids_for_y_class(z_hc, args.mid_type, y_train_tensor, y_train_binary_tensor)
+            mids_for_y_class, mids_y, y_unique = kld_func.get_mids_for_y_class(z_hc, args.centroid_type, y_train_tensor, y_train_binary_tensor)
             encoder.mids = mids_y
             encoder.y_unique = y_unique
             train_data.update_mids_for_y_class(mids_for_y_class)

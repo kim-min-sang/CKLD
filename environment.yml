@@ -1,4 +1,4 @@
-name: doctor
+name: ckld
 channels:
   - pytorch
   - nvidia

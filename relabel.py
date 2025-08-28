@@ -174,7 +174,7 @@ def main():
                             args.enc_hidden, NUM_CLASSES)
         mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
         
-        kld_dev_scale = kld_func.get_kld_dev_scale(args.mid_type, enc_dims[-1], args.kld_scale)
+        kld_dev_scale = kld_func.get_kld_dev_scale(args.centroid_type, enc_dims[-1], args.kld_scale)
         
         encoder = EncKldCustomMlpEnsemble6(enc_dims, mlp_dims, kld_scale = args.kld_scale, kld_dev_scale = kld_dev_scale)
         encoder_name = 'enc-kld-custom-mlp-ensemble6'
@@ -218,7 +218,7 @@ def main():
     
     enc_dims_str = str(enc_dims).replace(' ', '').replace(',', '-').replace('[', '').replace(']', '') 
     
-    ENC_MODEL_PATH = os.path.join(MODEL_DIR, f'{encoder_name}_{args.mid_type}_{enc_dims_str}_{args.loss_func}' + \
+    ENC_MODEL_PATH = os.path.join(MODEL_DIR, f'{encoder_name}_{args.centroid_type}_{enc_dims_str}_{args.loss_func}' + \
                                 f'_xent{args.xent_lambda}' + \
                                 f'_mselambda{args.mse_lambda}' + \
                                 f'_caelambda{args.cae_lambda}' + \

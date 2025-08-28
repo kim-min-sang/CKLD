@@ -25,13 +25,13 @@ def get_kld_weights(z_hc, X_train_tensor, y_train_binary_tensor):
 
 
 
-def get_mids_for_y_class(z_hc, mid_type, y_train_tensor, y_train_binary_tensor):
-    if mid_type == "fam":
+def get_mids_for_y_class(z_hc, centroid_type, y_train_tensor, y_train_binary_tensor):
+    if centroid_type == "fam":
         y_cls = y_train_tensor
-    elif mid_type == "bin":
+    elif centroid_type == "bin":
         y_cls = y_train_binary_tensor[:,1]
     else:
-        raise ValueError(f"Invalid mid_type: {mid_type!r}. Expected 'fam' or 'bin'.")
+        raise ValueError(f"Invalid centroid_type: {centroid_type!r}. Expected 'fam' or 'bin'.")
     
     device = z_hc.device
     y_cls = y_cls.to(device)
@@ -54,13 +54,13 @@ def get_mids_for_y_class(z_hc, mid_type, y_train_tensor, y_train_binary_tensor):
 
 
 
-def get_mids_for_y_class_batch(mids, y_unique, mid_type, y_train_batch_tensor, y_train_binary_batch_tensor):
-    if mid_type == "fam":
+def get_mids_for_y_class_batch(mids, y_unique, centroid_type, y_train_batch_tensor, y_train_binary_batch_tensor):
+    if centroid_type == "fam":
         y_cls_batch = y_train_batch_tensor
-    elif mid_type == "bin":
+    elif centroid_type == "bin":
         y_cls_batch = y_train_binary_batch_tensor[:,1]
     else:
-        raise ValueError(f"Invalid mid_type: {mid_type!r}. Expected 'fam' or 'bin'.")
+        raise ValueError(f"Invalid centroid_type: {centroid_type!r}. Expected 'fam' or 'bin'.")
     
     eq   = y_cls_batch.unsqueeze(1) == y_unique.unsqueeze(0)  # (N, C)  
     idxs = eq.float().argmax(dim=1)                     # (N,)  
@@ -83,16 +83,16 @@ def find_exponent_of_two(enc_dims):
         raise ValueError(f"{enc_dims} is not a power of 2")
     
     
-def get_kld_dev_scale(mid_type, enc_dim_last, kld_scale):
+def get_kld_dev_scale(centroid_type, enc_dim_last, kld_scale):
     
     two_x = find_exponent_of_two(enc_dim_last)
     kld_dev_scale_before = math.sqrt(1/2) ** (two_x) * kld_scale
     
-    if mid_type == "bin":
+    if centroid_type == "bin":
         kld_dev_scale = kld_dev_scale_before
-    elif mid_type == "fam":
+    elif centroid_type == "fam":
         kld_dev_scale = kld_dev_scale_before
     else:
-        raise ValueError(f"get_kld_dev_scale(), mid_type error")
+        raise ValueError(f"get_kld_dev_scale(), centroid_type error")
     return kld_dev_scale
     
