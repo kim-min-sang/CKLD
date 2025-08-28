@@ -35,10 +35,10 @@ CLASSIFIER='enc-kld-custom-mlp-ensemble6'
 #ENCODER='simple-enc-mlp'
 #CLASSIFIER='simple-enc-mlp'
 
-MID_TYPE='bin'
+MID_TYPE=''
 KLD_SCALE=3.0
 
-CSV_NAME="_hc_androzoo_1"
+CSV_NAME="1"
 
 SLP=0
 
@@ -86,8 +86,8 @@ nohup python -u relabel.py	                                \
             --local_pseudo_loss                             \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/020_revision/${RESULT_DIR}/hc_androzoo_${MID_TYPE}_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}${CSV_NAME}.csv \
-            --log_path experiments/020_revision/${RESULT_DIR}/hc_androzoo_${MID_TYPE}_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log \
-            >> experiments/020_revision/${RESULT_DIR}/hc_androzoo_${MID_TYPE}_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log 2>&1 &
+            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${MID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}${CSV_NAME}.csv \
+            --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${MID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log \
+            >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${MID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log 2>&1 &
 
 wait

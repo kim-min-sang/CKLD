@@ -30,7 +30,7 @@ def parse_args():
     p.add_argument('--valid_date', default=None, help='Train start month. e.g., 2012-01')
     p.add_argument('--is-enc-kld-custom-mid', default=0, type=int,
                    help='')
-    p.add_argument('--mid-type', default=None, choices=['fam', 'bin'],
+    p.add_argument('--mid-type', nargs='?', default=None, choices=['fam', 'bin'],
                    help='')
     p.add_argument('--kld-beta', default=1, type=float,
                    help='')

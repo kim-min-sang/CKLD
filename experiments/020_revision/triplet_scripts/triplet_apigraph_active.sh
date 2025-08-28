@@ -45,7 +45,7 @@ LOSS='triplet-xent'
 MID_TYPE='fam'
 KLD_SCALE=1.0
 
-CSV_NAME="_triplet_apigraph_a_1"
+CSV_NAME="1"
 
 SLP=0
 
@@ -97,8 +97,8 @@ nohup python -u relabel.py	                                \
             --unc                                           \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/020_revision/${RESULT_DIR}/triplet_apigraph_${MID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}${CSV_NAME}.csv \
-            --log_path experiments/020_revision/${RESULT_DIR}/triplet_apigraph_${MID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log \
-            >> experiments/020_revision/${RESULT_DIR}/triplet_apigraph_${MID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log 2>&1 &
+            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${MID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}${CSV_NAME}.csv \
+            --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${MID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log \
+            >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${MID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log 2>&1 &
 
 wait
