@@ -184,7 +184,7 @@ class OODKldEnsembleSelector(Selector):
 '''
 
 
-# c_encoded + kld_mean (mean만)
+# c_encoded + kld_mean (mean)
 class OODKldEnsembleSelector(Selector):
     def __init__(self, encoder):
         self.encoder = encoder
