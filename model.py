@@ -137,7 +137,7 @@ class SimpleEncClassifier(nn.Module):
     
     
 
-# EncKldCustomMlpEnsemble6: EncKldCustomMlpEnsemble2 + 전역 kld loss
+# EncKldCustomMlpEnsemble6
 class EncKldCustomMlpEnsemble6(nn.Module):
     def __init__(self, enc_dims, mlp_dims, kld_scale = None, kld_dev_scale = None, dropout=0.2, verbose=1):
         super().__init__()
@@ -897,7 +897,7 @@ class TripletKldEnsembleMlp(nn.Module):
                 #plt.show()
                 
                 directory_path = "./maps/triplet_kld/"+ str(x_encoded.shape[1]) + "/epoch_" + str(epoch)
-                # 디렉토리 생성
+                
                 if not os.path.exists(directory_path):
                     os.makedirs(directory_path)
                 
