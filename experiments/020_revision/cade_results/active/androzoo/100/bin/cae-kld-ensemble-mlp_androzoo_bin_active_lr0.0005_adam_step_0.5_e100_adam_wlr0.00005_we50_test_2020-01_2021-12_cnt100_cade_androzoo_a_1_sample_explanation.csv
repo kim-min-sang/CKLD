@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	91	9	93	7	0		benign,umpay,syringe,execdownload,windows
+2020-02	83	17	80	20	4	kuguo,goldeneagle,congur,glodeagl	benign,boogr,kuguo,virtualapp,adware,spyware,ewind,execdownload,goldeneagle,glodeagl,congur,hiddad
+2020-03	60	40	71	29	1	leadbolt	tool,benign,infosteal,execdownload,wapron,adware,hiddad,leadbolt,hypay,ewind
+2020-04	70	30	74	26	1	fakeinst	sandr,benign,infosteal,fakeinst,execdownload,adware,resharer,goldeneagle,tool,hiddad,spyware,spynote,glodeagl
+2020-05	87	13	63	37	1	cerberus	tool,execdownload,benign,hiddad,smsreg,infosteal,cerberus,hqwar
+2020-06	72	28	64	36	4	fakeadblocker	benign,resharer,infosteal,wroba,jocker,execdownload,fakeadblocker,packed,hqwar,hiddad,smforw,adware,ramnit,blacklister,ewind
+2020-07	25	75	28	72	35	mobby	infosteal,benign,execdownload,mobby,adware
+2020-08	100	0	100	0	0		benign
+2020-09	85	15	81	19	0		resharer,benign,infosteal,execdownload,hiddad,hqwar
+2020-10	38	62	35	65	4	fakecop	benign,infosteal,execdownload,hqwar,brata,adware,fakecop,boogr,blacklister
+2020-11	94	6	63	37	0		execdownload,benign,infosteal
+2020-12	90	10	94	6	0		benign,execdownload,infosteal
+2021-01	98	2	98	2	0		brata,benign,execdownload
+2021-02	86	14	80	20	0		benign,execdownload,infosteal,joker,packed,jocker,spyware
+2021-03	78	22	27	73	10	gustuff	benign,joker,adware,mobby,ewind,execdownload,infosteal,gustuff,blacklister
+2021-04	94	6	60	40	5	ibec,polph	polph,benign,ibec,execdownload,infosteal,packed,joker
+2021-05	88	12	52	48	3	twmobo,fakedoc,ogel	benign,infosteal,server,ogel,boogr,execdownload,joker,smforw,polph,fakedoc,twmobo
+2021-06	90	10	79	21	3	droidkungfu,lockscreen	benign,joker,infosteal,lockscreen,droidkungfu,execdownload,packed
+2021-07	73	27	78	22	1	exploit	benign,adware,droidkungfu,exploit,infosteal,execdownload,jocker
+2021-08	71	29	42	58	0		infosteal,execdownload,benign,adware,blacklister,spyware
+2021-09	36	64	51	49	0		infosteal,benign,execdownload,wroba
+2021-10	96	4	54	46	0		benign,infosteal,execdownload,hqwar
+2021-11	95	5	86	14	0		benign,infosteal,execdownload,server,spyware,smsreg,unknown,wroba

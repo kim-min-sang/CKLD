@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	36	14	24	26	13	styricka,resharer,lockscreen,triada,syringe,wapron,umpay,windows	benign,adware,execdownload,syringe,windows,packed,triada,wapron,resharer,styricka,lockscreen,umpay,smsreg
+2020-02	36	14	32	18	9	fakeapp,glodeagl,virtualapp,infosteal,goldeneagle	virtualapp,benign,styricka,fakeapp,execdownload,infosteal,goldeneagle,glodeagl,triada,smsreg
+2020-03	26	24	19	31	2	leadbolt,spyware	adware,infosteal,benign,spyware,smsreg,fakeapp,triada,styricka,wapron,leadbolt,execdownload
+2020-04	37	13	35	15	6	clicks,sandr,spynote,fakeinst,smforw	benign,adware,sandr,execdownload,infosteal,fakeinst,smforw,spynote,spyware,clicks,resharer,wapron
+2020-05	27	23	18	32	6	spymax,ewind,fakeadblocker,cerberus,boogr	infosteal,benign,execdownload,adware,ewind,cerberus,packed,fakeadblocker,smsreg,boogr,fakeapp,spymax
+2020-06	35	15	20	30	6	hqwar,jocker,ramnit,mobtool	infosteal,ramnit,execdownload,mobtool,hqwar,benign,boogr,resharer,smsreg,adware,styricka,packed,fakeapp,jocker
+2020-07	46	4	12	38	19	mobby	benign,infosteal,mobby,adware
+2020-08	43	7	5	45	0		benign,infosteal,execdownload,hqwar,adware,ewind
+2020-09	43	7	13	37	2	monitorminor,mcalprotect	benign,execdownload,monitorminor,hqwar,resharer,mcalprotect,windows,adware,ewind
+2020-10	4	46	4	46	1	brata	benign,brata,execdownload,hqwar,infosteal
+2020-11	45	5	4	46	0		infosteal,benign,execdownload,ewind,adware
+2020-12	49	1	0	50	49	geinimi	geinimi,packed,benign
+2021-01	6	44	6	44	2	droiddreamlight	droiddreamlight,benign,infosteal,execdownload,adware
+2021-02	38	12	30	20	1	ransomware	benign,adware,execdownload,infosteal,fakeapp,spyware,ransomware
+2021-03	49	1	2	48	0		execdownload,infosteal,benign,adware,mobby,ewind
+2021-04	46	4	17	33	5	polph,joker	benign,polph,infosteal,spymax,execdownload,packed,fakeapp,joker
+2021-05	45	5	16	34	10	server,unknown,ogel,fakedoc,twmobo	spynote,infosteal,fakedoc,polph,execdownload,benign,server,ogel,unknown,smforw,twmobo
+2021-06	43	7	30	20	1	droidkungfu	execdownload,infosteal,droidkungfu,benign,lockscreen,joker
+2021-07	41	9	16	34	2	exploit	droidkungfu,execdownload,exploit,benign,infosteal,sandr
+2021-08	43	7	10	40	0		execdownload,benign,infosteal,adware
+2021-09	31	19	38	12	0		benign,infosteal,execdownload
+2021-10	48	2	5	45	3	wroba	benign,infosteal,execdownload,wroba
+2021-11	47	3	15	35	0		benign,infosteal,execdownload,wroba,spyware

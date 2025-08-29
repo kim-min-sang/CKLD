@@ -46,7 +46,7 @@ LOSS='triplet-mse-kld-ensemble-xent'
 CENTROID_TYPE='bin'
 KLD_SCALE=2.0
 
-CSV_NAME="1"
+CSV_NAME="a_1"
 
 SLP=0
 

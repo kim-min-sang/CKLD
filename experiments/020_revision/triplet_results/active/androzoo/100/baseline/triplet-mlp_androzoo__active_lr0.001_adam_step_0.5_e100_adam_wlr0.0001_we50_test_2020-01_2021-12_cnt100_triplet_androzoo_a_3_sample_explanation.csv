@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	94	6	83	17	0		benign,adware,triada,execdownload,dnotua,fakeapp,packed
+2020-02	86	14	76	24	2	goldeneagle,glodeagl	benign,hiddad,dnotua,execdownload,adware,goldeneagle,ewind,infosteal,glodeagl,robtes
+2020-03	76	24	85	15	0		benign,adware,infosteal,execdownload,smsreg
+2020-04	80	20	97	3	1	fakeinst	benign,goldeneagle,fakeinst,clicks
+2020-05	71	29	74	26	6	mobby	benign,hiddad,resharer,mobby,infosteal,execdownload,boogr,adware,smsreg,ewind
+2020-06	74	26	71	29	3	fakeadblocker	execdownload,adware,ewind,benign,blacklister,smforw,hiddad,infosteal,hqwar,fakeadblocker,robtes,smsreg,joker
+2020-07	80	20	89	11	0		benign,infosteal,execdownload,jocker,adware
+2020-08	97	3	3	97	0		benign,adware,ewind
+2020-09	93	7	14	86	0		benign,hqwar,adware,ewind,mobby,infosteal,mobidash
+2020-10	68	32	56	44	0		execdownload,benign,smforw,hqwar,dnotua,infosteal,ewind,adware,spyware
+2020-11	70	30	66	34	2	fakecop	infosteal,execdownload,benign,fakecop,adware,boogr,ewind
+2020-12	97	3	98	2	0		benign,execdownload
+2021-01	73	27	71	29	13	droidkungfu,droiddreamlight,geinimi	droidkungfu,benign,execdownload,server,geinimi,infosteal,droiddreamlight,hiddad,adware
+2021-02	83	17	59	41	0		benign,infosteal,execdownload,adware,spyagent,fakeapp,smsreg,smspay,packed,spyware,joker,ransomware,jocker
+2021-03	90	10	81	19	1	gustuff	infosteal,benign,joker,execdownload,gustuff,spyware
+2021-04	97	3	85	15	4	polph	benign,infosteal,joker,execdownload,polph,packed,fakeapp
+2021-05	92	8	65	35	2	twmobo,fakedoc	benign,infosteal,execdownload,fakedoc,joker,twmobo,polph,jocker
+2021-06	84	16	56	44	2	lockscreen	infosteal,execdownload,packed,benign,lockscreen,joker,smspay,droidkungfu,hiddad,adware,triada,jocker
+2021-07	56	44	95	5	1	exploit	benign,droidkungfu,adware,exploit,infosteal,execdownload
+2021-08	90	10	44	56	0		benign,infosteal,execdownload,adware,clicks
+2021-09	44	56	63	37	0		benign,infosteal,hiddad,execdownload
+2021-10	94	6	54	46	0		hqwar,benign,execdownload,infosteal
+2021-11	99	1	60	40	0		wroba,benign,spyware,infosteal,execdownload,wapron,smsreg,packed,adware,server

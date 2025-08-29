@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	93	7	92	8	0		benign,windows,execdownload,umpay,ewind,adware
+2020-02	82	18	86	14	2	glodeagl,goldeneagle	benign,execdownload,adware,spyware,goldeneagle,glodeagl,boogr,ewind,styricka
+2020-03	71	29	78	22	1	leadbolt	tool,infosteal,benign,leadbolt,hiddad,execdownload,virtualapp,wapron,adware
+2020-04	81	19	87	13	1	fakeinst	benign,execdownload,infosteal,resharer,tool,spynote,fakeinst,spyware
+2020-05	73	27	50	50	2	fakeadblocker,cerberus	benign,execdownload,infosteal,hqwar,cerberus,hiddad,smsreg,resharer,packed,fakeadblocker
+2020-06	74	26	73	27	0		benign,resharer,adware,execdownload,wroba,infosteal,hqwar,ramnit,packed,blacklister,styricka,jocker,hiddad
+2020-07	9	91	0	100	49	simpo,mobby	mobby,adware,simpo,benign
+2020-08	78	22	11	89	0		execdownload,benign,adware,mobby,infosteal,hqwar
+2020-09	91	9	25	75	4	vmvol,monitorminor,mcalprotect	hqwar,vmvol,monitorminor,benign,infosteal,execdownload,mcalprotect,adware,hiddad
+2020-10	95	5	50	50	4	fakecop	dnotua,execdownload,benign,infosteal,fakecop,spyware,smforw,hqwar,adware,ewind
+2020-11	66	34	53	47	0		benign,boogr,infosteal,execdownload,ewind,adware
+2020-12	88	12	90	10	0		benign,infosteal,execdownload
+2021-01	66	34	71	29	0		benign,execdownload,adware
+2021-02	90	10	82	18	0		benign,infosteal,execdownload,joker,packed,spyagent
+2021-03	77	23	62	38	10	gustuff	benign,joker,blacklister,infosteal,gustuff,execdownload,clicks
+2021-04	97	3	77	23	3	polph,ibec	benign,infosteal,execdownload,polph,ibec,packed
+2021-05	96	4	64	36	2	ogel,fakedoc	benign,joker,infosteal,boogr,execdownload,polph,server,ogel,fakedoc,adware,packed
+2021-06	89	11	84	16	3	lockscreen,droidkungfu	benign,packed,execdownload,infosteal,lockscreen,droidkungfu,adware,triada
+2021-07	92	8	87	13	0		benign,adware,droidkungfu,execdownload,infosteal
+2021-08	67	33	53	47	0		benign,infosteal,adware
+2021-09	91	9	98	2	0		benign,execdownload,infosteal
+2021-10	92	8	84	16	0		benign,execdownload,infosteal
+2021-11	96	4	87	13	0		benign,infosteal,wroba,spyware,execdownload

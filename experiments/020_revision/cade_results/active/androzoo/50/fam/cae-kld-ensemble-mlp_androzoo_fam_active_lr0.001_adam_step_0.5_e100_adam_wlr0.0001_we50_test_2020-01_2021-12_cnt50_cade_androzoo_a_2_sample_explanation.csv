@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	41	9	34	16	9	spyware,spymax,styricka,resharer,triada,wapron,umpay	benign,styricka,wapron,execdownload,umpay,resharer,smsreg,triada,spyware,spymax
+2020-02	50	0	50	0	0		benign
+2020-03	21	29	25	25	12	infosteal,cyfin,virtualapp	benign,spyware,smsreg,virtualapp,adware,wapron,styricka,cyfin,execdownload,infosteal
+2020-04	43	7	37	13	4	hiddad,glodeagl,spynote,clicks	benign,adware,glodeagl,spyware,clicks,execdownload,resharer,wapron,hiddad,spynote
+2020-05	3	47	4	46	14	mobby,ewind	benign,mobby,adware,ewind
+2020-06	40	10	10	40	8	ransomware,dnotua,unknown,smforw,boogr	boogr,adware,benign,smforw,smsreg,infosteal,execdownload,wapron,dnotua,spyware,styricka,unknown,ransomware
+2020-07	17	33	23	27	2	mobtool,hiddenads	benign,infosteal,execdownload,mobtool,smforw,hiddenads,adware,ewind
+2020-08	50	0	3	47	0		benign,adware,ewind
+2020-09	48	2	0	50	1	monitorminor	infosteal,monitorminor,adware,ewind,benign
+2020-10	49	1	8	42	3	fakecop,fakeadblocker	benign,fakecop,smforw,execdownload,adware,ewind,fakeadblocker
+2020-11	45	5	2	48	0		benign,execdownload,ewind,adware,infosteal,fakeadblocker,mobtool
+2020-12	20	30	1	49	48	geinimi	benign,geinimi,packed
+2021-01	12	38	7	43	3	droiddreamlight	benign,geinimi,infosteal,droiddreamlight,adware
+2021-02	36	14	21	29	1	fakeapp	execdownload,infosteal,spyware,fakeapp,adware,packed,benign
+2021-03	48	2	12	38	0		benign,infosteal,execdownload,adware,mobby,ewind
+2021-04	44	6	21	29	4	smsthief,ibec,polph	benign,infosteal,polph,ibec,execdownload,packed,fakeapp,smsthief
+2021-05	42	8	15	35	8	server,fakedoc,ogel	infosteal,fakedoc,execdownload,polph,benign,smforw,server,ogel,packed
+2021-06	44	6	29	21	3	droidkungfu,lockscreen	lockscreen,execdownload,infosteal,benign,droidkungfu,packed
+2021-07	34	16	16	34	2	exploit,sandr	benign,infosteal,execdownload,exploit,droidkungfu,sandr
+2021-08	37	13	10	40	0		execdownload,benign,infosteal
+2021-09	39	11	14	36	0		benign,execdownload,infosteal,hiddad
+2021-10	49	1	5	45	0		execdownload,benign,infosteal
+2021-11	47	3	13	37	4	wroba	benign,execdownload,infosteal,server,wroba,unknown

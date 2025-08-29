@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	36	14	34	16	3	lockscreen,iconhider,virtualapp	triada,iconhider,benign,adware,execdownload,syringe,lockscreen,fakeapp,umpay,virtualapp,windows
+2020-02	34	16	30	20	2	congur,kuguo	adware,benign,execdownload,congur,ewind,infosteal,kuguo,hiddad
+2020-03	38	12	38	12	0		benign,hypay,adware,infosteal,execdownload
+2020-04	35	15	38	12	0		benign,execdownload,infosteal
+2020-05	38	12	36	14	1	fakeadblocker	benign,infosteal,fakeadblocker,packed,hiddad,execdownload,smsreg,resharer,adware
+2020-06	37	13	35	15	1	teddad	execdownload,infosteal,benign,ewind,hqwar,adware,jocker,smforw,teddad
+2020-07	46	4	13	37	17	mobby	benign,infosteal,mobby,adware
+2020-08	45	5	18	32	0		benign,execdownload,infosteal,adware,dnotua,ewind
+2020-09	34	16	21	29	3	rogueware,vmvol	benign,hqwar,infosteal,hiddad,jocker,rogueware,adware,vmvol,ewind
+2020-10	29	21	22	28	3	blacklister,fakecop	benign,execdownload,fakecop,infosteal,dnotua,ewind,hqwar,blacklister,adware,linux
+2020-11	45	5	14	36	0		benign,infosteal,execdownload,boogr,adware,fakecop,ewind,mobtool
+2020-12	49	1	2	48	48	geinimi	benign,geinimi
+2021-01	3	47	4	46	1	droiddreamlight	benign,droiddreamlight,execdownload,adware,ewind
+2021-02	47	3	30	20	1	spyagent	benign,spyagent,adware,packed,infosteal,fakeapp,smspay,smsreg,spyware
+2021-03	43	7	25	25	0		benign,joker,infosteal,adware,ewind,execdownload,mobby
+2021-04	42	8	13	37	4	smsthief,polph	infosteal,execdownload,benign,packed,polph,smsthief,adware,fakeapp
+2021-05	39	11	17	33	1	fakedoc	execdownload,infosteal,benign,smspay,boogr,polph,fakedoc,packed,smforw,joker
+2021-06	39	11	20	30	0		execdownload,benign,infosteal,lockscreen,joker,packed,smspay,adware,hiddad
+2021-07	32	18	24	26	3	droidkungfu	infosteal,droidkungfu,benign,execdownload,lockscreen
+2021-08	33	17	8	42	0		infosteal,benign,execdownload
+2021-09	39	11	29	21	0		benign,infosteal,hiddad,execdownload,packed
+2021-10	44	6	27	23	0		benign,infosteal,hqwar,execdownload
+2021-11	40	10	30	20	1	server	benign,infosteal,server,wroba,execdownload,adware,piom,spyware,wapron

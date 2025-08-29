@@ -46,7 +46,7 @@ CLASSIFIER='simple-enc-mlp'
 CENTROID_TYPE='fam'
 KLD_SCALE=1.0
 
-CSV_NAME="1"
+CSV_NAME="a_1"
 
 SLP=0
 

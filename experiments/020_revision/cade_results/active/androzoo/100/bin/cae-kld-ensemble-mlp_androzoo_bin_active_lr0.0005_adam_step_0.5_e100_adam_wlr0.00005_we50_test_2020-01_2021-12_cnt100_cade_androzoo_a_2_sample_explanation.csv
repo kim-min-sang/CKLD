@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	94	6	96	4	0		benign,windows,syringe,umpay,ewind
+2020-02	77	23	81	19	3	congur,glodeagl,goldeneagle	benign,adware,ewind,execdownload,spyware,goldeneagle,glodeagl,infosteal,congur,hiddad
+2020-03	73	27	84	16	1	leadbolt	tool,benign,infosteal,execdownload,leadbolt,hypay,spyware
+2020-04	80	20	86	14	1	fakeinst	tool,benign,infosteal,execdownload,resharer,adware,goldeneagle,hiddad,fakeinst,spyware
+2020-05	72	28	51	49	2	fakeadblocker,cerberus	tool,execdownload,benign,smsreg,infosteal,hqwar,hiddad,cerberus,packed,fakeadblocker
+2020-06	74	26	72	28	0		execdownload,benign,packed,ramnit,infosteal,adware,hqwar,wroba,resharer,jocker,smforw,hiddad,smsreg
+2020-07	74	26	70	30	0		benign,infosteal,execdownload,smforw,spyware,hiddenads,styricka,mobtool
+2020-08	100	0	1	99	0		benign,adware,ewind
+2020-09	89	11	92	8	1	vmvol	benign,resharer,execdownload,vmvol,infosteal
+2020-10	44	56	37	63	2	fakecop	benign,hqwar,execdownload,boogr,infosteal,fakecop,brata
+2020-11	95	5	77	23	0		fakecop,benign,execdownload,infosteal,adware
+2020-12	89	11	59	41	31	geinimi	benign,execdownload,infosteal,geinimi
+2021-01	28	72	28	72	0		benign,adware,ewind
+2021-02	88	12	80	20	0		infosteal,benign,execdownload,spyagent,joker,packed,ransomware
+2021-03	77	23	78	22	10	gustuff	benign,packed,infosteal,joker,fakeapp,gustuff
+2021-04	94	6	87	13	2	polph	spymax,benign,joker,packed,infosteal,polph
+2021-05	94	6	64	36	2	twmobo,ogel	benign,execdownload,infosteal,twmobo,spynote,joker,server,ogel,boogr,adware,jocker,polph
+2021-06	93	7	83	17	3	lockscreen,droidkungfu	droidkungfu,benign,execdownload,infosteal,packed,adware,lockscreen,joker
+2021-07	87	13	87	13	1	exploit	benign,droidkungfu,exploit,execdownload,infosteal,adware
+2021-08	69	31	59	41	0		benign,infosteal,execdownload,blacklister,adware
+2021-09	91	9	93	7	0		benign,fakeadblocker,execdownload,infosteal,hiddad
+2021-10	93	7	91	9	0		benign,infosteal,execdownload,hqwar
+2021-11	93	7	90	10	0		benign,piom,wroba,execdownload,infosteal,unknown

@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	190	10	186	14	0		spyware,spymax,benign,syringe,execdownload,triada,windows,fakeapp,packed,hiddad
+2020-02	131	69	128	72	1	congur	benign,adware,ewind,spyware,execdownload,infosteal,congur,clicks,hiddad
+2020-03	168	32	176	24	0		tool,benign,execdownload,hiddad,infosteal,virtualapp,hypay
+2020-04	173	27	173	27	2	goldeneagle,fakeinst	sandr,tool,benign,resharer,infosteal,execdownload,fakeinst,goldeneagle,adware,hiddad,fakeapp
+2020-05	121	79	115	85	8	cerberus,mobby,fakeadblocker	benign,infosteal,hqwar,execdownload,resharer,packed,fakeadblocker,tool,adware,ewind,smsreg,hiddad,cerberus,mobby
+2020-06	173	27	159	41	0		infosteal,benign,blacklister,ramnit,execdownload,hqwar,styricka,adware,ewind,wapron,smforw,spyware,hiddad,smsreg,jocker,packed
+2020-07	103	97	105	95	0		benign,execdownload,infosteal,adware,ewind
+2020-08	187	13	175	25	0		benign,dnotua,infosteal,execdownload,hqwar
+2020-09	176	24	94	106	1	teddad	benign,execdownload,hiddad,hqwar,teddad,resharer,adware,ewind,mobby,infosteal,jocker,windows
+2020-10	187	13	90	110	4	fakecop	benign,execdownload,brata,infosteal,fakecop,hqwar,boogr,adware,ewind,joker,blacklister
+2020-11	165	35	159	41	0		execdownload,benign,infosteal,ewind,adware
+2020-12	196	4	196	4	0		benign,execdownload,infosteal
+2021-01	59	141	59	141	10	droiddreamlight,geinimi	brata,benign,geinimi,packed,droiddreamlight,execdownload,infosteal,adware,ewind
+2021-02	191	9	180	20	0		benign,joker,infosteal,execdownload,spyware,ransomware,packed
+2021-03	184	16	179	21	0		benign,joker,spyware,infosteal,blacklister,fakeapp,packed,execdownload
+2021-04	193	7	167	33	5	polph,ibec	joker,benign,execdownload,infosteal,packed,polph,ibec,adware
+2021-05	189	11	166	34	3	ogel,twmobo,fakedoc	server,adware,benign,infosteal,ogel,unknown,boogr,twmobo,wroba,packed,execdownload,fakedoc,jocker
+2021-06	188	12	176	24	3	droidkungfu,lockscreen	benign,infosteal,joker,execdownload,lockscreen,droidkungfu,triada,packed,jocker,adware
+2021-07	173	27	176	24	1	exploit	benign,droidkungfu,joker,execdownload,infosteal,piom,adware,exploit
+2021-08	183	17	146	54	0		benign,infosteal,fakeadblocker,adware,execdownload,blacklister,spyware,clicks
+2021-09	144	56	161	39	0		benign,execdownload,infosteal,piom
+2021-10	197	3	178	22	0		benign,execdownload,infosteal
+2021-11	197	3	186	14	0		benign,wroba,smsreg,infosteal,server,execdownload

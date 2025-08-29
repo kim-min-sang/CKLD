@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	43	7	42	8	5	styricka,umpay,spymax,spyware,clicks	packed,benign,execdownload,spyware,spymax,clicks,umpay,styricka
+2020-02	43	7	37	13	4	hiddad,goldeneagle,glodeagl,infosteal	benign,goldeneagle,glodeagl,execdownload,adware,styricka,hiddad,infosteal
+2020-03	35	15	38	12	1	wapron	benign,infosteal,smsreg,adware,spyware,wapron
+2020-04	20	30	21	29	3	resharer,fakeinst,smforw	infosteal,benign,smforw,execdownload,spyware,resharer,fakeinst,clicks,wapron
+2020-05	29	21	19	31	4	fakeadblocker,ewind,boogr,unknown	benign,infosteal,packed,fakeadblocker,boogr,unknown,execdownload,smsreg,smforw,adware,ewind
+2020-06	36	14	11	39	7	dnotua,hqwar,ramnit	execdownload,hqwar,infosteal,benign,ramnit,smforw,styricka,smsreg,spyware,dnotua,adware,ewind,fakeadblocker,packed
+2020-07	42	8	11	39	1	mobtool	infosteal,benign,mobtool,adware,ewind
+2020-08	11	39	0	50	0		execdownload,infosteal,adware,ewind,benign
+2020-09	14	36	8	42	0		benign,infosteal,hqwar,adware,ewind
+2020-10	18	32	2	48	0		execdownload,benign,hqwar,infosteal
+2020-11	47	3	3	47	0		benign,infosteal,execdownload,boogr,ewind,adware
+2020-12	45	5	8	42	40	geinimi	benign,execdownload,geinimi
+2021-01	5	45	5	45	0		benign,adware
+2021-02	41	9	21	29	2	fakeapp,jocker	benign,execdownload,infosteal,adware,spyware,fakeapp,jocker
+2021-03	30	20	8	42	14	gustuff,mobby	infosteal,gustuff,benign,execdownload,spyware,adware,mobby,ewind
+2021-04	45	5	12	38	5	polph,joker	benign,joker,execdownload,infosteal,polph,fakeapp,packed
+2021-05	41	9	8	42	2	fakedoc,server	benign,infosteal,unknown,fakedoc,server,joker,execdownload,polph,smforw
+2021-06	46	4	27	23	3	lockscreen,droidkungfu	execdownload,benign,packed,infosteal,lockscreen,droidkungfu,hiddad
+2021-07	28	22	32	18	3	sandr,exploit	sandr,benign,jocker,droidkungfu,execdownload,infosteal,exploit,wapron
+2021-08	36	14	12	38	0		benign,adware,infosteal,execdownload
+2021-09	38	12	40	10	0		benign,execdownload,infosteal
+2021-10	47	3	6	44	0		execdownload,benign,infosteal,hqwar
+2021-11	46	4	14	36	4	wroba	benign,execdownload,infosteal,server,wroba

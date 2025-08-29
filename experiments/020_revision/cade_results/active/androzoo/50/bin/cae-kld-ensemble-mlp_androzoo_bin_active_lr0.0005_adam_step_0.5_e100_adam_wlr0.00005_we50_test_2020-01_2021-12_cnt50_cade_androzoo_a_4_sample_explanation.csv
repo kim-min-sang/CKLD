@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	46	4	46	4	0		benign,windows,syringe,triada,umpay
+2020-02	43	7	42	8	2	glodeagl,goldeneagle	spyware,benign,adware,goldeneagle,glodeagl
+2020-03	31	19	36	14	0		tool,execdownload,benign,infosteal,virtualapp
+2020-04	21	29	34	16	0		tool,resharer,infosteal,benign,execdownload,hiddad,spyware,goldeneagle,clicks,adware,spynote
+2020-05	35	15	41	9	1	fakeadblocker	hiddad,benign,infosteal,packed,fakeadblocker
+2020-06	28	22	22	28	0		benign,adware,ewind,execdownload,infosteal,hqwar,hiddad,wroba,packed,ramnit,resharer,tool
+2020-07	44	6	44	6	0		infosteal,execdownload,benign
+2020-08	36	14	17	33	0		benign,joker,infosteal,execdownload,hqwar,adware,ewind
+2020-09	38	12	26	24	4	teddad,rogueware,vmvol	execdownload,benign,vmvol,hqwar,infosteal,teddad,adware,smforw,windows,rogueware
+2020-10	31	19	21	29	3	fakecop,multiple	benign,hqwar,infosteal,fakecop,execdownload,boogr,multiple,adware,spyware
+2020-11	39	11	14	36	0		execdownload,benign,infosteal,adware,fakecop,ewind
+2020-12	36	14	33	17	0		benign,execdownload,infosteal,spynote
+2021-01	29	21	32	18	11	droidkungfu,droiddreamlight,geinimi	benign,geinimi,execdownload,infosteal,packed,droiddreamlight,droidkungfu,server
+2021-02	37	13	29	21	0		infosteal,adware,execdownload,benign,jocker
+2021-03	47	3	46	4	0		infosteal,benign,execdownload
+2021-04	31	19	23	27	5	polph,ibec	benign,polph,infosteal,ibec,execdownload,joker,packed
+2021-05	44	6	20	30	2	ogel,fakedoc	benign,unknown,joker,infosteal,server,ogel,execdownload,fakedoc,smforw
+2021-06	44	6	38	12	0		benign,execdownload,infosteal,packed,droidkungfu,joker
+2021-07	42	8	41	9	5	lockscreen,exploit	benign,execdownload,infosteal,jocker,adware,exploit,lockscreen
+2021-08	40	10	17	33	0		benign,infosteal,adware,blacklister,execdownload
+2021-09	25	25	43	7	0		execdownload,infosteal,benign
+2021-10	49	1	34	16	0		benign,infosteal
+2021-11	47	3	44	6	0		benign,infosteal,server,spyware

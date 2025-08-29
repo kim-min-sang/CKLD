@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	90	10	88	12	1	iconhider	benign,packed,syringe,adware,dnotua,iconhider,execdownload,triada
+2020-02	92	8	83	17	3	goldeneagle,congur,glodeagl	benign,adware,ewind,congur,goldeneagle,glodeagl,dnotua,packed,hiddad,robtes
+2020-03	77	23	93	7	0		benign,adware,infosteal,packed,wapron
+2020-04	84	16	92	8	0		execdownload,benign,infosteal,smforw,adware,spyware,resharer,goldeneagle
+2020-05	63	37	63	37	4	mobby	benign,boogr,hiddad,resharer,execdownload,adware,mobby,ewind
+2020-06	87	13	81	19	0		ewind,hiddad,adware,execdownload,benign,hqwar,infosteal,spyware,resharer,styricka,packed,wapron
+2020-07	81	19	88	12	0		execdownload,benign,infosteal,mobby,adware
+2020-08	95	5	24	76	0		benign,adware,execdownload,ewind
+2020-09	27	73	21	79	0		benign,hiddad,infosteal,adware,ewind,hqwar,mobidash,mobby
+2020-10	77	23	66	34	2	fakecop	fakecop,benign,execdownload,adware,dnotua,ewind,hqwar,boogr,infosteal
+2020-11	66	34	62	38	0		benign,infosteal,execdownload,adware,fakecop,ewind,smforw
+2020-12	98	2	9	91	88	geinimi	benign,geinimi,packed,execdownload
+2021-01	51	49	45	55	4	droiddreamlight	execdownload,benign,geinimi,adware,droiddreamlight,server
+2021-02	79	21	59	41	0		infosteal,benign,execdownload,packed,joker,jocker,adware,smsreg,fakeapp,smspay,spyware,ransomware,spyagent
+2021-03	91	9	55	45	0		benign,infosteal,execdownload,joker,mobby,adware,fakeapp
+2021-04	89	11	72	28	4	polph,ibec	execdownload,packed,benign,polph,joker,infosteal,ibec,adware,resharer,fakeapp,clicks
+2021-05	86	14	63	37	2	fakedoc,twmobo	infosteal,execdownload,benign,joker,fakedoc,boogr,polph,unknown,wroba,twmobo,jocker
+2021-06	93	7	82	18	0		infosteal,benign,execdownload,packed,jocker,adware,smspay
+2021-07	90	10	86	14	5	exploit,droidkungfu	benign,adware,infosteal,droidkungfu,exploit,execdownload
+2021-08	56	44	17	83	0		infosteal,benign,execdownload,adware
+2021-09	61	39	59	41	0		benign,infosteal,piom,execdownload
+2021-10	92	8	46	54	0		benign,infosteal,execdownload,hqwar
+2021-11	97	3	68	32	0		execdownload,wroba,server,infosteal,benign,smsreg,spyware,adware,wapron,piom,packed

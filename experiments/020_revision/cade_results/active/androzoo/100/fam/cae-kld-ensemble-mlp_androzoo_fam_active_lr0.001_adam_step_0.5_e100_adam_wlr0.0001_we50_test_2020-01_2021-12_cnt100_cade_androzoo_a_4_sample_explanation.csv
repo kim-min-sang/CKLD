@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	93	7	84	16	6	spyware,lockscreen,resharer,spymax,styricka,wapron	benign,adware,execdownload,packed,resharer,lockscreen,styricka,spyware,spymax,wapron
+2020-02	84	16	77	23	7	ewind,infosteal,glodeagl,fakeapp,unknown,goldeneagle	goldeneagle,glodeagl,benign,execdownload,fakeapp,styricka,infosteal,adware,unknown,ewind
+2020-03	81	19	71	29	1	spynote	benign,infosteal,execdownload,smsreg,ewind,adware,wapron,styricka,spynote,spyware
+2020-04	89	11	88	12	3	fakeinst,clicks,smforw	benign,adware,infosteal,fakeinst,spyware,smforw,resharer,clicks,execdownload
+2020-05	11	89	6	94	25	boogr,mobby,cerberus	cerberus,execdownload,infosteal,benign,mobby,adware,ewind,boogr
+2020-06	75	25	31	69	15	fakeadblocker,tool,dnotua,wroba,mobtool,ramnit,hqwar,ransomware	hqwar,benign,ramnit,infosteal,execdownload,mobtool,smsreg,spynote,dnotua,ransomware,adware,spyware,fakeadblocker,packed,unknown,styricka,wroba,smforw,tool,boogr
+2020-07	45	55	11	89	0		benign,infosteal,execdownload,adware,ewind
+2020-08	95	5	8	92	0		benign,infosteal,execdownload,adware,ewind
+2020-09	98	2	5	95	2	vmvol,mcalprotect	benign,execdownload,infosteal,hqwar,vmvol,mcalprotect,adware,ewind,mobby
+2020-10	93	7	49	51	5	brata,fakecop	benign,hqwar,spyware,execdownload,infosteal,brata,adware,ewind,fakecop,smforw
+2020-11	93	7	31	69	0		execdownload,infosteal,benign,fakecop,mobtool,styricka,adware,fakeadblocker
+2020-12	31	69	21	79	70	windows,geinimi	smforw,spyware,spynote,windows,benign,adware,geinimi,packed
+2021-01	19	81	17	83	7	server,droiddreamlight,droidkungfu	droiddreamlight,benign,execdownload,server,droidkungfu,geinimi,adware
+2021-02	85	15	67	33	4	spyagent,jocker,joker	execdownload,infosteal,benign,spyware,adware,fakeapp,spyagent,jocker,packed,joker
+2021-03	81	19	12	88	10	gustuff	benign,infosteal,adware,mobby,ewind,gustuff,execdownload
+2021-04	98	2	62	38	5	smsthief,polph	joker,polph,infosteal,benign,fakeapp,execdownload,packed,smsthief
+2021-05	83	17	46	54	2	ogel,fakedoc	benign,joker,boogr,infosteal,wroba,smforw,execdownload,server,ogel,polph,fakedoc,unknown
+2021-06	92	8	76	24	0		execdownload,infosteal,droidkungfu,benign,packed,lockscreen,joker
+2021-07	82	18	53	47	3	exploit,sandr	execdownload,droidkungfu,infosteal,benign,wapron,exploit,sandr,jocker
+2021-08	74	26	18	82	0		execdownload,infosteal,benign
+2021-09	54	46	22	78	1	piom	infosteal,execdownload,benign,fakeadblocker,piom
+2021-10	96	4	14	86	0		infosteal,execdownload,benign,wroba
+2021-11	98	2	64	36	0		infosteal,server,execdownload,benign,wroba

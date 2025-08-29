@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	93	7	94	6	0		benign,execdownload,syringe,umpay
+2020-02	90	10	90	10	0		benign,adware,ewind,spyware,boogr
+2020-03	85	15	95	5	1	leadbolt	tool,benign,execdownload,hiddad,leadbolt,infosteal
+2020-04	96	4	96	4	1	goldeneagle	tool,spynote,benign,goldeneagle,adware
+2020-05	48	52	48	52	11	mobby,cerberus,fakeadblocker	benign,hiddad,execdownload,cerberus,infosteal,packed,fakeadblocker,smsreg,mobby,adware,ewind
+2020-06	74	26	67	33	0		blacklister,benign,infosteal,hqwar,execdownload,hiddad,wroba,styricka,wapron,ramnit,tool,smforw,resharer,smsreg,adware
+2020-07	87	13	91	9	0		infosteal,execdownload,benign
+2020-08	24	76	24	76	0		benign,joker,adware,execdownload,infosteal,ewind
+2020-09	76	24	11	89	1	vmvol	benign,infosteal,hqwar,execdownload,adware,ewind,mobby,vmvol
+2020-10	35	65	30	70	2	fakecop	execdownload,infosteal,brata,benign,adware,hqwar,fakecop,smforw,spyware,boogr
+2020-11	83	17	40	60	0		infosteal,execdownload,benign,fakecop,adware,ewind
+2020-12	94	6	46	54	52	geinimi	execdownload,benign,geinimi
+2021-01	90	10	88	12	3	droidkungfu,droiddreamlight	benign,execdownload,droiddreamlight,brata,infosteal,packed,geinimi,droidkungfu
+2021-02	87	13	80	20	0		infosteal,execdownload,benign,spyagent,spyware,jocker,joker
+2021-03	72	28	68	32	10	gustuff	benign,infosteal,execdownload,joker,spyware,gustuff
+2021-04	94	6	76	24	3	ibec,polph	benign,execdownload,infosteal,joker,polph,ibec,resharer,adware
+2021-05	93	7	60	40	3	fakedoc,twmobo,ogel	benign,wroba,infosteal,fakedoc,execdownload,adware,fakeapp,unknown,server,ogel,twmobo
+2021-06	96	4	83	17	2	lockscreen	execdownload,benign,packed,infosteal,lockscreen,droidkungfu,triada
+2021-07	78	22	83	17	1	exploit	benign,infosteal,jocker,joker,adware,droidkungfu,execdownload,exploit
+2021-08	93	7	58	42	0		benign,adware,execdownload,infosteal,spyware
+2021-09	75	25	88	12	0		benign,infosteal,execdownload
+2021-10	69	31	53	47	0		benign,infosteal,execdownload
+2021-11	96	4	94	6	0		benign,infosteal,smsreg,wroba,server,unknown

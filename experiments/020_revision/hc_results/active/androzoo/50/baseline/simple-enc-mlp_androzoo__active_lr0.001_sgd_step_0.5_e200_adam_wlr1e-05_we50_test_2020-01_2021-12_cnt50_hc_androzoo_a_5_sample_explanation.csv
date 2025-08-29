@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	36	14	26	24	7	lockscreen,iconhider,virtualapp	fakeapp,lockscreen,virtualapp,benign,adware,execdownload,iconhider,windows,triada,syringe
+2020-02	40	10	34	16	1	congur	execdownload,benign,adware,infosteal,congur,spyware,virtualapp,ewind,shedun,hiddad
+2020-03	36	14	42	8	0		execdownload,benign,infosteal,virtualapp,adware
+2020-04	40	10	34	16	0		benign,infosteal,spyware,adware
+2020-05	41	9	38	12	0		benign,hiddad,smsreg,infosteal,execdownload,packed,adware
+2020-06	37	13	33	17	0		ewind,benign,execdownload,adware,hqwar,hiddad,infosteal,smforw,jocker
+2020-07	41	9	20	30	8	mobby	benign,mobby,adware,infosteal
+2020-08	40	10	23	27	1	blacklister	benign,adware,blacklister,execdownload,infosteal,ewind,dnotua
+2020-09	36	14	30	20	1	rogueware	benign,infosteal,jocker,hiddad,hqwar,rogueware,execdownload
+2020-10	39	11	12	38	2	fakecop	infosteal,execdownload,boogr,benign,adware,fakecop,dnotua,spyware,ewind,linux
+2020-11	44	6	7	43	0		fakecop,infosteal,benign,boogr,adware,ewind,execdownload,smspay,mobtool
+2020-12	4	46	5	45	45	geinimi	benign,geinimi
+2021-01	15	35	15	35	2	droiddreamlight	benign,droiddreamlight,execdownload,geinimi,adware,packed
+2021-02	47	3	28	22	1	spyagent	benign,packed,spyagent,execdownload,infosteal,fakeapp,smspay,adware,smsreg
+2021-03	43	7	20	30	3	gustuff	benign,infosteal,execdownload,joker,gustuff,adware,hiddad,packed,smsreg
+2021-04	46	4	11	39	2	polph,ibec	benign,execdownload,infosteal,packed,adware,fakeapp,polph,ibec
+2021-05	36	14	11	39	1	fakedoc	infosteal,execdownload,smspay,boogr,fakedoc,benign,wroba,packed,polph,smforw,joker,fakeapp,clicks
+2021-06	41	9	23	27	0		benign,infosteal,lockscreen,execdownload,packed,joker,adware,hiddad
+2021-07	30	20	23	27	6	droidkungfu,exploit	droidkungfu,benign,execdownload,infosteal,exploit,lockscreen
+2021-08	23	27	5	45	0		execdownload,benign,infosteal
+2021-09	24	26	45	5	0		benign,piom,infosteal,hiddad
+2021-10	46	4	17	33	0		benign,hqwar,infosteal,execdownload,smsreg
+2021-11	42	8	18	32	1	server	wroba,infosteal,benign,execdownload,piom,smsreg,adware,server,packed

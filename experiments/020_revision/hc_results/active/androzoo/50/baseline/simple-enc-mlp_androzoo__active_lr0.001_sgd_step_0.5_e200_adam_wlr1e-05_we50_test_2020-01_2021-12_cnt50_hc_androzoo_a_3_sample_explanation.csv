@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	41	9	31	19	5	iconhider,virtualapp,lockscreen	triada,benign,adware,virtualapp,syringe,fakeapp,lockscreen,iconhider,execdownload,windows
+2020-02	42	8	37	13	1	congur	benign,spyware,execdownload,adware,infosteal,congur,hiddad,dnotua
+2020-03	34	16	43	7	0		execdownload,benign,adware,infosteal,virtualapp
+2020-04	43	7	29	21	1	goldeneagle	benign,execdownload,infosteal,spyware,goldeneagle
+2020-05	37	13	36	14	1	fakeadblocker	benign,hiddad,infosteal,ewind,packed,adware,fakeadblocker,smsreg,execdownload
+2020-06	36	14	31	19	0		hqwar,benign,infosteal,adware,hiddad,ewind,execdownload,jocker
+2020-07	37	13	27	23	11	mobby	benign,infosteal,adware,mobby
+2020-08	44	6	45	5	1	blacklister	benign,adware,infosteal,blacklister
+2020-09	33	17	30	20	2	rogueware	infosteal,benign,hqwar,execdownload,jocker,rogueware,mobidash
+2020-10	9	41	4	46	2	fakecop	execdownload,benign,fakecop,infosteal,hqwar,dnotua,blacklister
+2020-11	45	5	10	40	0		benign,fakecop,infosteal,execdownload,boogr,adware,ewind,mobtool
+2020-12	46	4	16	34	34	geinimi	benign,geinimi
+2021-01	43	7	27	23	3	droiddreamlight	benign,execdownload,packed,geinimi,adware,hiddad,infosteal,smsreg,droiddreamlight
+2021-02	49	1	28	22	1	spyagent	benign,packed,spyagent,infosteal,adware,smsreg,fakeapp,spyware,smspay
+2021-03	46	4	23	27	0		benign,joker,smsreg,ewind,execdownload,adware,mobby,infosteal,packed
+2021-04	42	8	13	37	5	spymax,polph,ibec,smsthief	benign,execdownload,infosteal,ibec,adware,smsthief,packed,fakeapp,spymax,polph,clicks
+2021-05	44	6	22	28	1	fakedoc	boogr,infosteal,benign,polph,smspay,execdownload,packed,fakedoc,smforw,clicks,joker
+2021-06	34	16	21	29	0		benign,execdownload,lockscreen,infosteal,smspay,hiddad,packed,adware,triada
+2021-07	27	23	24	26	2	exploit	execdownload,infosteal,benign,exploit,lockscreen,adware
+2021-08	23	27	17	33	0		infosteal,execdownload,benign
+2021-09	40	10	12	38	0		benign,infosteal,execdownload
+2021-10	35	15	22	28	0		benign,infosteal,execdownload,hqwar,smsreg
+2021-11	42	8	28	22	1	server	benign,execdownload,wroba,packed,infosteal,server,spyware,piom,adware,clicks

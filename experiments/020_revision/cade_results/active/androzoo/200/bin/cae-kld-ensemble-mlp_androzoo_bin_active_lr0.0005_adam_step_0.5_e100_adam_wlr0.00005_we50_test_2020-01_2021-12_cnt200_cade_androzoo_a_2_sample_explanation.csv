@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	196	4	198	2	0		benign,ewind,windows
+2020-02	196	4	195	5	0		styricka,benign,execdownload,hiddad
+2020-03	152	48	162	38	1	leadbolt	benign,infosteal,execdownload,resharer,hypay,fakeapp,tool,hiddad,spyware,adware,virtualapp,leadbolt,ewind,wapron,smsreg
+2020-04	174	26	178	22	7	glodeagl,goldeneagle	spynote,benign,tool,goldeneagle,adware,execdownload,infosteal,resharer,hiddad,dnotua,glodeagl,clicks
+2020-05	71	129	58	142	25	fakeadblocker,mobby,cerberus	benign,resharer,execdownload,hiddad,smsreg,cerberus,infosteal,packed,fakeadblocker,mobby,adware,ewind,hqwar,boogr
+2020-06	169	31	159	41	0		benign,ramnit,execdownload,infosteal,packed,hqwar,adware,hiddad,resharer,jocker,smforw,tool,styricka,smsreg,spynote,mobok
+2020-07	191	9	52	148	0		benign,mobtool,infosteal,execdownload,adware,ewind
+2020-08	178	22	36	164	0		benign,execdownload,adware,mobby,ewind,infosteal,blacklister,spyware
+2020-09	180	20	52	148	2	rogueware	execdownload,windows,hqwar,benign,hiddad,infosteal,rogueware,mobidash,smforw,resharer,adware,ewind,mobby
+2020-10	187	13	191	9	0		benign,execdownload,infosteal,spyware,dnotua,blacklister
+2020-11	198	2	151	49	5	fakecop	benign,infosteal,execdownload,fakecop,adware
+2020-12	197	3	199	1	0		benign,spynote
+2021-01	188	12	194	6	1	droidkungfu	benign,execdownload,brata,droidkungfu,blacklister
+2021-02	188	12	184	16	0		execdownload,infosteal,benign,spyware,jocker,joker
+2021-03	176	24	98	102	10	gustuff	benign,infosteal,gustuff,spyware,execdownload,blacklister,joker,adware,mobby,ewind
+2021-04	197	3	191	9	2	polph	infosteal,benign,joker,execdownload,polph
+2021-05	188	12	167	33	1	ogel	benign,adware,server,ogel,unknown,infosteal,packed,execdownload,fakeapp,wroba,smforw,jocker
+2021-06	194	6	176	24	2	lockscreen	execdownload,benign,droidkungfu,lockscreen,infosteal,joker,adware
+2021-07	183	17	189	11	2	exploit	benign,jocker,exploit,infosteal,execdownload,droidkungfu
+2021-08	177	23	122	78	0		benign,spyware,infosteal,clicks,execdownload,spynote
+2021-09	181	19	186	14	0		infosteal,piom,benign,execdownload
+2021-10	196	4	169	31	0		benign,execdownload,infosteal
+2021-11	196	4	192	8	0		infosteal,server,benign,unknown,wroba,spyware
