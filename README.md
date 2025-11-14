@@ -1,7 +1,10 @@
 # CKLD: More Effective Concept Drift Adaptation Method with KLD on Contrastive Learning
 This is the source code accompanying our paper
 "CKLD: More Effective Concept Drift Adaptation Framework with KLD on Contrastive Learning",
-submitted to USENIX Security 2026.
+submitted to the 2026 IEEE Symposium on Security and Privacy (IEEE S&P 2026).
+
+
+
 
 ## Setup
 The experiments were tested on Ubuntu 22.04 with an NVIDIA GPU.
