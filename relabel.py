@@ -24,13 +24,14 @@ import kld_func
 from common import get_model_stats
 #from common import draw_tsne,draw_tsne_concat,draw_tsne_split
 from model import SimpleEncClassifier
-from model import EncKldCustomMlpEnsemble6, CAEKldEnsembleMlp, CAEMlp, TripletMlp, TripletKldEnsembleMlp
+from model import EncKldCustomMlpEnsemble6, CAEKldEnsembleMlp, CAEMlp, TripletMlp, TripletKldEnsembleMlp,TripletKldOnlyMlp, CAEKldOnlyMlp, EncKldCustomMlpOnly6
 
 from selector_pseudo_loss import LocalPseudoLossSelector
 from selector_cadeood import OODSelector, OODKldEnsembleSelector
 from selector_simple import UncertainPredScoreSelector
 from utils import save_model
 from train import train_encoder
+from sklearn.model_selection import train_test_split
 
 def eval_classifier(args, classifier, cur_month_str, X, y_binary, y_family, train_families, \
                         fout, fam_out, stat_out, gpu = False, multi = False):
@@ -54,35 +55,35 @@ def eval_classifier(args, classifier, cur_month_str, X, y_binary, y_family, trai
     fout.write('%s\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\n' % \
                 (cur_month_str, tpr, tnr, fpr, fnr, acc, precision, f1))
     fout.flush()
-    if multi == False:
-        tn, fp, fn, tp = confusion_matrix(y_binary, y_pred_bin).ravel()
-        stat_out.write('%s\t%d\t%d\t%d\t%d\t%d\n' % \
-                    (cur_month_str, X.shape[0], tp, tn, fp, fn))
-        stat_out.flush()
-
-    # check FNR within different families.
-    family_cnt = defaultdict(lambda: 0)
-    for idx, family in enumerate(y_family):
-        family_cnt[family] += 1
-    neg_by_fam = defaultdict(lambda: 0)
-    family_to_idx = defaultdict(list)
-    # y_family can be all_train_family since we only care abou False Negatives
-    fn_indices = np.where((y_binary != y_pred_bin) & (y_binary != 0))[0]
-    for idx in fn_indices:
-        family = y_family[idx]
-        neg_by_fam[family] += 1
-        family_to_idx[family].append(idx)
-    for family, neg_cnt in neg_by_fam.items():
-        new = family not in train_families
-        fam_total = family_cnt[family]
-        fam_rate = neg_cnt / float(fam_total)
-        fam_out.write('%s\t%s\t%s\t%s\t%d\n' % (cur_month_str, new, family, fam_rate, neg_cnt))
-        fam_out.flush()
-    return y_pred, neg_by_fam, family_to_idx
-
-
-
-
+    
+    if args.is_for_no_drift == False:
+        if multi == False:
+            tn, fp, fn, tp = confusion_matrix(y_binary, y_pred_bin).ravel()
+            stat_out.write('%s\t%d\t%d\t%d\t%d\t%d\n' % \
+                        (cur_month_str, X.shape[0], tp, tn, fp, fn))
+            stat_out.flush()
+            
+        # check FNR within different families.
+        family_cnt = defaultdict(lambda: 0)
+        for idx, family in enumerate(y_family):
+            family_cnt[family] += 1
+        neg_by_fam = defaultdict(lambda: 0)
+        family_to_idx = defaultdict(list)
+        # y_family can be all_train_family since we only care abou False Negatives
+        fn_indices = np.where((y_binary != y_pred_bin) & (y_binary != 0))[0]
+        for idx in fn_indices:
+            family = y_family[idx]
+            neg_by_fam[family] += 1
+            family_to_idx[family].append(idx)
+        for family, neg_cnt in neg_by_fam.items():
+            new = family not in train_families
+            fam_total = family_cnt[family]
+            fam_rate = neg_cnt / float(fam_total)
+            fam_out.write('%s\t%s\t%s\t%s\t%d\n' % (cur_month_str, new, family, fam_rate, neg_cnt))
+            fam_out.flush()
+        return y_pred, neg_by_fam, family_to_idx
+    
+    return y_pred
 
 def main():
     """
@@ -112,6 +113,11 @@ def main():
     
     logging.info('Running with configuration:\n' + pformat(vars(args)))
 
+    if args.sleep > 0:
+        for i in range(args.sleep):
+            print(f"{i+1} / {args.sleep}")
+            time.sleep(60)
+
     """
     Step (1): Prepare the training dataset. Load the feature vectors and labels.
     """
@@ -123,6 +129,12 @@ def main():
         X_train, y_train, all_train_family = data.load_range_dataset_w_benign(args.data, args.train_start, args.train_end)
     else:
         X_train, y_train, y_train_family = data.load_range_dataset_w_benign(args.data, args.train_start, args.train_end)
+        
+        if args.is_for_no_drift:
+            X_train, X_test, y_train, y_test = train_test_split(
+                X_train, y_train,
+                test_size=0.20
+            )  
 
         ben_len = X_train.shape[0] - y_train_family.shape[0]
         y_ben_family = np.full(ben_len, 'benign')
@@ -153,6 +165,8 @@ def main():
     logging.info(f'Number of features: {NUM_FEATURES}; Number of classes: {NUM_CLASSES}')
 
     y_train_binary = np.array([1 if item != 0 else 0 for item in y_train])
+    if args.is_for_no_drift==True:
+        y_test_binary = np.array([1 if item != 0 else 0 for item in y_test])
     BIN_NUM_CLASSES = 2
 
     """
@@ -202,6 +216,25 @@ def main():
         mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
         encoder = TripletKldEnsembleMlp(enc_dims, mlp_dims, kld_scale = args.kld_scale)
         encoder_name = 'triplet-kld-ensemble-mlp'
+    elif args.encoder == 'triplet-kld-only-mlp':
+        enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
+                            args.enc_hidden, NUM_CLASSES)
+        mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
+        encoder = TripletKldOnlyMlp(enc_dims, mlp_dims, kld_scale = args.kld_scale)
+        encoder_name = 'triplet-kld-only-mlp'
+    elif args.encoder == 'cae-kld-only-mlp':
+        enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
+                            args.enc_hidden, NUM_CLASSES)
+        mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
+        encoder = CAEKldOnlyMlp(enc_dims, mlp_dims, kld_scale = args.kld_scale)
+        encoder_name = 'cae-kld-only-mlp'
+    elif args.encoder == 'enc-kld-custom-mlp-only6':
+        enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
+                            args.enc_hidden, NUM_CLASSES)
+        mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
+        kld_dev_scale = kld_func.get_kld_dev_scale(args.centroid_type, enc_dims[-1], args.kld_scale)
+        encoder = EncKldCustomMlpOnly6(enc_dims, mlp_dims, kld_scale = args.kld_scale, kld_dev_scale = kld_dev_scale)
+        encoder_name = 'enc-kld-custom-mlp-only6'
     else:
         raise Exception(f'The encoder {args.encoder} is not supported yet.')
 
@@ -287,6 +320,8 @@ def main():
             X_train_feat = encoder.encode(X_train_tensor).numpy()
     else:
         X_train_feat = X_train
+        if args.is_for_no_drift == True:
+            X_test_feat = X_test
 
     if args.classifier == args.encoder:
         classifier = encoder
@@ -302,8 +337,15 @@ def main():
     fam_out.write('Month\tNew\tFamily\tFNR\tCnt\n')
     stat_out = open(args.result.split('.csv')[0]+'_stat.csv', 'w')
     stat_out.write('date\tTotal\tTP\tTN\tFP\tFN\n')
-    eval_classifier(args, classifier, args.train_end, X_train_feat, y_train_binary, all_train_family, train_families, \
+    if args.is_for_no_drift == True:
+        eval_classifier(args, classifier, args.train_start + 'to' + args.train_end, X_test_feat, y_test_binary, None, None, \
                     fout, fam_out, stat_out, gpu = cls_gpu, multi = args.eval_multi)
+        logging.info('terminate no drift evaluation.')
+        return
+    else:
+        eval_classifier(args, classifier, args.train_end, X_train_feat, y_train_binary, all_train_family, train_families, \
+                    fout, fam_out, stat_out, gpu = cls_gpu, multi = args.eval_multi)
+    
     sample_out = open(args.result.split('.csv')[0]+'_sample.csv', 'w')
     sample_out.write('date\tCount\tIndex\tTrue\tPred\tFamily\tScore\n')
     sample_out.flush()

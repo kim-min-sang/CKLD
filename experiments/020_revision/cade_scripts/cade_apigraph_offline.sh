@@ -29,20 +29,22 @@ OPT=adam
 E=100
 LR=0.0005
 
-ENCODER='cae-mlp'
-CLASSIFIER='cae-mlp'
-#ENCODER='cae-kld-ensemble-mlp'
-#CLASSIFIER='cae-kld-ensemble-mlp'
+#ENCODER='cae-mlp'
+#CLASSIFIER='cae-mlp'
+ENCODER='cae-kld-ensemble-mlp'
+CLASSIFIER='cae-kld-ensemble-mlp'
+#ENCODER='cae-kld-only-mlp'
+#CLASSIFIER='cae-kld-only-mlp'
 
-LOSS='triplet-mse-xent'
-#LOSS='triplet-mse-kld-ensemble-xent'
+#LOSS='triplet-mse-xent'
+LOSS='triplet-mse-kld-ensemble-xent'
 
-CENTROID_TYPE=''
-KLD_SCALE=3.0
+CENTROID_TYPE='fam'
+KLD_SCALE=2.0
 
-CSV_NAME="1"
+CSV_NAME="102_5_6"
 
-SLP=0
+SLP=45
 
 ###############################################################
 
@@ -51,6 +53,7 @@ TS=$(date "+%m.%d-%H.%M.%S")
 nohup python -u relabel.py	                                \
             --sleep ${SLP}                                  \
             --ood                                           \
+            --is-for-no-drift 1                             \
             --retrain-first 1                               \
             --is-only-test-eval-without-al 1                \
             --margin 10                                     \
@@ -81,13 +84,14 @@ nohup python -u relabel.py	                                \
             --lr_decay_epochs "10,500,10"                   \
             --epochs ${E}                                   \
             --encoder-retrain                               \
-            --cae-lambda 0.1                                \
+            --cae-lambda 1.0                                \
+            --mse-lambda 10.0                               \
             --xent-lambda 100                               \
             --display-interval 180                          \
             --al                                            \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}${CSV_NAME}.csv \
+            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${CSV_NAME}.csv \
             --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
             >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
 

@@ -24,23 +24,25 @@ B=1024
 ###############################################################
 
 OPT=adam
-E=2
+E=100
 LR=0.00005
 
-LOSS='hi-dist-kld-custom-xent-ensemble6'
 #LOSS='hi-dist-xent'
+LOSS='hi-dist-kld-custom-xent-ensemble6'
 
-ENCODER='enc-kld-custom-mlp-ensemble6'
-CLASSIFIER='enc-kld-custom-mlp-ensemble6'
 #ENCODER='simple-enc-mlp'
 #CLASSIFIER='simple-enc-mlp'
+ENCODER='enc-kld-custom-mlp-ensemble6'
+CLASSIFIER='enc-kld-custom-mlp-ensemble6'
+#ENCODER='enc-kld-custom-mlp-only6'
+#CLASSIFIER='enc-kld-custom-mlp-only6'
 
-CENTROID_TYPE=''
-KLD_SCALE=3.0
+CENTROID_TYPE='fam'
+KLD_SCALE=2.0
 
-CSV_NAME="1"
+CSV_NAME="106_5_6"
 
-SLP=0
+SLP=210
 
 ###############################################################
 
@@ -48,6 +50,7 @@ TS=$(date "+%m.%d-%H.%M.%S")
 
 nohup python -u relabel.py	                                \
             --sleep ${SLP}                                  \
+            --is-for-no-drift 1                             \
             --retrain-first 1                               \
             --is-only-test-eval-without-al 1                \
             --is-accum-samples-load 0                       \
@@ -86,7 +89,7 @@ nohup python -u relabel.py	                                \
             --local_pseudo_loss                             \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}${CSV_NAME}.csv \
+            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${CSV_NAME}.csv \
             --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log \
             >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_androzoo_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log 2>&1 &
 

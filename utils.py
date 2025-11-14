@@ -41,6 +41,8 @@ def parse_args():
                    help='')
     p.add_argument('--is-accum-samples-save', default=0, type=int,
                    help='')
+    p.add_argument('--is-for-no-drift', default=0, type=int,
+                   help='')
     
     p.add_argument('--kld_anneal_init', default=0.1, type=float,
                    help='')
@@ -101,7 +103,7 @@ def parse_args():
     # encoder model
     p.add_argument('--encoder', default=None, \
                     choices=['cae', 'enc', 'mlp', \
-                            'simple-enc-mlp', 'enc-kld-custom-mlp-ensemble2', 'enc-vae-custom-mlp-ensemble3', 'enc-kld-custom-mlp-ensemble4', 'cae-kld-ensemble-mlp', 'cae-mlp', 'enc-kld-custom-mlp-ensemble5', 'enc-kld-custom-mlp-ensemble6', 'enc-kld-custom-mlp-ensemble7', 'enc-kld-custom-mlp-ensemble8', 'triplet-mlp', 'triplet-kld-ensemble-mlp'], \
+                            'simple-enc-mlp', 'enc-kld-custom-mlp-ensemble2', 'enc-vae-custom-mlp-ensemble3', 'enc-kld-custom-mlp-ensemble4', 'cae-kld-ensemble-mlp', 'cae-mlp', 'enc-kld-custom-mlp-ensemble5', 'enc-kld-custom-mlp-ensemble6', 'enc-kld-custom-mlp-ensemble7', 'enc-kld-custom-mlp-ensemble8', 'triplet-mlp', 'triplet-kld-ensemble-mlp', 'triplet-kld-only-mlp', 'enc-kld-custom-mlp-only6', 'cae-kld-only-mlp'], \
                     help='The encoder model to get embeddings of the input.')
     p.add_argument('--encoder-retrain', action='store_true',
                    help='Whether to train the encoder again.')
@@ -111,7 +113,7 @@ def parse_args():
     # classifier
     p.add_argument('-c', '--classifier', default='svm',
                    choices=['mlp', 'svm', 'gbdt', \
-                            'simple-enc-mlp', 'enc-kld-custom-mlp-ensemble2', 'enc-vae-custom-mlp-ensemble3', 'enc-kld-custom-mlp-ensemble4','cae-kld-ensemble-mlp', 'cae-mlp', 'enc-kld-custom-mlp-ensemble5', 'enc-kld-custom-mlp-ensemble6', 'enc-kld-custom-mlp-ensemble7', 'enc-kld-custom-mlp-ensemble8', 'triplet-mlp', 'triplet-kld-ensemble-mlp'],
+                            'simple-enc-mlp', 'enc-kld-custom-mlp-ensemble2', 'enc-vae-custom-mlp-ensemble3', 'enc-kld-custom-mlp-ensemble4','cae-kld-ensemble-mlp', 'cae-mlp', 'enc-kld-custom-mlp-ensemble5', 'enc-kld-custom-mlp-ensemble6', 'enc-kld-custom-mlp-ensemble7', 'enc-kld-custom-mlp-ensemble8', 'triplet-mlp', 'triplet-kld-ensemble-mlp', 'triplet-kld-only-mlp', 'enc-kld-custom-mlp-only6', 'cae-kld-only-mlp'],
                    help='The target classifier to use.')
     p.add_argument('--svm-c', default=1.0, type=float,
                    help='Regularization parameter for SVM.' \

@@ -21,18 +21,20 @@ OPT=adam
 E=150
 LR=0.0005
 
-#ENCODER='triplet-mlp'
-#CLASSIFIER='triplet-mlp'
-ENCODER='triplet-kld-ensemble-mlp'
-CLASSIFIER='triplet-kld-ensemble-mlp'
+ENCODER='triplet-mlp'
+CLASSIFIER='triplet-mlp'
+#ENCODER='triplet-kld-ensemble-mlp'
+#CLASSIFIER='triplet-kld-ensemble-mlp'
+#ENCODER='triplet-kld-only-mlp'
+#CLASSIFIER='triplet-kld-only-mlp'
 
-#LOSS='triplet-xent'
-LOSS='triplet-kld-ensemble-xent'
+LOSS='triplet-xent'
+#LOSS='triplet-kld-ensemble-xent'
 
-CENTROID_TYPE='' # used only active learning
-# KLD_SCALE=2.0 # used only active learning
+CENTROID_TYPE=''
+KLD_SCALE=2.0
 
-CSV_NAME="1"
+CSV_NAME="101_1_6"
 
 SLP=0
 
@@ -43,6 +45,7 @@ TS=$(date "+%m.%d-%H.%M.%S")
 nohup python -u relabel.py	                                \
             --sleep ${SLP}                                  \
             --unc                                           \
+            --is-for-no-drift 1                             \
             --retrain-first 1                               \
             --is-only-test-eval-without-al 1                \
             --margin 10                                     \
@@ -79,7 +82,7 @@ nohup python -u relabel.py	                                \
             --al                                            \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}${CSV_NAME}.csv \
+            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${CSV_NAME}.csv \
             --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
             >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
 wait

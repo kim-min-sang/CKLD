@@ -7,6 +7,7 @@ from collections import Counter
 from torch import nn
 from torch.utils.data import TensorDataset, DataLoader
 from pytorch_metric_learning.samplers import MPerClassSampler
+from sklearn.model_selection import train_test_split
 
 from common import to_categorical
 from losses import TripletMSELoss, TripletMseKldEnsembleXentLoss, TripletMseXentLoss, TripletXentLoss, TripletKldEnsembleXentLoss
@@ -196,7 +197,7 @@ def train_encoder(args, encoder, X_train, y_train, y_train_binary,
     else:
         weight_tensor = torch.from_numpy(weight).float()
     
-    ckld_encoders = ['enc-kld-custom-mlp-ensemble6', 'cae-kld-ensemble-mlp', 'triplet-kld-ensemble-mlp']
+    ckld_encoders = ['enc-kld-custom-mlp-ensemble6', 'cae-kld-ensemble-mlp', 'triplet-kld-ensemble-mlp', 'triplet-kld-only-mlp', 'enc-kld-custom-mlp-only6', 'cae-kld-only-mlp']
     
     
     if args.encoder in ckld_encoders:
