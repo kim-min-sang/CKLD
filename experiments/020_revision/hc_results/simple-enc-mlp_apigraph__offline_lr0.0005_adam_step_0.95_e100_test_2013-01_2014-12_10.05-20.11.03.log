@@ -1,0 +1,292 @@
+2025-10-05 20:11:04,517 - root - INFO - Running with configuration:
+{'accumulate_data': False,
+ 'al': True,
+ 'al_epochs': 50,
+ 'al_optimizer': None,
+ 'benign_zero': True,
+ 'bsize': 1024,
+ 'cae_batch_size': 64,
+ 'cae_epochs': 250,
+ 'cae_hidden': None,
+ 'cae_lambda': 0.1,
+ 'cae_lr': 0.001,
+ 'centroid_type': None,
+ 'classifier': 'simple-enc-mlp',
+ 'cls_feat': 'input',
+ 'cls_retrain': 0,
+ 'clsdate': None,
+ 'cold_start': False,
+ 'count': None,
+ 'criteria': 'cred',
+ 'data': 'gen_apigraph_drebin',
+ 'display_interval': 180,
+ 'enc_hidden': '512-384-256-128',
+ 'encoder': 'simple-enc-mlp',
+ 'encoder_retrain': True,
+ 'epochs': 100,
+ 'eta': 0.3,
+ 'eval_multi': False,
+ 'is_accum_samples_load': 0,
+ 'is_accum_samples_save': 0,
+ 'is_draw_tsne': 0,
+ 'is_enc_kld_custom_mid': 1,
+ 'is_for_no_drift': 1,
+ 'is_only_test_eval_without_al': 1,
+ 'is_ovl': 0,
+ 'is_valid': 0,
+ 'kld_anneal_init': 0.1,
+ 'kld_anneal_warm': 0.2,
+ 'kld_beta': 1,
+ 'kld_scale': 3.0,
+ 'learning_rate': 0.0005,
+ 'local_pseudo_loss': True,
+ 'log_path': 'experiments/020_revision/hc_results/simple-enc-mlp_apigraph__offline_lr0.0005_adam_step_0.95_e100_test_2013-01_2014-12_10.05-20.11.03.log',
+ 'loss_func': 'hi-dist-xent',
+ 'lr_decay_epochs': [range(10, 500, 10)],
+ 'lr_decay_rate': 0.95,
+ 'mad_threshold': 3.5,
+ 'margin': 10.0,
+ 'margin_between_b_and_m': 2.0,
+ 'max_depth': 6,
+ 'mdate': None,
+ 'min_per_class': 2,
+ 'mlp_batch_size': 32,
+ 'mlp_display_interval': 300,
+ 'mlp_dropout': 0.2,
+ 'mlp_epochs': 50,
+ 'mlp_hidden': '100-100',
+ 'mlp_lr': 0.001,
+ 'mlp_warm_epochs': 50,
+ 'mlp_warm_lr': 0.001,
+ 'mse_lambda': 1,
+ 'multi_class': False,
+ 'num_round': 10,
+ 'ood': False,
+ 'ood_kld_ensemble': False,
+ 'optimizer': 'adam',
+ 'plb': None,
+ 'rand': False,
+ 'reduce': 'none',
+ 'result': 'experiments/020_revision/hc_results/simple-enc-mlp_apigraph__offline_lr0.0005_adam_step_0.95_e100_test_2013-01_2014-12_103_1_4.csv',
+ 'retrain_first': 1,
+ 'sample_per_class': 2,
+ 'sample_reduce': 'mean',
+ 'sampler': 'half',
+ 'scheduler': 'step',
+ 'sleep': 50,
+ 'snapshot': False,
+ 'step_month': 1,
+ 'svm_c': 1.0,
+ 'test_end': '2014-12',
+ 'test_start': '2013-01',
+ 'train': None,
+ 'train_end': '2012-12',
+ 'train_start': '2012-01',
+ 'transcend': False,
+ 'triplet_lambda': 1.0,
+ 'unc': False,
+ 'valid_date': '2013-06',
+ 'verbose': False,
+ 'warm_learning_rate': 0.001,
+ 'xent_lambda': 100.0}
+1 / 50
+2 / 50
+3 / 50
+4 / 50
+5 / 50
+6 / 50
+7 / 50
+8 / 50
+9 / 50
+10 / 50
+11 / 50
+12 / 50
+13 / 50
+14 / 50
+15 / 50
+16 / 50
+17 / 50
+18 / 50
+19 / 50
+20 / 50
+21 / 50
+22 / 50
+23 / 50
+24 / 50
+25 / 50
+26 / 50
+27 / 50
+28 / 50
+29 / 50
+30 / 50
+31 / 50
+32 / 50
+33 / 50
+34 / 50
+35 / 50
+36 / 50
+37 / 50
+38 / 50
+39 / 50
+40 / 50
+41 / 50
+42 / 50
+43 / 50
+44 / 50
+45 / 50
+46 / 50
+47 / 50
+48 / 50
+49 / 50
+50 / 50
+2025-10-05 21:01:07,282 - root - INFO - Loading gen_apigraph_drebin training dataset
+2025-10-05 21:01:08,702 - root - INFO - Loaded X_train: (24426, 1159), (24426,)
+2025-10-05 21:01:08,703 - root - INFO - y_train labels: [  0.   1.   2.   3.   4.   5.   6.   7.   8.   9.  10.  11.  12.  13.
+  14.  15.  16.  17.  18.  19.  20.  21.  22.  23.  24.  25.  26.  27.
+  28.  29.  30.  31.  32.  34.  35.  36.  37.  38.  39.  40.  41.  42.
+  43.  44.  45.  46.  48.  49.  51.  52.  53.  54.  55.  56.  57.  58.
+  59.  60.  61.  62.  63.  64.  65.  66.  67.  68.  69.  70.  71.  72.
+  73.  74.  75.  76.  77.  81.  82.  83.  84.  85.  86.  87.  88.  90.
+  91.  92.  94.  95.  96.  97.  98.  99. 100. 101. 104. 105.]
+2025-10-05 21:01:08,707 - root - INFO - y_train: Counter({0.0: 21987, 4.0: 599, 5.0: 442, 6.0: 322, 19.0: 198, 1.0: 151, 8.0: 122, 15.0: 77, 10.0: 71, 16.0: 63, 20.0: 45, 43.0: 34, 18.0: 33, 35.0: 28, 34.0: 23, 61.0: 18, 30.0: 17, 24.0: 11, 11.0: 9, 17.0: 7, 65.0: 7, 63.0: 7, 21.0: 7, 59.0: 6, 3.0: 6, 31.0: 5, 13.0: 5, 38.0: 5, 56.0: 5, 68.0: 5, 52.0: 5, 62.0: 4, 71.0: 4, 83.0: 4, 55.0: 4, 54.0: 4, 2.0: 4, 14.0: 3, 82.0: 3, 67.0: 3, 86.0: 3, 29.0: 2, 64.0: 2, 26.0: 2, 22.0: 2, 58.0: 2, 73.0: 2, 77.0: 2, 66.0: 2, 9.0: 2, 85.0: 2, 7.0: 2, 51.0: 2, 40.0: 2, 84.0: 2, 97.0: 2, 48.0: 1, 92.0: 1, 37.0: 1, 12.0: 1, 28.0: 1, 36.0: 1, 76.0: 1, 104.0: 1, 23.0: 1, 74.0: 1, 42.0: 1, 75.0: 1, 46.0: 1, 91.0: 1, 81.0: 1, 45.0: 1, 87.0: 1, 49.0: 1, 60.0: 1, 101.0: 1, 32.0: 1, 27.0: 1, 39.0: 1, 44.0: 1, 57.0: 1, 70.0: 1, 96.0: 1, 100.0: 1, 88.0: 1, 90.0: 1, 94.0: 1, 41.0: 1, 105.0: 1, 95.0: 1, 69.0: 1, 25.0: 1, 72.0: 1, 99.0: 1, 98.0: 1, 53.0: 1})
+2025-10-05 21:01:08,708 - root - INFO - Number of features: 1159; Number of classes: 96
+Sequential(
+  (0): Linear(in_features=1159, out_features=512, bias=True)
+  (1): ReLU()
+  (2): Linear(in_features=512, out_features=384, bias=True)
+  (3): ReLU()
+  (4): Linear(in_features=384, out_features=256, bias=True)
+  (5): ReLU()
+  (6): Linear(in_features=256, out_features=128, bias=True)
+)
+Sequential(
+  (0): Linear(in_features=128, out_features=100, bias=True)
+  (1): ReLU()
+  (2): Dropout(p=0.2, inplace=False)
+  (3): Linear(in_features=100, out_features=100, bias=True)
+  (4): ReLU()
+  (5): Dropout(p=0.2, inplace=False)
+  (6): Linear(in_features=100, out_features=2, bias=True)
+  (7): Softmax(dim=1)
+)
+2025-10-05 21:01:09,253 - root - INFO - Initial encoder model: ENC_MODEL_PATH models/2012-01to2012-12/simple_enc_classifier_None_1159-512-384-256-128_hi-dist-xent_xent100.0_mselambda1_caelambda0.1_adam_step_lr0.0005_decay0.95_half_b1024_e100.pth
+2025-10-05 21:01:09,254 - root - INFO - upsample_values None
+2025-10-05 21:01:09,254 - root - INFO - X_train_final.shape: (24426, 1159)
+2025-10-05 21:01:09,255 - root - INFO - y_train_final.shape: (24426,)
+2025-10-05 21:01:09,255 - root - INFO - y_train_binary_final.shape: (24426,)
+2025-10-05 21:01:09,256 - root - INFO - y_train_final labels: [  0.   1.   2.   3.   4.   5.   6.   7.   8.   9.  10.  11.  12.  13.
+  14.  15.  16.  17.  18.  19.  20.  21.  22.  23.  24.  25.  26.  27.
+  28.  29.  30.  31.  32.  34.  35.  36.  37.  38.  39.  40.  41.  42.
+  43.  44.  45.  46.  48.  49.  51.  52.  53.  54.  55.  56.  57.  58.
+  59.  60.  61.  62.  63.  64.  65.  66.  67.  68.  69.  70.  71.  72.
+  73.  74.  75.  76.  77.  81.  82.  83.  84.  85.  86.  87.  88.  90.
+  91.  92.  94.  95.  96.  97.  98.  99. 100. 101. 104. 105.]
+2025-10-05 21:01:09,260 - root - INFO - y_train_final: Counter({0.0: 21987, 4.0: 599, 5.0: 442, 6.0: 322, 19.0: 198, 1.0: 151, 8.0: 122, 15.0: 77, 10.0: 71, 16.0: 63, 20.0: 45, 43.0: 34, 18.0: 33, 35.0: 28, 34.0: 23, 61.0: 18, 30.0: 17, 24.0: 11, 11.0: 9, 17.0: 7, 65.0: 7, 63.0: 7, 21.0: 7, 59.0: 6, 3.0: 6, 31.0: 5, 13.0: 5, 38.0: 5, 56.0: 5, 68.0: 5, 52.0: 5, 62.0: 4, 71.0: 4, 83.0: 4, 55.0: 4, 54.0: 4, 2.0: 4, 14.0: 3, 82.0: 3, 67.0: 3, 86.0: 3, 29.0: 2, 64.0: 2, 26.0: 2, 22.0: 2, 58.0: 2, 73.0: 2, 77.0: 2, 66.0: 2, 9.0: 2, 85.0: 2, 7.0: 2, 51.0: 2, 40.0: 2, 84.0: 2, 97.0: 2, 48.0: 1, 92.0: 1, 37.0: 1, 12.0: 1, 28.0: 1, 36.0: 1, 76.0: 1, 104.0: 1, 23.0: 1, 74.0: 1, 42.0: 1, 75.0: 1, 46.0: 1, 91.0: 1, 81.0: 1, 45.0: 1, 87.0: 1, 49.0: 1, 60.0: 1, 101.0: 1, 32.0: 1, 27.0: 1, 39.0: 1, 44.0: 1, 57.0: 1, 70.0: 1, 96.0: 1, 100.0: 1, 88.0: 1, 90.0: 1, 94.0: 1, 41.0: 1, 105.0: 1, 95.0: 1, 69.0: 1, 25.0: 1, 72.0: 1, 99.0: 1, 98.0: 1, 53.0: 1})
+/home/kms/github/doctor/CKLD/losses.py:487: UserWarning: The use of `x.T` on tensors of dimension other than 2 to reverse their shape is deprecated and it will throw an error in a future release. Consider `x.mT` to transpose batches of matrices or `x.permute(*torch.arange(x.ndim - 1, -1, -1))` to reverse the dimensions of a tensor. (Triggered internally at /opt/conda/conda-bld/pytorch_1704987280714/work/aten/src/ATen/native/TensorShape.cpp:3637.)
+  y_norm = y.norm(dim=1).T # [1,1024] = [1024]
+2025-10-05 21:01:11,866 - root - INFO - epoch 1, b 1024, lr 0.0005, loss 53.641254831881156, total time 2.26
+2025-10-05 21:01:14,190 - root - INFO - epoch 2, b 1024, lr 0.0005, loss 9.608219079359113, total time 2.32
+2025-10-05 21:01:16,867 - root - INFO - epoch 3, b 1024, lr 0.0005, loss 2.840476604094818, total time 2.68
+2025-10-05 21:01:19,508 - root - INFO - epoch 4, b 1024, lr 0.0005, loss 1.879921808822983, total time 2.64
+2025-10-05 21:01:23,106 - root - INFO - epoch 5, b 1024, lr 0.0005, loss 1.2046330275225579, total time 3.60
+2025-10-05 21:01:26,382 - root - INFO - epoch 6, b 1024, lr 0.0005, loss 0.6823582364506895, total time 3.28
+2025-10-05 21:01:29,822 - root - INFO - epoch 7, b 1024, lr 0.0005, loss 0.5985757609086414, total time 3.44
+2025-10-05 21:01:32,918 - root - INFO - epoch 8, b 1024, lr 0.0005, loss 0.5368559842251017, total time 3.10
+2025-10-05 21:01:36,567 - root - INFO - epoch 9, b 1024, lr 0.0005, loss 0.4021361256801437, total time 3.65
+2025-10-05 21:01:40,074 - root - INFO - epoch 10, b 1024, lr 0.0005, loss 0.36701368386608996, total time 3.51
+2025-10-05 21:01:43,379 - root - INFO - epoch 11, b 1024, lr 0.000475, loss 0.2946814697995034, total time 3.30
+2025-10-05 21:01:46,561 - root - INFO - epoch 12, b 1024, lr 0.000475, loss 0.24246873736807348, total time 3.18
+2025-10-05 21:01:49,511 - root - INFO - epoch 13, b 1024, lr 0.000475, loss 0.21303451151567165, total time 2.95
+2025-10-05 21:01:52,248 - root - INFO - epoch 14, b 1024, lr 0.000475, loss 0.17087306291252938, total time 2.74
+2025-10-05 21:01:55,131 - root - INFO - epoch 15, b 1024, lr 0.000475, loss 0.20753427338952282, total time 2.88
+2025-10-05 21:01:58,216 - root - INFO - epoch 16, b 1024, lr 0.000475, loss 0.21546386651927205, total time 3.08
+2025-10-05 21:02:01,896 - root - INFO - epoch 17, b 1024, lr 0.000475, loss 0.140328877942476, total time 3.68
+2025-10-05 21:02:05,218 - root - INFO - epoch 18, b 1024, lr 0.000475, loss 0.13809990025382657, total time 3.32
+2025-10-05 21:02:08,710 - root - INFO - epoch 19, b 1024, lr 0.000475, loss 0.15936991203572362, total time 3.49
+2025-10-05 21:02:12,138 - root - INFO - epoch 20, b 1024, lr 0.000475, loss 0.18803669642091217, total time 3.43
+2025-10-05 21:02:15,894 - root - INFO - epoch 21, b 1024, lr 0.00045125, loss 0.16279403178630908, total time 3.76
+2025-10-05 21:02:19,272 - root - INFO - epoch 22, b 1024, lr 0.00045125, loss 0.13271695318128, total time 3.38
+2025-10-05 21:02:22,765 - root - INFO - epoch 23, b 1024, lr 0.00045125, loss 0.1418390407317039, total time 3.49
+2025-10-05 21:02:26,476 - root - INFO - epoch 24, b 1024, lr 0.00045125, loss 0.1269639580636609, total time 3.71
+2025-10-05 21:02:29,701 - root - INFO - epoch 25, b 1024, lr 0.00045125, loss 0.11028849723043717, total time 3.22
+2025-10-05 21:02:32,838 - root - INFO - epoch 26, b 1024, lr 0.00045125, loss 0.13431563623744283, total time 3.14
+2025-10-05 21:02:36,076 - root - INFO - epoch 27, b 1024, lr 0.00045125, loss 0.1632493230162914, total time 3.24
+2025-10-05 21:02:39,822 - root - INFO - epoch 28, b 1024, lr 0.00045125, loss 0.2646107057954856, total time 3.74
+2025-10-05 21:02:43,491 - root - INFO - epoch 29, b 1024, lr 0.00045125, loss 0.2812288266395474, total time 3.67
+2025-10-05 21:02:46,875 - root - INFO - epoch 30, b 1024, lr 0.00045125, loss 0.16901269048534123, total time 3.38
+2025-10-05 21:02:50,620 - root - INFO - epoch 31, b 1024, lr 0.0004286875, loss 0.20409676256349918, total time 3.74
+2025-10-05 21:02:53,906 - root - INFO - epoch 32, b 1024, lr 0.0004286875, loss 0.26643012231982216, total time 3.28
+2025-10-05 21:02:57,471 - root - INFO - epoch 33, b 1024, lr 0.0004286875, loss 0.19553205120171122, total time 3.56
+2025-10-05 21:03:00,803 - root - INFO - epoch 34, b 1024, lr 0.0004286875, loss 0.14175312702382292, total time 3.33
+2025-10-05 21:03:04,024 - root - INFO - epoch 35, b 1024, lr 0.0004286875, loss 0.14195903722575964, total time 3.22
+2025-10-05 21:03:07,517 - root - INFO - epoch 36, b 1024, lr 0.0004286875, loss 0.11959096908396691, total time 3.49
+2025-10-05 21:03:10,924 - root - INFO - epoch 37, b 1024, lr 0.0004286875, loss 0.12825667667341056, total time 3.41
+2025-10-05 21:03:14,213 - root - INFO - epoch 38, b 1024, lr 0.0004286875, loss 0.12231874152394066, total time 3.29
+2025-10-05 21:03:18,017 - root - INFO - epoch 39, b 1024, lr 0.0004286875, loss 0.11808596726381583, total time 3.80
+2025-10-05 21:03:21,189 - root - INFO - epoch 40, b 1024, lr 0.0004286875, loss 0.10894259631824095, total time 3.17
+2025-10-05 21:03:24,879 - root - INFO - epoch 41, b 1024, lr 0.00040725312499999993, loss 0.12155776839387009, total time 3.69
+2025-10-05 21:03:28,291 - root - INFO - epoch 42, b 1024, lr 0.00040725312499999993, loss 0.08816173795418805, total time 3.41
+2025-10-05 21:03:31,473 - root - INFO - epoch 43, b 1024, lr 0.00040725312499999993, loss 0.09378861836813927, total time 3.18
+2025-10-05 21:03:34,812 - root - INFO - epoch 44, b 1024, lr 0.00040725312499999993, loss 0.10021773582172025, total time 3.34
+2025-10-05 21:03:37,724 - root - INFO - epoch 45, b 1024, lr 0.00040725312499999993, loss 0.10417062146419108, total time 2.91
+2025-10-05 21:03:40,869 - root - INFO - epoch 46, b 1024, lr 0.00040725312499999993, loss 0.11199143034251816, total time 3.14
+2025-10-05 21:03:44,363 - root - INFO - epoch 47, b 1024, lr 0.00040725312499999993, loss 0.1005842169402229, total time 3.49
+2025-10-05 21:03:47,796 - root - INFO - epoch 48, b 1024, lr 0.00040725312499999993, loss 0.08750437059269132, total time 3.43
+2025-10-05 21:03:50,687 - root - INFO - epoch 49, b 1024, lr 0.00040725312499999993, loss 0.09321242927605726, total time 2.89
+2025-10-05 21:03:53,778 - root - INFO - epoch 50, b 1024, lr 0.00040725312499999993, loss 0.09106752899525192, total time 3.09
+2025-10-05 21:03:56,737 - root - INFO - epoch 51, b 1024, lr 0.0003868904687499999, loss 0.08530280149513504, total time 2.96
+2025-10-05 21:04:00,600 - root - INFO - epoch 52, b 1024, lr 0.0003868904687499999, loss 0.09942690046054378, total time 3.86
+2025-10-05 21:04:04,148 - root - INFO - epoch 53, b 1024, lr 0.0003868904687499999, loss 0.14434065015531006, total time 3.55
+2025-10-05 21:04:07,553 - root - INFO - epoch 54, b 1024, lr 0.0003868904687499999, loss 0.10949165604297585, total time 3.40
+2025-10-05 21:04:11,130 - root - INFO - epoch 55, b 1024, lr 0.0003868904687499999, loss 0.08434416800749582, total time 3.58
+2025-10-05 21:04:14,536 - root - INFO - epoch 56, b 1024, lr 0.0003868904687499999, loss 0.08222950820371168, total time 3.40
+2025-10-05 21:04:17,772 - root - INFO - epoch 57, b 1024, lr 0.0003868904687499999, loss 0.09278395755859628, total time 3.23
+2025-10-05 21:04:20,628 - root - INFO - epoch 58, b 1024, lr 0.0003868904687499999, loss 0.11551246863484753, total time 2.85
+2025-10-05 21:04:23,687 - root - INFO - epoch 59, b 1024, lr 0.0003868904687499999, loss 0.12442119010473014, total time 3.06
+2025-10-05 21:04:27,635 - root - INFO - epoch 60, b 1024, lr 0.0003868904687499999, loss 0.08025296770593199, total time 3.95
+2025-10-05 21:04:30,962 - root - INFO - epoch 61, b 1024, lr 0.00036754594531249993, loss 0.0853485829660139, total time 3.32
+2025-10-05 21:04:33,991 - root - INFO - epoch 62, b 1024, lr 0.00036754594531249993, loss 0.09475257216470723, total time 3.03
+2025-10-05 21:04:37,188 - root - INFO - epoch 63, b 1024, lr 0.00036754594531249993, loss 0.08737017504348076, total time 3.20
+2025-10-05 21:04:40,151 - root - INFO - epoch 64, b 1024, lr 0.00036754594531249993, loss 0.09500136575030575, total time 2.96
+2025-10-05 21:04:43,475 - root - INFO - epoch 65, b 1024, lr 0.00036754594531249993, loss 0.08617706553358363, total time 3.32
+2025-10-05 21:04:46,663 - root - INFO - epoch 66, b 1024, lr 0.00036754594531249993, loss 0.07817692100773885, total time 3.19
+2025-10-05 21:04:49,899 - root - INFO - epoch 67, b 1024, lr 0.00036754594531249993, loss 0.08695565663326298, total time 3.24
+2025-10-05 21:04:53,142 - root - INFO - epoch 68, b 1024, lr 0.00036754594531249993, loss 0.08129577348334367, total time 3.24
+2025-10-05 21:04:56,796 - root - INFO - epoch 69, b 1024, lr 0.00036754594531249993, loss 0.09342162250571272, total time 3.65
+2025-10-05 21:05:00,221 - root - INFO - epoch 70, b 1024, lr 0.00036754594531249993, loss 0.11002028496089668, total time 3.42
+2025-10-05 21:05:03,735 - root - INFO - epoch 71, b 1024, lr 0.00034916864804687486, loss 0.08677631070076185, total time 3.51
+2025-10-05 21:05:07,712 - root - INFO - epoch 72, b 1024, lr 0.00034916864804687486, loss 0.09041994996384137, total time 3.98
+2025-10-05 21:05:11,166 - root - INFO - epoch 73, b 1024, lr 0.00034916864804687486, loss 0.096742174804789, total time 3.45
+2025-10-05 21:05:14,570 - root - INFO - epoch 74, b 1024, lr 0.00034916864804687486, loss 0.086417317332239, total time 3.40
+2025-10-05 21:05:17,903 - root - INFO - epoch 75, b 1024, lr 0.00034916864804687486, loss 0.09840951920605566, total time 3.33
+2025-10-05 21:05:21,500 - root - INFO - epoch 76, b 1024, lr 0.00034916864804687486, loss 0.09583875984659612, total time 3.60
+2025-10-05 21:05:25,237 - root - INFO - epoch 77, b 1024, lr 0.00034916864804687486, loss 0.08593121850840985, total time 3.73
+2025-10-05 21:05:28,217 - root - INFO - epoch 78, b 1024, lr 0.00034916864804687486, loss 0.08802141665346742, total time 2.98
+2025-10-05 21:05:31,932 - root - INFO - epoch 79, b 1024, lr 0.00034916864804687486, loss 0.08725831180525423, total time 3.71
+2025-10-05 21:05:35,255 - root - INFO - epoch 80, b 1024, lr 0.00034916864804687486, loss 0.08359731859271687, total time 3.32
+2025-10-05 21:05:39,066 - root - INFO - epoch 81, b 1024, lr 0.00033171021564453113, loss 0.07411770089212608, total time 3.81
+2025-10-05 21:05:42,281 - root - INFO - epoch 82, b 1024, lr 0.00033171021564453113, loss 0.09080781872355044, total time 3.21
+2025-10-05 21:05:45,191 - root - INFO - epoch 83, b 1024, lr 0.00033171021564453113, loss 0.1068278797862132, total time 2.91
+2025-10-05 21:05:48,432 - root - INFO - epoch 84, b 1024, lr 0.00033171021564453113, loss 0.0787996942200902, total time 3.24
+2025-10-05 21:05:51,661 - root - INFO - epoch 85, b 1024, lr 0.00033171021564453113, loss 0.08482429320397585, total time 3.23
+2025-10-05 21:05:54,818 - root - INFO - epoch 86, b 1024, lr 0.00033171021564453113, loss 0.08113842011732642, total time 3.16
+2025-10-05 21:05:57,738 - root - INFO - epoch 87, b 1024, lr 0.00033171021564453113, loss 0.08375915241944969, total time 2.92
+2025-10-05 21:06:00,313 - root - INFO - epoch 88, b 1024, lr 0.00033171021564453113, loss 0.09676994415286654, total time 2.58
+2025-10-05 21:06:03,295 - root - INFO - epoch 89, b 1024, lr 0.00033171021564453113, loss 0.09182032729371464, total time 2.98
+2025-10-05 21:06:05,921 - root - INFO - epoch 90, b 1024, lr 0.00033171021564453113, loss 0.11025417522220497, total time 2.63
+2025-10-05 21:06:08,531 - root - INFO - epoch 91, b 1024, lr 0.00031512470486230455, loss 0.18941453736024397, total time 2.61
+2025-10-05 21:06:10,660 - root - INFO - epoch 92, b 1024, lr 0.00031512470486230455, loss 0.24660028335816403, total time 2.13
+2025-10-05 21:06:12,343 - root - INFO - epoch 93, b 1024, lr 0.00031512470486230455, loss 0.19517668658432968, total time 1.68
+2025-10-05 21:06:14,170 - root - INFO - epoch 94, b 1024, lr 0.00031512470486230455, loss 0.1438736265405804, total time 1.83
+2025-10-05 21:06:16,088 - root - INFO - epoch 95, b 1024, lr 0.00031512470486230455, loss 0.2754326447732637, total time 1.92
+2025-10-05 21:06:18,046 - root - INFO - epoch 96, b 1024, lr 0.00031512470486230455, loss 0.12012475318045325, total time 1.96
+2025-10-05 21:06:19,916 - root - INFO - epoch 97, b 1024, lr 0.00031512470486230455, loss 0.16246987705746624, total time 1.87
+2025-10-05 21:06:21,505 - root - INFO - epoch 98, b 1024, lr 0.00031512470486230455, loss 0.11839111983131877, total time 1.59
+2025-10-05 21:06:22,975 - root - INFO - epoch 99, b 1024, lr 0.00031512470486230455, loss 0.09882522564899754, total time 1.47
+2025-10-05 21:06:24,103 - root - INFO - epoch 100, b 1024, lr 0.00031512470486230455, loss 0.08950411559949682, total time 1.13
+2025-10-05 21:06:24,103 - root - INFO - Training Encoder model time: 314.843 seconds
+2025-10-05 21:06:24,103 - root - INFO - Saving the model...
+==> Saving...
+2025-10-05 21:06:24,119 - root - INFO - Training Encoder model finished: models/2012-01to2012-12/simple_enc_classifier_None_1159-512-384-256-128_hi-dist-xent_xent100.0_mselambda1_caelambda0.1_adam_step_lr0.0005_decay0.95_half_b1024_e100.pth
+2025-10-05 21:06:24,134 - root - INFO - terminate no drift evaluation.
+2025-10-05 21:06:24,135 - root - INFO - time elapsed: 3319.620497226715 seconds

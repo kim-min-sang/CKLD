@@ -1,0 +1,541 @@
+2025-10-03 00:02:54,653 - root - INFO - Running with configuration:
+{'accumulate_data': False,
+ 'al': True,
+ 'al_epochs': 50,
+ 'al_optimizer': None,
+ 'benign_zero': True,
+ 'bsize': 1536,
+ 'cae_batch_size': 64,
+ 'cae_epochs': 250,
+ 'cae_hidden': None,
+ 'cae_lambda': 0.1,
+ 'cae_lr': 0.001,
+ 'centroid_type': 'fam',
+ 'classifier': 'triplet-kld-only-mlp',
+ 'cls_feat': 'input',
+ 'cls_retrain': 0,
+ 'clsdate': None,
+ 'cold_start': False,
+ 'count': None,
+ 'criteria': 'cred',
+ 'data': 'gen_apigraph_drebin',
+ 'display_interval': 180,
+ 'enc_hidden': '512-384-256-128',
+ 'encoder': 'triplet-kld-only-mlp',
+ 'encoder_retrain': True,
+ 'epochs': 50,
+ 'eta': 0.3,
+ 'eval_multi': False,
+ 'is_accum_samples_load': 0,
+ 'is_accum_samples_save': 0,
+ 'is_draw_tsne': 0,
+ 'is_enc_kld_custom_mid': 1,
+ 'is_only_test_eval_without_al': 1,
+ 'is_ovl': 0,
+ 'is_valid': 0,
+ 'kld_anneal_init': 0.1,
+ 'kld_anneal_warm': 0.2,
+ 'kld_beta': 1,
+ 'kld_scale': 2.0,
+ 'learning_rate': 5e-06,
+ 'local_pseudo_loss': False,
+ 'log_path': 'experiments/020_revision/triplet_results/triplet-kld-only-mlp_apigraph_fam_offline_lr0.000005_adam_step_0.95_e50_test_2013-01_2018-12_10.03-00.02.53.log',
+ 'loss_func': 'triplet-kld-ensemble-xent',
+ 'lr_decay_epochs': [range(10, 500, 10)],
+ 'lr_decay_rate': 0.95,
+ 'mad_threshold': 3.5,
+ 'margin': 10.0,
+ 'margin_between_b_and_m': 2.0,
+ 'max_depth': 6,
+ 'mdate': None,
+ 'min_per_class': 2,
+ 'mlp_batch_size': 32,
+ 'mlp_display_interval': 300,
+ 'mlp_dropout': 0.2,
+ 'mlp_epochs': 50,
+ 'mlp_hidden': '100-100',
+ 'mlp_lr': 0.001,
+ 'mlp_warm_epochs': 50,
+ 'mlp_warm_lr': 0.001,
+ 'mse_lambda': 1,
+ 'multi_class': False,
+ 'num_round': 10,
+ 'ood': False,
+ 'ood_kld_ensemble': False,
+ 'optimizer': 'adam',
+ 'plb': None,
+ 'rand': False,
+ 'reduce': 'none',
+ 'result': 'experiments/020_revision/triplet_results/triplet-kld-only-mlp_apigraph_fam_offline_lr0.000005_adam_step_0.95_e50_test_2013-01_2018-12_12_1_12.csv',
+ 'retrain_first': 1,
+ 'sample_per_class': 2,
+ 'sample_reduce': 'mean',
+ 'sampler': 'triplet',
+ 'scheduler': 'step',
+ 'sleep': 5,
+ 'snapshot': False,
+ 'step_month': 1,
+ 'svm_c': 1.0,
+ 'test_end': '2018-12',
+ 'test_start': '2013-01',
+ 'train': None,
+ 'train_end': '2012-12',
+ 'train_start': '2012-01',
+ 'transcend': False,
+ 'triplet_lambda': 1.0,
+ 'unc': True,
+ 'valid_date': '2018-12',
+ 'verbose': False,
+ 'warm_learning_rate': 0.001,
+ 'xent_lambda': 100.0}
+1 / 5
+2 / 5
+3 / 5
+4 / 5
+5 / 5
+2025-10-03 00:07:54,948 - root - INFO - Loading gen_apigraph_drebin training dataset
+2025-10-03 00:07:55,441 - root - INFO - Loaded X_train: (30533, 1159), (30533,)
+2025-10-03 00:07:55,442 - root - INFO - y_train labels: [  0.   1.   2.   3.   4.   5.   6.   7.   8.   9.  10.  11.  12.  13.
+  14.  15.  16.  17.  18.  19.  20.  21.  22.  23.  24.  25.  26.  27.
+  28.  29.  30.  31.  32.  33.  34.  35.  36.  37.  38.  39.  40.  41.
+  42.  43.  44.  45.  46.  47.  48.  49.  50.  51.  52.  53.  54.  55.
+  56.  57.  58.  59.  60.  61.  62.  63.  64.  65.  66.  67.  68.  69.
+  70.  71.  72.  73.  74.  75.  76.  77.  78.  79.  80.  81.  82.  83.
+  84.  85.  86.  87.  88.  89.  90.  91.  92.  93.  94.  95.  96.  97.
+  98.  99. 100. 101. 102. 103. 104. 105.]
+2025-10-03 00:07:55,444 - root - INFO - y_train: Counter({0.0: 27472, 4.0: 749, 5.0: 566, 6.0: 412, 19.0: 249, 1.0: 179, 8.0: 147, 15.0: 97, 10.0: 85, 16.0: 82, 20.0: 53, 43.0: 40, 18.0: 35, 35.0: 35, 34.0: 28, 61.0: 24, 30.0: 21, 24.0: 13, 63.0: 11, 11.0: 10, 17.0: 10, 3.0: 8, 59.0: 8, 21.0: 7, 52.0: 7, 65.0: 7, 68.0: 7, 13.0: 6, 38.0: 6, 56.0: 6, 31.0: 5, 54.0: 5, 62.0: 5, 2.0: 4, 27.0: 4, 55.0: 4, 71.0: 4, 83.0: 4, 86.0: 4, 97.0: 4, 7.0: 3, 14.0: 3, 26.0: 3, 39.0: 3, 40.0: 3, 51.0: 3, 57.0: 3, 64.0: 3, 67.0: 3, 69.0: 3, 72.0: 3, 73.0: 3, 82.0: 3, 85.0: 3, 9.0: 2, 12.0: 2, 22.0: 2, 29.0: 2, 36.0: 2, 44.0: 2, 46.0: 2, 53.0: 2, 58.0: 2, 66.0: 2, 74.0: 2, 75.0: 2, 77.0: 2, 78.0: 2, 84.0: 2, 96.0: 2, 23.0: 1, 25.0: 1, 28.0: 1, 32.0: 1, 33.0: 1, 37.0: 1, 41.0: 1, 42.0: 1, 45.0: 1, 47.0: 1, 48.0: 1, 49.0: 1, 50.0: 1, 60.0: 1, 70.0: 1, 76.0: 1, 79.0: 1, 80.0: 1, 81.0: 1, 87.0: 1, 88.0: 1, 89.0: 1, 90.0: 1, 91.0: 1, 92.0: 1, 93.0: 1, 94.0: 1, 95.0: 1, 98.0: 1, 99.0: 1, 100.0: 1, 101.0: 1, 102.0: 1, 103.0: 1, 104.0: 1, 105.0: 1})
+2025-10-03 00:07:55,445 - root - INFO - Number of features: 1159; Number of classes: 106
+Sequential(
+  (0): Linear(in_features=1159, out_features=512, bias=True)
+  (1): ReLU()
+  (2): Linear(in_features=512, out_features=384, bias=True)
+  (3): ReLU()
+  (4): Linear(in_features=384, out_features=256, bias=True)
+  (5): ReLU()
+  (6): Linear(in_features=256, out_features=128, bias=True)
+)
+Sequential(
+  (0): Linear(in_features=1159, out_features=512, bias=True)
+  (1): ReLU()
+  (2): Linear(in_features=512, out_features=384, bias=True)
+  (3): ReLU()
+  (4): Linear(in_features=384, out_features=256, bias=True)
+  (5): ReLU()
+)
+Sequential(
+  (0): Linear(in_features=128, out_features=100, bias=True)
+  (1): ReLU()
+  (2): Dropout(p=0.2, inplace=False)
+  (3): Linear(in_features=100, out_features=100, bias=True)
+  (4): ReLU()
+  (5): Dropout(p=0.2, inplace=False)
+  (6): Linear(in_features=100, out_features=2, bias=True)
+  (7): Softmax(dim=1)
+)
+2025-10-03 00:07:55,792 - root - INFO - Initial encoder model: ENC_MODEL_PATH models/2012-01to2012-12/triplet-kld-only-mlp_fam_1159-512-384-256-128_triplet-kld-ensemble-xent_xent100.0_mselambda1_caelambda0.1_adam_step_lr5e-06_decay0.95_triplet_b1536_e50.pth
+2025-10-03 00:07:55,792 - root - INFO - upsample_values None
+2025-10-03 00:07:55,792 - root - INFO - X_train_final.shape: (30533, 1159)
+2025-10-03 00:07:55,792 - root - INFO - y_train_final.shape: (30533,)
+2025-10-03 00:07:55,792 - root - INFO - y_train_binary_final.shape: (30533,)
+2025-10-03 00:07:55,792 - root - INFO - y_train_final labels: [  0.   1.   2.   3.   4.   5.   6.   7.   8.   9.  10.  11.  12.  13.
+  14.  15.  16.  17.  18.  19.  20.  21.  22.  23.  24.  25.  26.  27.
+  28.  29.  30.  31.  32.  33.  34.  35.  36.  37.  38.  39.  40.  41.
+  42.  43.  44.  45.  46.  47.  48.  49.  50.  51.  52.  53.  54.  55.
+  56.  57.  58.  59.  60.  61.  62.  63.  64.  65.  66.  67.  68.  69.
+  70.  71.  72.  73.  74.  75.  76.  77.  78.  79.  80.  81.  82.  83.
+  84.  85.  86.  87.  88.  89.  90.  91.  92.  93.  94.  95.  96.  97.
+  98.  99. 100. 101. 102. 103. 104. 105.]
+2025-10-03 00:07:55,795 - root - INFO - y_train_final: Counter({0.0: 27472, 4.0: 749, 5.0: 566, 6.0: 412, 19.0: 249, 1.0: 179, 8.0: 147, 15.0: 97, 10.0: 85, 16.0: 82, 20.0: 53, 43.0: 40, 18.0: 35, 35.0: 35, 34.0: 28, 61.0: 24, 30.0: 21, 24.0: 13, 63.0: 11, 11.0: 10, 17.0: 10, 3.0: 8, 59.0: 8, 21.0: 7, 52.0: 7, 65.0: 7, 68.0: 7, 13.0: 6, 38.0: 6, 56.0: 6, 31.0: 5, 54.0: 5, 62.0: 5, 2.0: 4, 27.0: 4, 55.0: 4, 71.0: 4, 83.0: 4, 86.0: 4, 97.0: 4, 7.0: 3, 14.0: 3, 26.0: 3, 39.0: 3, 40.0: 3, 51.0: 3, 57.0: 3, 64.0: 3, 67.0: 3, 69.0: 3, 72.0: 3, 73.0: 3, 82.0: 3, 85.0: 3, 9.0: 2, 12.0: 2, 22.0: 2, 29.0: 2, 36.0: 2, 44.0: 2, 46.0: 2, 53.0: 2, 58.0: 2, 66.0: 2, 74.0: 2, 75.0: 2, 77.0: 2, 78.0: 2, 84.0: 2, 96.0: 2, 23.0: 1, 25.0: 1, 28.0: 1, 32.0: 1, 33.0: 1, 37.0: 1, 41.0: 1, 42.0: 1, 45.0: 1, 47.0: 1, 48.0: 1, 49.0: 1, 50.0: 1, 60.0: 1, 70.0: 1, 76.0: 1, 79.0: 1, 80.0: 1, 81.0: 1, 87.0: 1, 88.0: 1, 89.0: 1, 90.0: 1, 91.0: 1, 92.0: 1, 93.0: 1, 94.0: 1, 95.0: 1, 98.0: 1, 99.0: 1, 100.0: 1, 101.0: 1, 102.0: 1, 103.0: 1, 104.0: 1, 105.0: 1})
+2025-10-03 00:07:58,069 - root - INFO - Train: [1][60/60]	BT 0.018 (0.034)  DT 0.008 (0.025)  loss 78.07101 (78.09712)  supcon 9.81011 (9.82478)  kld 0.57584 (0.59201)  xent 0.67651 (0.67636)   gap 0.03372 (0.04430)  
+2025-10-03 00:07:58,069 - root - INFO - epoch 1, b 1536, lr 5e-06, loss 78.09712204295832, total time 2.04
+2025-10-03 00:08:00,021 - root - INFO - Train: [2][60/60]	BT 0.016 (0.033)  DT 0.009 (0.025)  loss 77.88815 (77.93990)  supcon 9.75564 (9.78812)  kld 0.54782 (0.56203)  xent 0.67549 (0.67553)   gap 0.03546 (0.03686)  
+2025-10-03 00:08:00,021 - root - INFO - epoch 2, b 1536, lr 5e-06, loss 77.93990343643782, total time 1.95
+2025-10-03 00:08:02,107 - root - INFO - Train: [3][60/60]	BT 0.017 (0.035)  DT 0.009 (0.026)  loss 77.57001 (77.78265)  supcon 9.70601 (9.73981)  kld 0.52846 (0.54581)  xent 0.67301 (0.67464)   gap 0.03416 (0.03304)  
+2025-10-03 00:08:02,108 - root - INFO - epoch 3, b 1536, lr 5e-06, loss 77.78265404047657, total time 2.09
+2025-10-03 00:08:04,205 - root - INFO - Train: [4][60/60]	BT 0.018 (0.035)  DT 0.010 (0.026)  loss 77.37419 (77.60384)  supcon 9.67406 (9.68366)  kld 0.51380 (0.53641)  xent 0.67153 (0.67352)   gap 0.03301 (0.03199)  
+2025-10-03 00:08:04,205 - root - INFO - epoch 4, b 1536, lr 5e-06, loss 77.60384303904328, total time 2.10
+2025-10-03 00:08:06,305 - root - INFO - Train: [5][60/60]	BT 0.019 (0.035)  DT 0.011 (0.025)  loss 77.23132 (77.40040)  supcon 9.60214 (9.61825)  kld 0.51341 (0.53208)  xent 0.67076 (0.67218)   gap 0.03947 (0.03241)  
+2025-10-03 00:08:06,305 - root - INFO - epoch 5, b 1536, lr 5e-06, loss 77.400404692641, total time 2.10
+2025-10-03 00:08:08,576 - root - INFO - Train: [6][60/60]	BT 0.018 (0.038)  DT 0.010 (0.028)  loss 76.82847 (77.15345)  supcon 9.49356 (9.55292)  kld 0.51009 (0.53468)  xent 0.66789 (0.67031)   gap 0.03563 (0.03505)  
+2025-10-03 00:08:08,576 - root - INFO - epoch 6, b 1536, lr 5e-06, loss 77.15344560143599, total time 2.27
+2025-10-03 00:08:10,879 - root - INFO - Train: [7][60/60]	BT 0.020 (0.038)  DT 0.011 (0.027)  loss 76.48837 (76.72293)  supcon 9.49423 (9.46026)  kld 0.52233 (0.54644)  xent 0.66434 (0.66678)   gap 0.03776 (0.03854)  
+2025-10-03 00:08:10,879 - root - INFO - epoch 7, b 1536, lr 5e-06, loss 76.72292947092944, total time 2.30
+2025-10-03 00:08:13,341 - root - INFO - Train: [8][60/60]	BT 0.029 (0.041)  DT 0.010 (0.029)  loss 75.30340 (76.03770)  supcon 9.28548 (9.36458)  kld 0.59741 (0.59470)  xent 0.65377 (0.66035)   gap 0.04320 (0.04357)  
+2025-10-03 00:08:13,341 - root - INFO - epoch 8, b 1536, lr 5e-06, loss 76.03769509176155, total time 2.46
+2025-10-03 00:08:15,665 - root - INFO - Train: [9][60/60]	BT 0.024 (0.039)  DT 0.010 (0.027)  loss 74.28648 (74.79986)  supcon 9.19877 (9.24605)  kld 0.86550 (0.74572)  xent 0.64174 (0.64761)   gap 0.04798 (0.04721)  
+2025-10-03 00:08:15,665 - root - INFO - epoch 9, b 1536, lr 5e-06, loss 74.79986004502541, total time 2.32
+2025-10-03 00:08:18,244 - root - INFO - Train: [10][60/60]	BT 0.025 (0.043)  DT 0.010 (0.029)  loss 70.97744 (72.61120)  supcon 9.03817 (9.11396)  kld 1.39345 (1.14022)  xent 0.60481 (0.62305)   gap 0.06463 (0.05223)  
+2025-10-03 00:08:18,244 - root - INFO - epoch 10, b 1536, lr 5e-06, loss 72.6112048590417, total time 2.58
+2025-10-03 00:08:20,880 - root - INFO - Train: [11][60/60]	BT 0.028 (0.044)  DT 0.009 (0.029)  loss 67.15305 (69.33648)  supcon 8.84312 (8.96045)  kld 2.52055 (1.96334)  xent 0.55731 (0.58357)   gap 0.05873 (0.05566)  
+2025-10-03 00:08:20,881 - root - INFO - epoch 11, b 1536, lr 4.75e-06, loss 69.33647756608084, total time 2.64
+2025-10-03 00:08:23,593 - root - INFO - Train: [12][60/60]	BT 0.038 (0.045)  DT 0.010 (0.028)  loss 62.92917 (65.44436)  supcon 8.60136 (8.78493)  kld 4.05361 (3.27394)  xent 0.50209 (0.53323)   gap 0.06488 (0.06276)  
+2025-10-03 00:08:23,593 - root - INFO - epoch 12, b 1536, lr 4.75e-06, loss 65.44436230317626, total time 2.71
+2025-10-03 00:08:26,324 - root - INFO - Train: [13][60/60]	BT 0.025 (0.046)  DT 0.010 (0.029)  loss 59.13591 (61.32566)  supcon 8.45074 (8.57520)  kld 5.74478 (4.93721)  xent 0.44872 (0.47745)   gap 0.06828 (0.06796)  
+2025-10-03 00:08:26,324 - root - INFO - epoch 13, b 1536, lr 4.75e-06, loss 61.325660033156204, total time 2.73
+2025-10-03 00:08:29,007 - root - INFO - Train: [14][60/60]	BT 0.030 (0.045)  DT 0.009 (0.029)  loss 55.99141 (57.33548)  supcon 8.27705 (8.32825)  kld 7.32332 (6.67215)  xent 0.40299 (0.42260)   gap 0.09173 (0.07518)  
+2025-10-03 00:08:29,007 - root - INFO - epoch 14, b 1536, lr 4.75e-06, loss 57.33548093122429, total time 2.68
+2025-10-03 00:08:31,663 - root - INFO - Train: [15][60/60]	BT 0.026 (0.044)  DT 0.010 (0.030)  loss 52.10587 (53.81138)  supcon 7.83364 (8.03642)  kld 8.43537 (8.13613)  xent 0.35746 (0.37556)   gap 0.09061 (0.08312)  
+2025-10-03 00:08:31,664 - root - INFO - epoch 15, b 1536, lr 4.75e-06, loss 53.81138237503507, total time 2.66
+2025-10-03 00:08:34,332 - root - INFO - Train: [16][60/60]	BT 0.018 (0.044)  DT 0.010 (0.029)  loss 48.60188 (50.52485)  supcon 7.44531 (7.67418)  kld 9.57958 (9.26465)  xent 0.31465 (0.33494)   gap 0.11223 (0.09168)  
+2025-10-03 00:08:34,332 - root - INFO - epoch 16, b 1536, lr 4.75e-06, loss 50.52484926982059, total time 2.67
+2025-10-03 00:08:36,984 - root - INFO - Train: [17][60/60]	BT 0.024 (0.044)  DT 0.010 (0.028)  loss 45.82365 (47.62813)  supcon 6.82219 (7.23933)  kld 10.53400 (9.95703)  xent 0.28353 (0.30336)   gap 0.11448 (0.09546)  
+2025-10-03 00:08:36,984 - root - INFO - epoch 17, b 1536, lr 4.75e-06, loss 47.62812734249123, total time 2.65
+2025-10-03 00:08:39,602 - root - INFO - Train: [18][60/60]	BT 0.023 (0.044)  DT 0.010 (0.028)  loss 43.24890 (44.90419)  supcon 6.16155 (6.70266)  kld 10.42315 (10.54045)  xent 0.26522 (0.27560)   gap 0.14217 (0.10136)  
+2025-10-03 00:08:39,602 - root - INFO - epoch 18, b 1536, lr 4.75e-06, loss 44.90418718243248, total time 2.62
+2025-10-03 00:08:42,121 - root - INFO - Train: [19][60/60]	BT 0.021 (0.042)  DT 0.010 (0.028)  loss 41.96528 (42.44042)  supcon 5.94615 (6.09032)  kld 11.34095 (10.99350)  xent 0.24583 (0.25252)   gap 0.09492 (0.10461)  
+2025-10-03 00:08:42,121 - root - INFO - epoch 19, b 1536, lr 4.75e-06, loss 42.440415413963045, total time 2.52
+2025-10-03 00:08:44,631 - root - INFO - Train: [20][60/60]	BT 0.019 (0.042)  DT 0.010 (0.028)  loss 38.83945 (39.94732)  supcon 5.31623 (5.50338)  kld 10.79848 (11.34875)  xent 0.22606 (0.23000)   gap 0.11873 (0.09530)  
+2025-10-03 00:08:44,631 - root - INFO - epoch 20, b 1536, lr 4.75e-06, loss 39.947321892190715, total time 2.51
+2025-10-03 00:08:47,116 - root - INFO - Train: [21][60/60]	BT 0.022 (0.041)  DT 0.009 (0.028)  loss 36.40577 (37.79425)  supcon 4.98964 (4.95239)  kld 11.57678 (11.51396)  xent 0.19765 (0.21245)   gap 0.07447 (0.08311)  
+2025-10-03 00:08:47,116 - root - INFO - epoch 21, b 1536, lr 4.5125e-06, loss 37.79424878501698, total time 2.48
+2025-10-03 00:08:49,668 - root - INFO - Train: [22][60/60]	BT 0.022 (0.043)  DT 0.009 (0.028)  loss 36.24223 (35.70553)  supcon 4.60019 (4.51121)  kld 11.38532 (11.51762)  xent 0.20193 (0.19609)   gap 0.06406 (0.06761)  
+2025-10-03 00:08:49,668 - root - INFO - epoch 22, b 1536, lr 4.5125e-06, loss 35.70553370165207, total time 2.55
+2025-10-03 00:08:52,235 - root - INFO - Train: [23][60/60]	BT 0.030 (0.043)  DT 0.011 (0.028)  loss 33.27910 (33.96523)  supcon 4.23910 (4.22305)  kld 11.05282 (11.31026)  xent 0.17931 (0.18376)   gap 0.05652 (0.05558)  
+2025-10-03 00:08:52,235 - root - INFO - epoch 23, b 1536, lr 4.5125e-06, loss 33.96523126567128, total time 2.57
+2025-10-03 00:08:54,744 - root - INFO - Train: [24][60/60]	BT 0.025 (0.042)  DT 0.010 (0.028)  loss 32.78876 (32.34672)  supcon 3.78033 (3.93560)  kld 10.70751 (11.00661)  xent 0.18278 (0.17355)   gap 0.02327 (0.04992)  
+2025-10-03 00:08:54,745 - root - INFO - epoch 24, b 1536, lr 4.5125e-06, loss 32.34671914618479, total time 2.51
+2025-10-03 00:08:57,286 - root - INFO - Train: [25][60/60]	BT 0.025 (0.042)  DT 0.010 (0.028)  loss 29.57980 (30.55418)  supcon 3.56215 (3.71913)  kld 10.12465 (10.65372)  xent 0.15778 (0.16138)   gap 0.11539 (0.04361)  
+2025-10-03 00:08:57,286 - root - INFO - epoch 25, b 1536, lr 4.5125e-06, loss 30.554183692346175, total time 2.54
+2025-10-03 00:08:59,846 - root - INFO - Train: [26][60/60]	BT 0.031 (0.043)  DT 0.010 (0.029)  loss 28.07207 (29.17650)  supcon 3.31549 (3.56350)  kld 10.12802 (10.23593)  xent 0.14600 (0.15338)   gap 0.02878 (0.03921)  
+2025-10-03 00:08:59,846 - root - INFO - epoch 26, b 1536, lr 4.5125e-06, loss 29.176496780223594, total time 2.56
+2025-10-03 00:09:02,418 - root - INFO - Train: [27][60/60]	BT 0.018 (0.043)  DT 0.009 (0.029)  loss 28.69871 (27.86878)  supcon 3.50217 (3.43594)  kld 9.73458 (9.82626)  xent 0.15447 (0.14569)   gap 0.01508 (0.03806)  
+2025-10-03 00:09:02,418 - root - INFO - epoch 27, b 1536, lr 4.5125e-06, loss 27.868778340328387, total time 2.57
+2025-10-03 00:09:04,971 - root - INFO - Train: [28][60/60]	BT 0.023 (0.043)  DT 0.011 (0.028)  loss 24.91596 (26.48700)  supcon 3.11511 (3.29213)  kld 9.36098 (9.40116)  xent 0.12323 (0.13757)   gap 0.11652 (0.03722)  
+2025-10-03 00:09:04,971 - root - INFO - epoch 28, b 1536, lr 4.5125e-06, loss 26.487004718337616, total time 2.55
+2025-10-03 00:09:07,465 - root - INFO - Train: [29][60/60]	BT 0.019 (0.042)  DT 0.009 (0.028)  loss 26.06021 (25.47695)  supcon 3.37317 (3.21336)  kld 9.22731 (9.03289)  xent 0.13440 (0.13195)   gap 0.01977 (0.03535)  
+2025-10-03 00:09:07,465 - root - INFO - epoch 29, b 1536, lr 4.5125e-06, loss 25.476945570792473, total time 2.49
+2025-10-03 00:09:09,968 - root - INFO - Train: [30][60/60]	BT 0.021 (0.042)  DT 0.009 (0.028)  loss 26.09219 (24.52313)  supcon 3.38580 (3.12319)  kld 8.55150 (8.64770)  xent 0.14049 (0.12716)   gap 0.10605 (0.03615)  
+2025-10-03 00:09:09,969 - root - INFO - epoch 30, b 1536, lr 4.5125e-06, loss 24.523128892015695, total time 2.50
+2025-10-03 00:09:12,532 - root - INFO - Train: [31][60/60]	BT 0.025 (0.043)  DT 0.010 (0.029)  loss 23.93726 (23.53559)  supcon 3.02286 (3.02986)  kld 8.25448 (8.34920)  xent 0.12602 (0.12126)   gap 0.05742 (0.03020)  
+2025-10-03 00:09:12,532 - root - INFO - epoch 31, b 1536, lr 4.2868749999999995e-06, loss 23.53558610477547, total time 2.56
+2025-10-03 00:09:15,079 - root - INFO - Train: [32][60/60]	BT 0.022 (0.042)  DT 0.009 (0.028)  loss 21.08748 (22.66118)  supcon 2.77751 (2.96352)  kld 7.78687 (8.09581)  xent 0.10350 (0.11572)   gap 0.17282 (0.02977)  
+2025-10-03 00:09:15,079 - root - INFO - epoch 32, b 1536, lr 4.2868749999999995e-06, loss 22.661184471519423, total time 2.55
+2025-10-03 00:09:17,650 - root - INFO - Train: [33][60/60]	BT 0.028 (0.043)  DT 0.009 (0.029)  loss 21.14483 (21.99988)  supcon 2.64283 (2.90069)  kld 7.68613 (7.86791)  xent 0.10787 (0.11207)   gap 0.02870 (0.02464)  
+2025-10-03 00:09:17,650 - root - INFO - epoch 33, b 1536, lr 4.2868749999999995e-06, loss 21.999881797108124, total time 2.57
+2025-10-03 00:09:20,197 - root - INFO - Train: [34][60/60]	BT 0.022 (0.042)  DT 0.010 (0.029)  loss 20.66820 (21.21465)  supcon 2.74799 (2.80959)  kld 7.57880 (7.61341)  xent 0.10180 (0.10763)   gap 0.16117 (0.02913)  
+2025-10-03 00:09:20,197 - root - INFO - epoch 34, b 1536, lr 4.2868749999999995e-06, loss 21.214648877977407, total time 2.55
+2025-10-03 00:09:22,782 - root - INFO - Train: [35][60/60]	BT 0.034 (0.043)  DT 0.012 (0.028)  loss 20.14461 (20.68258)  supcon 2.71821 (2.76551)  kld 7.09030 (7.40422)  xent 0.10304 (0.10489)   gap 0.03206 (0.02339)  
+2025-10-03 00:09:22,782 - root - INFO - epoch 35, b 1536, lr 4.2868749999999995e-06, loss 20.6825824101995, total time 2.59
+2025-10-03 00:09:25,350 - root - INFO - Train: [36][60/60]	BT 0.018 (0.043)  DT 0.009 (0.028)  loss 19.38216 (19.83391)  supcon 2.38785 (2.68416)  kld 7.17669 (7.16470)  xent 0.09522 (0.09954)   gap 0.29528 (0.03141)  
+2025-10-03 00:09:25,350 - root - INFO - epoch 36, b 1536, lr 4.2868749999999995e-06, loss 19.83391497582046, total time 2.57
+2025-10-03 00:09:27,941 - root - INFO - Train: [37][60/60]	BT 0.025 (0.043)  DT 0.010 (0.028)  loss 19.93169 (19.36059)  supcon 2.77803 (2.64179)  kld 6.81478 (7.01215)  xent 0.10328 (0.09687)   gap 0.01092 (0.01973)  
+2025-10-03 00:09:27,942 - root - INFO - epoch 37, b 1536, lr 4.2868749999999995e-06, loss 19.360592649418173, total time 2.59
+2025-10-03 00:09:30,481 - root - INFO - Train: [38][60/60]	BT 0.022 (0.042)  DT 0.009 (0.028)  loss 18.70886 (18.81889)  supcon 2.39324 (2.58599)  kld 6.93230 (6.83739)  xent 0.09331 (0.09373)   gap 0.05253 (0.02235)  
+2025-10-03 00:09:30,481 - root - INFO - epoch 38, b 1536, lr 4.2868749999999995e-06, loss 18.818886440025853, total time 2.54
+2025-10-03 00:09:33,076 - root - INFO - Train: [39][60/60]	BT 0.025 (0.043)  DT 0.010 (0.030)  loss 17.77148 (18.30150)  supcon 2.49068 (2.54377)  kld 6.80995 (6.68255)  xent 0.08452 (0.09053)   gap 0.01897 (0.02192)  
+2025-10-03 00:09:33,076 - root - INFO - epoch 39, b 1536, lr 4.2868749999999995e-06, loss 18.301495609002963, total time 2.59
+2025-10-03 00:09:35,581 - root - INFO - Train: [40][60/60]	BT 0.023 (0.042)  DT 0.009 (0.028)  loss 16.95751 (17.80970)  supcon 2.62007 (2.52451)  kld 6.19124 (6.57474)  xent 0.08122 (0.08690)   gap 0.02436 (0.02009)  
+2025-10-03 00:09:35,581 - root - INFO - epoch 40, b 1536, lr 4.2868749999999995e-06, loss 17.809703919420045, total time 2.51
+2025-10-03 00:09:38,127 - root - INFO - Train: [41][60/60]	BT 0.026 (0.042)  DT 0.010 (0.028)  loss 18.36625 (17.22416)  supcon 2.57735 (2.43072)  kld 6.23960 (6.37836)  xent 0.09537 (0.08395)   gap 0.01215 (0.01973)  
+2025-10-03 00:09:38,128 - root - INFO - epoch 41, b 1536, lr 4.07253125e-06, loss 17.224157693816874, total time 2.55
+2025-10-03 00:09:40,712 - root - INFO - Train: [42][60/60]	BT 0.025 (0.043)  DT 0.010 (0.028)  loss 16.49936 (16.95953)  supcon 2.32392 (2.41673)  kld 6.08093 (6.24970)  xent 0.08019 (0.08273)   gap 0.07568 (0.02020)  
+2025-10-03 00:09:40,713 - root - INFO - epoch 42, b 1536, lr 4.07253125e-06, loss 16.959528783199083, total time 2.58
+2025-10-03 00:09:43,320 - root - INFO - Train: [43][60/60]	BT 0.027 (0.043)  DT 0.011 (0.029)  loss 17.24177 (16.47934)  supcon 2.51618 (2.37729)  kld 6.19815 (6.11711)  xent 0.08496 (0.07962)   gap 0.03104 (0.02318)  
+2025-10-03 00:09:43,320 - root - INFO - epoch 43, b 1536, lr 4.07253125e-06, loss 16.479339064442318, total time 2.61
+2025-10-03 00:09:45,847 - root - INFO - Train: [44][60/60]	BT 0.024 (0.042)  DT 0.010 (0.029)  loss 15.91045 (16.17986)  supcon 2.29254 (2.34952)  kld 5.83079 (6.01153)  xent 0.07759 (0.07801)   gap 0.02791 (0.01737)  
+2025-10-03 00:09:45,848 - root - INFO - epoch 44, b 1536, lr 4.07253125e-06, loss 16.17985954918098, total time 2.53
+2025-10-03 00:09:48,417 - root - INFO - Train: [45][60/60]	BT 0.020 (0.043)  DT 0.010 (0.028)  loss 15.43783 (15.83518)  supcon 2.45435 (2.31214)  kld 5.86879 (5.87685)  xent 0.07085 (0.07629)   gap 0.02935 (0.01743)  
+2025-10-03 00:09:48,417 - root - INFO - epoch 45, b 1536, lr 4.07253125e-06, loss 15.835179456822571, total time 2.57
+2025-10-03 00:09:50,966 - root - INFO - Train: [46][60/60]	BT 0.026 (0.042)  DT 0.009 (0.028)  loss 16.44952 (15.47717)  supcon 2.43698 (2.29625)  kld 5.69160 (5.77065)  xent 0.08302 (0.07391)   gap 0.01893 (0.01944)  
+2025-10-03 00:09:50,966 - root - INFO - epoch 46, b 1536, lr 4.07253125e-06, loss 15.477168147939448, total time 2.55
+2025-10-03 00:09:53,456 - root - INFO - Train: [47][60/60]	BT 0.037 (0.041)  DT 0.009 (0.028)  loss 16.66151 (15.20432)  supcon 2.36256 (2.25376)  kld 5.95900 (5.67865)  xent 0.08328 (0.07252)   gap 0.01236 (0.01981)  
+2025-10-03 00:09:53,456 - root - INFO - epoch 47, b 1536, lr 4.07253125e-06, loss 15.204320321826287, total time 2.49
+2025-10-03 00:09:56,268 - root - INFO - Train: [48][60/60]	BT 0.023 (0.047)  DT 0.010 (0.033)  loss 13.95133 (14.83868)  supcon 1.97341 (2.23806)  kld 5.32223 (5.53542)  xent 0.06646 (0.07051)   gap 0.00955 (0.01390)  
+2025-10-03 00:09:56,268 - root - INFO - epoch 48, b 1536, lr 4.07253125e-06, loss 14.838684449470566, total time 2.81
+2025-10-03 00:09:59,186 - root - INFO - Train: [49][60/60]	BT 0.022 (0.049)  DT 0.012 (0.036)  loss 15.17358 (14.41153)  supcon 2.21543 (2.17050)  kld 5.47173 (5.46939)  xent 0.07460 (0.06755)   gap 0.02613 (0.01669)  
+2025-10-03 00:09:59,187 - root - INFO - epoch 49, b 1536, lr 4.07253125e-06, loss 14.411527251016611, total time 2.92
+2025-10-03 00:10:01,936 - root - INFO - Train: [50][60/60]	BT 0.023 (0.046)  DT 0.010 (0.032)  loss 17.11217 (14.18114)  supcon 2.37552 (2.16793)  kld 5.44981 (5.37742)  xent 0.09065 (0.06620)   gap 0.22202 (0.01610)  
+2025-10-03 00:10:01,936 - root - INFO - epoch 50, b 1536, lr 4.07253125e-06, loss 14.181141030966847, total time 2.75
+2025-10-03 00:10:01,937 - root - INFO - Training Encoder model time: 126.142 seconds
+2025-10-03 00:10:01,937 - root - INFO - Saving the model...
+==> Saving...
+2025-10-03 00:10:01,984 - root - INFO - Training Encoder model finished: models/2012-01to2012-12/triplet-kld-only-mlp_fam_1159-512-384-256-128_triplet-kld-ensemble-xent_xent100.0_mselambda1_caelambda0.1_adam_step_lr5e-06_decay0.95_triplet_b1536_e50.pth
+2025-10-03 00:10:02,194 - root - INFO - X_test.shape (4991, 1159)
+2025-10-03 00:10:02,194 - root - INFO - y_test.shape (4991,)
+2025-10-03 00:10:02,194 - root - INFO - y_test_family.shape (500,)
+2025-10-03 00:10:02,204 - root - INFO - Testing on 2013-01
+2025-10-03 00:10:02,287 - root - INFO - X_test.shape (3185, 1159)
+2025-10-03 00:10:02,287 - root - INFO - y_test.shape (3185,)
+2025-10-03 00:10:02,287 - root - INFO - y_test_family.shape (320,)
+2025-10-03 00:10:02,296 - root - INFO - Testing on 2013-02
+2025-10-03 00:10:02,366 - root - INFO - X_test.shape (3365, 1159)
+2025-10-03 00:10:02,366 - root - INFO - y_test.shape (3365,)
+2025-10-03 00:10:02,366 - root - INFO - y_test_family.shape (337,)
+2025-10-03 00:10:02,378 - root - INFO - Testing on 2013-03
+2025-10-03 00:10:02,460 - root - INFO - X_test.shape (3886, 1159)
+2025-10-03 00:10:02,461 - root - INFO - y_test.shape (3886,)
+2025-10-03 00:10:02,461 - root - INFO - y_test_family.shape (389,)
+2025-10-03 00:10:02,470 - root - INFO - Testing on 2013-04
+2025-10-03 00:10:02,560 - root - INFO - X_test.shape (4865, 1159)
+2025-10-03 00:10:02,560 - root - INFO - y_test.shape (4865,)
+2025-10-03 00:10:02,561 - root - INFO - y_test_family.shape (482,)
+2025-10-03 00:10:02,584 - root - INFO - Testing on 2013-05
+2025-10-03 00:10:02,658 - root - INFO - X_test.shape (3384, 1159)
+2025-10-03 00:10:02,658 - root - INFO - y_test.shape (3384,)
+2025-10-03 00:10:02,658 - root - INFO - y_test_family.shape (338,)
+2025-10-03 00:10:02,671 - root - INFO - Testing on 2013-06
+2025-10-03 00:10:02,723 - root - INFO - X_test.shape (2520, 1159)
+2025-10-03 00:10:02,724 - root - INFO - y_test.shape (2520,)
+2025-10-03 00:10:02,724 - root - INFO - y_test_family.shape (253,)
+2025-10-03 00:10:02,733 - root - INFO - Testing on 2013-07
+2025-10-03 00:10:02,782 - root - INFO - X_test.shape (2436, 1159)
+2025-10-03 00:10:02,782 - root - INFO - y_test.shape (2436,)
+2025-10-03 00:10:02,782 - root - INFO - y_test_family.shape (242,)
+2025-10-03 00:10:02,790 - root - INFO - Testing on 2013-08
+2025-10-03 00:10:02,880 - root - INFO - X_test.shape (4984, 1159)
+2025-10-03 00:10:02,880 - root - INFO - y_test.shape (4984,)
+2025-10-03 00:10:02,880 - root - INFO - y_test_family.shape (500,)
+2025-10-03 00:10:02,892 - root - INFO - Testing on 2013-09
+2025-10-03 00:10:02,995 - root - INFO - X_test.shape (4989, 1159)
+2025-10-03 00:10:02,995 - root - INFO - y_test.shape (4989,)
+2025-10-03 00:10:02,995 - root - INFO - y_test_family.shape (499,)
+2025-10-03 00:10:03,014 - root - INFO - Testing on 2013-10
+2025-10-03 00:10:03,111 - root - INFO - X_test.shape (4972, 1159)
+2025-10-03 00:10:03,111 - root - INFO - y_test.shape (4972,)
+2025-10-03 00:10:03,111 - root - INFO - y_test_family.shape (495,)
+2025-10-03 00:10:03,123 - root - INFO - Testing on 2013-11
+2025-10-03 00:10:03,227 - root - INFO - X_test.shape (4991, 1159)
+2025-10-03 00:10:03,227 - root - INFO - y_test.shape (4991,)
+2025-10-03 00:10:03,227 - root - INFO - y_test_family.shape (499,)
+2025-10-03 00:10:03,242 - root - INFO - Testing on 2013-12
+2025-10-03 00:10:03,342 - root - INFO - X_test.shape (4983, 1159)
+2025-10-03 00:10:03,342 - root - INFO - y_test.shape (4983,)
+2025-10-03 00:10:03,342 - root - INFO - y_test_family.shape (493,)
+2025-10-03 00:10:03,359 - root - INFO - Testing on 2014-01
+2025-10-03 00:10:03,451 - root - INFO - X_test.shape (4981, 1159)
+2025-10-03 00:10:03,451 - root - INFO - y_test.shape (4981,)
+2025-10-03 00:10:03,451 - root - INFO - y_test_family.shape (495,)
+2025-10-03 00:10:03,466 - root - INFO - Testing on 2014-02
+2025-10-03 00:10:03,566 - root - INFO - X_test.shape (4983, 1159)
+2025-10-03 00:10:03,566 - root - INFO - y_test.shape (4983,)
+2025-10-03 00:10:03,566 - root - INFO - y_test_family.shape (494,)
+2025-10-03 00:10:03,582 - root - INFO - Testing on 2014-03
+2025-10-03 00:10:03,667 - root - INFO - X_test.shape (4430, 1159)
+2025-10-03 00:10:03,667 - root - INFO - y_test.shape (4430,)
+2025-10-03 00:10:03,667 - root - INFO - y_test_family.shape (440,)
+2025-10-03 00:10:03,678 - root - INFO - Testing on 2014-04
+2025-10-03 00:10:03,785 - root - INFO - X_test.shape (4985, 1159)
+2025-10-03 00:10:03,785 - root - INFO - y_test.shape (4985,)
+2025-10-03 00:10:03,785 - root - INFO - y_test_family.shape (497,)
+2025-10-03 00:10:03,797 - root - INFO - Testing on 2014-05
+2025-10-03 00:10:03,899 - root - INFO - X_test.shape (4989, 1159)
+2025-10-03 00:10:03,900 - root - INFO - y_test.shape (4989,)
+2025-10-03 00:10:03,900 - root - INFO - y_test_family.shape (498,)
+2025-10-03 00:10:03,914 - root - INFO - Testing on 2014-06
+2025-10-03 00:10:04,021 - root - INFO - X_test.shape (4994, 1159)
+2025-10-03 00:10:04,021 - root - INFO - y_test.shape (4994,)
+2025-10-03 00:10:04,021 - root - INFO - y_test_family.shape (499,)
+2025-10-03 00:10:04,041 - root - INFO - Testing on 2014-07
+2025-10-03 00:10:04,150 - root - INFO - X_test.shape (4989, 1159)
+2025-10-03 00:10:04,150 - root - INFO - y_test.shape (4989,)
+2025-10-03 00:10:04,150 - root - INFO - y_test_family.shape (496,)
+2025-10-03 00:10:04,161 - root - INFO - Testing on 2014-08
+2025-10-03 00:10:04,251 - root - INFO - X_test.shape (4250, 1159)
+2025-10-03 00:10:04,251 - root - INFO - y_test.shape (4250,)
+2025-10-03 00:10:04,251 - root - INFO - y_test_family.shape (422,)
+2025-10-03 00:10:04,261 - root - INFO - Testing on 2014-09
+2025-10-03 00:10:04,361 - root - INFO - X_test.shape (4969, 1159)
+2025-10-03 00:10:04,361 - root - INFO - y_test.shape (4969,)
+2025-10-03 00:10:04,361 - root - INFO - y_test_family.shape (489,)
+2025-10-03 00:10:04,374 - root - INFO - Testing on 2014-10
+2025-10-03 00:10:04,474 - root - INFO - X_test.shape (4975, 1159)
+2025-10-03 00:10:04,474 - root - INFO - y_test.shape (4975,)
+2025-10-03 00:10:04,474 - root - INFO - y_test_family.shape (493,)
+2025-10-03 00:10:04,489 - root - INFO - Testing on 2014-11
+2025-10-03 00:10:04,587 - root - INFO - X_test.shape (4957, 1159)
+2025-10-03 00:10:04,588 - root - INFO - y_test.shape (4957,)
+2025-10-03 00:10:04,588 - root - INFO - y_test_family.shape (493,)
+2025-10-03 00:10:04,600 - root - INFO - Testing on 2014-12
+2025-10-03 00:10:04,698 - root - INFO - X_test.shape (4931, 1159)
+2025-10-03 00:10:04,698 - root - INFO - y_test.shape (4931,)
+2025-10-03 00:10:04,698 - root - INFO - y_test_family.shape (478,)
+2025-10-03 00:10:04,713 - root - INFO - Testing on 2015-01
+2025-10-03 00:10:04,817 - root - INFO - X_test.shape (4954, 1159)
+2025-10-03 00:10:04,817 - root - INFO - y_test.shape (4954,)
+2025-10-03 00:10:04,818 - root - INFO - y_test_family.shape (482,)
+2025-10-03 00:10:04,831 - root - INFO - Testing on 2015-02
+2025-10-03 00:10:04,936 - root - INFO - X_test.shape (4939, 1159)
+2025-10-03 00:10:04,936 - root - INFO - y_test.shape (4939,)
+2025-10-03 00:10:04,936 - root - INFO - y_test_family.shape (471,)
+2025-10-03 00:10:04,952 - root - INFO - Testing on 2015-03
+2025-10-03 00:10:05,049 - root - INFO - X_test.shape (4946, 1159)
+2025-10-03 00:10:05,049 - root - INFO - y_test.shape (4946,)
+2025-10-03 00:10:05,049 - root - INFO - y_test_family.shape (467,)
+2025-10-03 00:10:05,060 - root - INFO - Testing on 2015-04
+2025-10-03 00:10:05,156 - root - INFO - X_test.shape (4934, 1159)
+2025-10-03 00:10:05,156 - root - INFO - y_test.shape (4934,)
+2025-10-03 00:10:05,156 - root - INFO - y_test_family.shape (444,)
+2025-10-03 00:10:05,169 - root - INFO - Testing on 2015-05
+2025-10-03 00:10:05,264 - root - INFO - X_test.shape (4946, 1159)
+2025-10-03 00:10:05,264 - root - INFO - y_test.shape (4946,)
+2025-10-03 00:10:05,264 - root - INFO - y_test_family.shape (457,)
+2025-10-03 00:10:05,282 - root - INFO - Testing on 2015-06
+2025-10-03 00:10:05,382 - root - INFO - X_test.shape (4824, 1159)
+2025-10-03 00:10:05,382 - root - INFO - y_test.shape (4824,)
+2025-10-03 00:10:05,382 - root - INFO - y_test_family.shape (477,)
+2025-10-03 00:10:05,399 - root - INFO - Testing on 2015-07
+2025-10-03 00:10:05,469 - root - INFO - X_test.shape (3111, 1159)
+2025-10-03 00:10:05,469 - root - INFO - y_test.shape (3111,)
+2025-10-03 00:10:05,469 - root - INFO - y_test_family.shape (306,)
+2025-10-03 00:10:05,477 - root - INFO - Testing on 2015-08
+2025-10-03 00:10:05,571 - root - INFO - X_test.shape (4959, 1159)
+2025-10-03 00:10:05,572 - root - INFO - y_test.shape (4959,)
+2025-10-03 00:10:05,572 - root - INFO - y_test_family.shape (482,)
+2025-10-03 00:10:05,587 - root - INFO - Testing on 2015-09
+2025-10-03 00:10:05,681 - root - INFO - X_test.shape (4963, 1159)
+2025-10-03 00:10:05,681 - root - INFO - y_test.shape (4963,)
+2025-10-03 00:10:05,682 - root - INFO - y_test_family.shape (475,)
+2025-10-03 00:10:05,695 - root - INFO - Testing on 2015-10
+2025-10-03 00:10:05,795 - root - INFO - X_test.shape (4975, 1159)
+2025-10-03 00:10:05,795 - root - INFO - y_test.shape (4975,)
+2025-10-03 00:10:05,795 - root - INFO - y_test_family.shape (488,)
+2025-10-03 00:10:05,818 - root - INFO - Testing on 2015-11
+2025-10-03 00:10:05,906 - root - INFO - X_test.shape (4970, 1159)
+2025-10-03 00:10:05,906 - root - INFO - y_test.shape (4970,)
+2025-10-03 00:10:05,906 - root - INFO - y_test_family.shape (481,)
+2025-10-03 00:10:05,920 - root - INFO - Testing on 2015-12
+2025-10-03 00:10:06,013 - root - INFO - X_test.shape (4931, 1159)
+2025-10-03 00:10:06,013 - root - INFO - y_test.shape (4931,)
+2025-10-03 00:10:06,013 - root - INFO - y_test_family.shape (436,)
+2025-10-03 00:10:06,024 - root - INFO - Testing on 2016-01
+2025-10-03 00:10:06,117 - root - INFO - X_test.shape (4917, 1159)
+2025-10-03 00:10:06,118 - root - INFO - y_test.shape (4917,)
+2025-10-03 00:10:06,118 - root - INFO - y_test_family.shape (434,)
+2025-10-03 00:10:06,129 - root - INFO - Testing on 2016-02
+2025-10-03 00:10:06,223 - root - INFO - X_test.shape (4950, 1159)
+2025-10-03 00:10:06,223 - root - INFO - y_test.shape (4950,)
+2025-10-03 00:10:06,223 - root - INFO - y_test_family.shape (453,)
+2025-10-03 00:10:06,238 - root - INFO - Testing on 2016-03
+2025-10-03 00:10:06,344 - root - INFO - X_test.shape (4926, 1159)
+2025-10-03 00:10:06,344 - root - INFO - y_test.shape (4926,)
+2025-10-03 00:10:06,344 - root - INFO - y_test_family.shape (432,)
+2025-10-03 00:10:06,355 - root - INFO - Testing on 2016-04
+2025-10-03 00:10:06,444 - root - INFO - X_test.shape (4968, 1159)
+2025-10-03 00:10:06,444 - root - INFO - y_test.shape (4968,)
+2025-10-03 00:10:06,444 - root - INFO - y_test_family.shape (477,)
+2025-10-03 00:10:06,456 - root - INFO - Testing on 2016-05
+2025-10-03 00:10:06,543 - root - INFO - X_test.shape (4974, 1159)
+2025-10-03 00:10:06,543 - root - INFO - y_test.shape (4974,)
+2025-10-03 00:10:06,543 - root - INFO - y_test_family.shape (492,)
+2025-10-03 00:10:06,558 - root - INFO - Testing on 2016-06
+2025-10-03 00:10:06,652 - root - INFO - X_test.shape (4970, 1159)
+2025-10-03 00:10:06,653 - root - INFO - y_test.shape (4970,)
+2025-10-03 00:10:06,653 - root - INFO - y_test_family.shape (481,)
+2025-10-03 00:10:06,668 - root - INFO - Testing on 2016-07
+2025-10-03 00:10:06,770 - root - INFO - X_test.shape (4981, 1159)
+2025-10-03 00:10:06,770 - root - INFO - y_test.shape (4981,)
+2025-10-03 00:10:06,770 - root - INFO - y_test_family.shape (497,)
+2025-10-03 00:10:06,784 - root - INFO - Testing on 2016-08
+2025-10-03 00:10:06,880 - root - INFO - X_test.shape (4965, 1159)
+2025-10-03 00:10:06,880 - root - INFO - y_test.shape (4965,)
+2025-10-03 00:10:06,880 - root - INFO - y_test_family.shape (493,)
+2025-10-03 00:10:06,894 - root - INFO - Testing on 2016-09
+2025-10-03 00:10:06,998 - root - INFO - X_test.shape (4977, 1159)
+2025-10-03 00:10:06,998 - root - INFO - y_test.shape (4977,)
+2025-10-03 00:10:06,998 - root - INFO - y_test_family.shape (492,)
+2025-10-03 00:10:07,013 - root - INFO - Testing on 2016-10
+2025-10-03 00:10:07,084 - root - INFO - X_test.shape (3327, 1159)
+2025-10-03 00:10:07,084 - root - INFO - y_test.shape (3327,)
+2025-10-03 00:10:07,084 - root - INFO - y_test_family.shape (330,)
+2025-10-03 00:10:07,098 - root - INFO - Testing on 2016-11
+2025-10-03 00:10:07,158 - root - INFO - X_test.shape (3150, 1159)
+2025-10-03 00:10:07,158 - root - INFO - y_test.shape (3150,)
+2025-10-03 00:10:07,158 - root - INFO - y_test_family.shape (307,)
+2025-10-03 00:10:07,170 - root - INFO - Testing on 2016-12
+2025-10-03 00:10:07,231 - root - INFO - X_test.shape (3410, 1159)
+2025-10-03 00:10:07,231 - root - INFO - y_test.shape (3410,)
+2025-10-03 00:10:07,231 - root - INFO - y_test_family.shape (320,)
+2025-10-03 00:10:07,240 - root - INFO - Testing on 2017-01
+2025-10-03 00:10:07,308 - root - INFO - X_test.shape (3770, 1159)
+2025-10-03 00:10:07,308 - root - INFO - y_test.shape (3770,)
+2025-10-03 00:10:07,308 - root - INFO - y_test_family.shape (368,)
+2025-10-03 00:10:07,323 - root - INFO - Testing on 2017-02
+2025-10-03 00:10:07,395 - root - INFO - X_test.shape (3596, 1159)
+2025-10-03 00:10:07,395 - root - INFO - y_test.shape (3596,)
+2025-10-03 00:10:07,395 - root - INFO - y_test_family.shape (332,)
+2025-10-03 00:10:07,408 - root - INFO - Testing on 2017-03
+2025-10-03 00:10:07,455 - root - INFO - X_test.shape (1905, 1159)
+2025-10-03 00:10:07,455 - root - INFO - y_test.shape (1905,)
+2025-10-03 00:10:07,455 - root - INFO - y_test_family.shape (155,)
+2025-10-03 00:10:07,461 - root - INFO - Testing on 2017-04
+2025-10-03 00:10:07,490 - root - INFO - X_test.shape (1265, 1159)
+2025-10-03 00:10:07,490 - root - INFO - y_test.shape (1265,)
+2025-10-03 00:10:07,490 - root - INFO - y_test_family.shape (99,)
+2025-10-03 00:10:07,499 - root - INFO - Testing on 2017-05
+2025-10-03 00:10:07,527 - root - INFO - X_test.shape (1399, 1159)
+2025-10-03 00:10:07,527 - root - INFO - y_test.shape (1399,)
+2025-10-03 00:10:07,527 - root - INFO - y_test_family.shape (113,)
+2025-10-03 00:10:07,531 - root - INFO - Testing on 2017-06
+2025-10-03 00:10:07,566 - root - INFO - X_test.shape (1871, 1159)
+2025-10-03 00:10:07,566 - root - INFO - y_test.shape (1871,)
+2025-10-03 00:10:07,566 - root - INFO - y_test_family.shape (187,)
+2025-10-03 00:10:07,572 - root - INFO - Testing on 2017-07
+2025-10-03 00:10:07,626 - root - INFO - X_test.shape (2989, 1159)
+2025-10-03 00:10:07,626 - root - INFO - y_test.shape (2989,)
+2025-10-03 00:10:07,626 - root - INFO - y_test_family.shape (296,)
+2025-10-03 00:10:07,634 - root - INFO - Testing on 2017-08
+2025-10-03 00:10:07,669 - root - INFO - X_test.shape (1764, 1159)
+2025-10-03 00:10:07,669 - root - INFO - y_test.shape (1764,)
+2025-10-03 00:10:07,669 - root - INFO - y_test_family.shape (157,)
+2025-10-03 00:10:07,675 - root - INFO - Testing on 2017-09
+2025-10-03 00:10:07,727 - root - INFO - X_test.shape (2914, 1159)
+2025-10-03 00:10:07,727 - root - INFO - y_test.shape (2914,)
+2025-10-03 00:10:07,727 - root - INFO - y_test_family.shape (221,)
+2025-10-03 00:10:07,734 - root - INFO - Testing on 2017-10
+2025-10-03 00:10:07,761 - root - INFO - X_test.shape (987, 1159)
+2025-10-03 00:10:07,761 - root - INFO - y_test.shape (987,)
+2025-10-03 00:10:07,761 - root - INFO - y_test_family.shape (92,)
+2025-10-03 00:10:07,764 - root - INFO - Testing on 2017-11
+2025-10-03 00:10:07,793 - root - INFO - X_test.shape (1442, 1159)
+2025-10-03 00:10:07,793 - root - INFO - y_test.shape (1442,)
+2025-10-03 00:10:07,793 - root - INFO - y_test_family.shape (125,)
+2025-10-03 00:10:07,798 - root - INFO - Testing on 2017-12
+2025-10-03 00:10:07,834 - root - INFO - X_test.shape (1836, 1159)
+2025-10-03 00:10:07,834 - root - INFO - y_test.shape (1836,)
+2025-10-03 00:10:07,834 - root - INFO - y_test_family.shape (153,)
+2025-10-03 00:10:07,839 - root - INFO - Testing on 2018-01
+2025-10-03 00:10:07,872 - root - INFO - X_test.shape (1791, 1159)
+2025-10-03 00:10:07,872 - root - INFO - y_test.shape (1791,)
+2025-10-03 00:10:07,872 - root - INFO - y_test_family.shape (145,)
+2025-10-03 00:10:07,882 - root - INFO - Testing on 2018-02
+2025-10-03 00:10:07,971 - root - INFO - X_test.shape (4765, 1159)
+2025-10-03 00:10:07,971 - root - INFO - y_test.shape (4765,)
+2025-10-03 00:10:07,971 - root - INFO - y_test_family.shape (274,)
+2025-10-03 00:10:07,985 - root - INFO - Testing on 2018-03
+2025-10-03 00:10:08,041 - root - INFO - X_test.shape (2966, 1159)
+2025-10-03 00:10:08,041 - root - INFO - y_test.shape (2966,)
+2025-10-03 00:10:08,041 - root - INFO - y_test_family.shape (281,)
+2025-10-03 00:10:08,049 - root - INFO - Testing on 2018-04
+2025-10-03 00:10:08,096 - root - INFO - X_test.shape (2478, 1159)
+2025-10-03 00:10:08,096 - root - INFO - y_test.shape (2478,)
+2025-10-03 00:10:08,096 - root - INFO - y_test_family.shape (242,)
+2025-10-03 00:10:08,104 - root - INFO - Testing on 2018-05
+2025-10-03 00:10:08,196 - root - INFO - X_test.shape (4970, 1159)
+2025-10-03 00:10:08,196 - root - INFO - y_test.shape (4970,)
+2025-10-03 00:10:08,196 - root - INFO - y_test_family.shape (478,)
+2025-10-03 00:10:08,210 - root - INFO - Testing on 2018-06
+2025-10-03 00:10:08,312 - root - INFO - X_test.shape (4983, 1159)
+2025-10-03 00:10:08,312 - root - INFO - y_test.shape (4983,)
+2025-10-03 00:10:08,312 - root - INFO - y_test_family.shape (488,)
+2025-10-03 00:10:08,329 - root - INFO - Testing on 2018-07
+2025-10-03 00:10:08,396 - root - INFO - X_test.shape (2989, 1159)
+2025-10-03 00:10:08,396 - root - INFO - y_test.shape (2989,)
+2025-10-03 00:10:08,396 - root - INFO - y_test_family.shape (291,)
+2025-10-03 00:10:08,409 - root - INFO - Testing on 2018-08
+2025-10-03 00:10:08,500 - root - INFO - X_test.shape (4953, 1159)
+2025-10-03 00:10:08,500 - root - INFO - y_test.shape (4953,)
+2025-10-03 00:10:08,500 - root - INFO - y_test_family.shape (458,)
+2025-10-03 00:10:08,511 - root - INFO - Testing on 2018-09
+2025-10-03 00:10:08,608 - root - INFO - X_test.shape (4989, 1159)
+2025-10-03 00:10:08,608 - root - INFO - y_test.shape (4989,)
+2025-10-03 00:10:08,609 - root - INFO - y_test_family.shape (493,)
+2025-10-03 00:10:08,622 - root - INFO - Testing on 2018-10
+2025-10-03 00:10:08,695 - root - INFO - X_test.shape (2984, 1159)
+2025-10-03 00:10:08,695 - root - INFO - y_test.shape (2984,)
+2025-10-03 00:10:08,695 - root - INFO - y_test_family.shape (287,)
+2025-10-03 00:10:08,709 - root - INFO - Testing on 2018-11
+2025-10-03 00:10:08,750 - root - INFO - X_test.shape (2225, 1159)
+2025-10-03 00:10:08,751 - root - INFO - y_test.shape (2225,)
+2025-10-03 00:10:08,751 - root - INFO - y_test_family.shape (193,)
+2025-10-03 00:10:08,760 - root - INFO - Testing on 2018-12
+2025-10-03 00:10:08,769 - root - INFO - time elapsed: 434.1187045574188 seconds
