@@ -37,7 +37,9 @@ LOSS='triplet-mse-xent'
 # Loss for LCKLD-only, CKLD
 #LOSS='triplet-mse-kld-ensemble-xent'
 
+# one of: '', 'bin', 'fam'
 CENTROID_TYPE=''
+# Set the beta (β)
 KLD_SCALE=1.0
 
 CSV_NAME="1"

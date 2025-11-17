@@ -82,7 +82,7 @@ LOSS='triplet-xent'
 # Loss for LCKLD-only, CKLD
 #LOSS='triplet-kld-ensemble-xent'
 
-# 'bin' or 'fam'
+# one of: '', 'bin', 'fam'
 CENTROID_TYPE=''
 # Set the beta (β)
 KLD_SCALE=1.0
@@ -152,8 +152,8 @@ The loss function is also paired with the corresponding encoder/classifier setti
 
 - **LCKLD-only(Triplet)**
   ```ini
-  ENCODER='triplet-kld-ensemble-mlp'
-  CLASSIFIER='triplet-kld-ensemble-mlp'
+  ENCODER='triplet-kld-only-mlp'
+  CLASSIFIER='triplet-kld-only-mlp'
   LOSS='triplet-kld-ensemble-xent'
   ```
 

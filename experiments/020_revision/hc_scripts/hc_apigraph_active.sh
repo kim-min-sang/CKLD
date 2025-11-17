@@ -53,7 +53,9 @@ LOSS='hi-dist-xent'
 # Loss for LCKLD-only, CKLD
 #LOSS='hi-dist-kld-custom-xent-ensemble6'
 
+# one of: '', 'bin', 'fam'
 CENTROID_TYPE=''
+# Set the beta (β)
 KLD_SCALE=1.0
 
 CSV_NAME="a_1"
