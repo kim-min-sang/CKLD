@@ -205,13 +205,13 @@ The loss function is also paired with the corresponding encoder/classifier setti
   ```
 
 
-In addition, we use the following hyperparameters: OPT denotes the optimizer, E the number of training epochs, and LR the learning rate.
-In the offline learning setting, you can train and test the model in a no-drift (i.e., without concept drift) scenario by setting \texttt{--is-for-no-drift 1}.
+In addition, we use the following hyperparameters: 
 
+- **E**
+  The number of training epochs.
 
-## Example Active Learning Setting
-
-Following the offline learning setup, the additional configurations specific to **active learning** are as follows:
+- **LR**
+  The learning rate.
 
 - **CENTROID_TYPE**  
   Sets the centroid type used in the paper (`bin` for binary label centroids, `fam` for family label centroids).
@@ -219,10 +219,22 @@ Following the offline learning setup, the additional configurations specific to 
 - **KLD_SCALE (β)**  
   Controls the degree of generalization in the KL divergence term, as described in the paper.
 
+In the offline learning setting, you can train and test the model in a no-drift (i.e., without concept drift) scenario by setting `{--is-for-no-drift 1}`.
+
+
+## Example Active Learning Setting
+
+Following the offline learning setup, the additional configurations specific to **active learning** are as follows:
+
 - **CNT**  
   Specifies the annotation budget, representing analyst effort as defined in the paper.
 
-In addition, WE denotes the number of epochs used for warm-start retraining, and WLR denotes the learning rate used for warm-start retraining.
+- **WE**  
+  The number of epochs used for warm-start retraining.
+
+- **WLR**  
+  The learning rate used for warm-start retraining.
+
 
 ## Running Experiments
 
