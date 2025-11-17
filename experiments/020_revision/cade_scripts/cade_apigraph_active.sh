@@ -1,10 +1,3 @@
-#! /bin/bash
-
-#SBATCH -t 03:00:00
-
-#SBATCH -n 1
-
-#SBATCH -c 8
 
 SCH=step
 DECAY=0.95
@@ -21,30 +14,38 @@ modeldim="512-384-256-128"
 S='triplet'
 B=1536
 
-
 ###############################################################
 
-CNT=200
+CNT=100
 
 OPT=adam
 
-E=100
-WE=100
+E=5
+WE=5
 
 LR=0.001
 WLR=0.00001
 
-#ENCODER='cae-mlp'
-#CLASSIFIER='cae-mlp'
-ENCODER='cae-kld-ensemble-mlp'
-CLASSIFIER='cae-kld-ensemble-mlp'
+# Encoder for contrastive-only (baseline)
+ENCODER='cae-mlp'
+CLASSIFIER='cae-mlp'
 
-#LOSS='triplet-mse-xent'
-LOSS='triplet-mse-kld-ensemble-xent'
+# Encoder for LCKLD-only
+#ENCODER='cae-kld-only-mlp'
+#CLASSIFIER='cae-kld-only-mlp'
 
+# Encoder for CKLD
+#ENCODER='cae-kld-ensemble-mlp'
+#CLASSIFIER='cae-kld-ensemble-mlp'
 
-CENTROID_TYPE='bin'
-KLD_SCALE=2.0
+# Loss for Contrastive-only
+LOSS='triplet-mse-xent'
+
+# Loss for LCKLD-only, CKLD
+#LOSS='triplet-mse-kld-ensemble-xent'
+
+CENTROID_TYPE=''
+KLD_SCALE=1.0
 
 CSV_NAME="a_1"
 
@@ -65,7 +66,7 @@ nohup python -u relabel.py	                                \
             --margin-between-b-and-m 2                      \
             --kld-scale ${KLD_SCALE}                        \
             --is-enc-kld-custom-mid 1                       \
-            --centroid-type ${CENTROID_TYPE}                          \
+            --centroid-type ${CENTROID_TYPE}                \
             --is-valid 0                                    \
             --data ${DATA}                                  \
             --benign_zero                                   \

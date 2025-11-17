@@ -1,10 +1,3 @@
-#! /bin/bash
-
-#SBATCH -t 04:00:00
-
-#SBATCH -n 1
-
-#SBATCH -c 8
 
 SCH=step
 DECAY=0.5
@@ -13,14 +6,12 @@ TRAIN_START=2019-01
 TRAIN_END=2019-12
 TEST_START=2020-01
 TEST_END=2021-12
-VALID_DATE=2021-02
+VALID_DATE=2020-06
 RESULT_DIR=triplet_results
 
 modeldim="512-384-256-128"
 S='triplet'
 B=1536
-
-
 
 ###############################################################
 
@@ -28,22 +19,30 @@ OPT=adam
 E=100
 LR=0.0001
 
+# Encoder for contrastive-only (baseline)
 ENCODER='triplet-mlp'
 CLASSIFIER='triplet-mlp'
-#ENCODER='triplet-kld-ensemble-mlp'
-#CLASSIFIER='triplet-kld-ensemble-mlp'
+
+# Encoder for LCKLD-only
 #ENCODER='triplet-kld-only-mlp'
 #CLASSIFIER='triplet-kld-only-mlp'
 
+# Encoder for CKLD
+#ENCODER='triplet-kld-ensemble-mlp'
+#CLASSIFIER='triplet-kld-ensemble-mlp'
+
+# Loss for Contrastive-only
 LOSS='triplet-xent'
+
+# Loss for LCKLD-only, CKLD
 #LOSS='triplet-kld-ensemble-xent'
 
 CENTROID_TYPE=''
 KLD_SCALE=1.0
 
-CSV_NAME="104_1_6"
+CSV_NAME="1"
 
-SLP=255
+SLP=0
 
 ###############################################################
 
@@ -53,13 +52,12 @@ TS=$(date "+%m.%d-%H.%M.%S")
 nohup python -u relabel.py	                                \
             --sleep ${SLP}                                  \
             --unc                                           \
-            --is-for-no-drift 1                             \
             --retrain-first 1                               \
             --is-only-test-eval-without-al 1                \
             --margin 10                                     \
             --margin-between-b-and-m 2                      \
             --is-enc-kld-custom-mid 1                       \
-            --centroid-type ${CENTROID_TYPE}                          \
+            --centroid-type ${CENTROID_TYPE}                \
             --kld-scale ${KLD_SCALE}                        \
             --is-valid 0                                    \
             --data ${DATA}                                  \

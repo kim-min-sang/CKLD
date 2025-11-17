@@ -27,22 +27,30 @@ OPT=adam
 E=100
 LR=0.00005
 
-#LOSS='hi-dist-xent'
-LOSS='hi-dist-kld-custom-xent-ensemble6'
+# Encoder for contrastive-only (baseline)
+ENCODER='simple-enc-mlp'
+CLASSIFIER='simple-enc-mlp'
 
-#ENCODER='simple-enc-mlp'
-#CLASSIFIER='simple-enc-mlp'
-ENCODER='enc-kld-custom-mlp-ensemble6'
-CLASSIFIER='enc-kld-custom-mlp-ensemble6'
+# Encoder for LCKLD-only
 #ENCODER='enc-kld-custom-mlp-only6'
 #CLASSIFIER='enc-kld-custom-mlp-only6'
 
-CENTROID_TYPE='fam'
-KLD_SCALE=2.0
+# Encoder for CKLD
+#ENCODER='enc-kld-custom-mlp-ensemble6'
+#CLASSIFIER='enc-kld-custom-mlp-ensemble6'
 
-CSV_NAME="106_5_6"
+# Loss for Contrastive-only
+LOSS='hi-dist-xent'
 
-SLP=210
+# Loss for LCKLD-only, CKLD
+#LOSS='hi-dist-kld-custom-xent-ensemble6'
+
+CENTROID_TYPE=''
+KLD_SCALE=1.0
+
+CSV_NAME="1"
+
+SLP=0
 
 ###############################################################
 
@@ -50,7 +58,6 @@ TS=$(date "+%m.%d-%H.%M.%S")
 
 nohup python -u relabel.py	                                \
             --sleep ${SLP}                                  \
-            --is-for-no-drift 1                             \
             --retrain-first 1                               \
             --is-only-test-eval-without-al 1                \
             --is-accum-samples-load 0                       \
@@ -59,7 +66,7 @@ nohup python -u relabel.py	                                \
             --margin-between-b-and-m 2                      \
             --kld-scale ${KLD_SCALE}                        \
             --is-enc-kld-custom-mid 1                       \
-            --centroid-type ${CENTROID_TYPE}                          \
+            --centroid-type ${CENTROID_TYPE}                \
             --is-valid 0                                    \
             --data ${DATA}                                  \
             --benign_zero                                   \

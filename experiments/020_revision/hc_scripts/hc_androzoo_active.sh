@@ -25,7 +25,7 @@ B=1024
 
 ###############################################################
 
-CNT=200
+CNT=100
 
 OPT=sgd
 
@@ -35,16 +35,26 @@ WE=50
 LR=0.001
 WLR=0.00001
 
-LOSS='hi-dist-kld-custom-xent-ensemble6'
-#LOSS='hi-dist-xent'
+# Encoder for contrastive-only (baseline)
+ENCODER='simple-enc-mlp'
+CLASSIFIER='simple-enc-mlp'
 
-ENCODER='enc-kld-custom-mlp-ensemble6'
-CLASSIFIER='enc-kld-custom-mlp-ensemble6'
-#ENCODER='simple-enc-mlp'
-#CLASSIFIER='simple-enc-mlp'
+# Encoder for LCKLD-only
+#ENCODER='enc-kld-custom-mlp-only6'
+#CLASSIFIER='enc-kld-custom-mlp-only6'
 
-CENTROID_TYPE='fam'
-KLD_SCALE=2.0
+# Encoder for CKLD
+#ENCODER='enc-kld-custom-mlp-ensemble6'
+#CLASSIFIER='enc-kld-custom-mlp-ensemble6'
+
+# Loss for Contrastive-only
+LOSS='hi-dist-xent'
+
+# Loss for LCKLD-only, CKLD
+#LOSS='hi-dist-kld-custom-xent-ensemble6'
+
+CENTROID_TYPE=''
+KLD_SCALE=1.0
 
 CSV_NAME="a_1"
 
@@ -64,7 +74,7 @@ nohup python -u relabel.py	                                \
             --margin-between-b-and-m 2                      \
             --kld-scale ${KLD_SCALE}                        \
             --is-enc-kld-custom-mid 1                       \
-            --centroid-type ${CENTROID_TYPE}                          \
+            --centroid-type ${CENTROID_TYPE}                \
             --is-valid 0                                    \
             --data ${DATA}                                  \
             --benign_zero                                   \

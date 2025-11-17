@@ -1,4 +1,4 @@
-OPT=adam
+
 SCH=step
 DECAY=0.95
 DATA=gen_apigraph_drebin
@@ -6,7 +6,7 @@ TRAIN_START=2012-01
 TRAIN_END=2012-12
 TEST_START=2013-01
 TEST_END=2018-12
-VALID_DATE=2018-12
+VALID_DATE=2013-06
 RESULT_DIR=triplet_results
 
 modeldim="512-384-256-128"
@@ -15,26 +15,32 @@ B=1536
 
 ###############################################################
 
-# CNT=100 # used only active learning
-
 OPT=adam
 E=150
 LR=0.0005
 
+# Encoder for contrastive-only (baseline)
 ENCODER='triplet-mlp'
 CLASSIFIER='triplet-mlp'
-#ENCODER='triplet-kld-ensemble-mlp'
-#CLASSIFIER='triplet-kld-ensemble-mlp'
+
+# Encoder for LCKLD-only
 #ENCODER='triplet-kld-only-mlp'
 #CLASSIFIER='triplet-kld-only-mlp'
 
+# Encoder for CKLD
+#ENCODER='triplet-kld-ensemble-mlp'
+#CLASSIFIER='triplet-kld-ensemble-mlp'
+
+# Loss for Contrastive-only
 LOSS='triplet-xent'
+
+# Loss for LCKLD-only, CKLD
 #LOSS='triplet-kld-ensemble-xent'
 
 CENTROID_TYPE=''
-KLD_SCALE=2.0
+KLD_SCALE=1.0
 
-CSV_NAME="101_1_6"
+CSV_NAME="1"
 
 SLP=0
 
@@ -45,7 +51,6 @@ TS=$(date "+%m.%d-%H.%M.%S")
 nohup python -u relabel.py	                                \
             --sleep ${SLP}                                  \
             --unc                                           \
-            --is-for-no-drift 1                             \
             --retrain-first 1                               \
             --is-only-test-eval-without-al 1                \
             --margin 10                                     \

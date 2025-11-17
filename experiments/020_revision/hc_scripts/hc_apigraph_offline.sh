@@ -1,4 +1,3 @@
-#! /bin/bash
 
 SCH=step
 DECAY=0.95
@@ -15,27 +14,34 @@ modeldim="512-384-256-128"
 S='half'
 B=1024
 
-
 ###############################################################
 
 OPT=adam
 E=100
 LR=0.0005
 
-#LOSS='hi-dist-xent'
-LOSS='hi-dist-kld-custom-xent-ensemble6'
+# Encoder for contrastive-only (baseline)
+ENCODER='simple-enc-mlp'
+CLASSIFIER='simple-enc-mlp'
 
-#ENCODER='simple-enc-mlp'
-#CLASSIFIER='simple-enc-mlp'
-ENCODER='enc-kld-custom-mlp-ensemble6'
-CLASSIFIER='enc-kld-custom-mlp-ensemble6'
+# Encoder for LCKLD-only
 #ENCODER='enc-kld-custom-mlp-only6'
 #CLASSIFIER='enc-kld-custom-mlp-only6'
 
-CENTROID_TYPE='bin'
-KLD_SCALE=3.0
+# Encoder for CKLD
+#ENCODER='enc-kld-custom-mlp-ensemble6'
+#CLASSIFIER='enc-kld-custom-mlp-ensemble6'
 
-CSV_NAME="15_0_6"
+# Loss for Contrastive-only
+LOSS='hi-dist-xent'
+
+# Loss for LCKLD-only, CKLD
+#LOSS='hi-dist-kld-custom-xent-ensemble6'
+
+CENTROID_TYPE=''
+KLD_SCALE=1.0
+
+CSV_NAME="1"
 
 SLP=0
 
@@ -45,7 +51,6 @@ TS=$(date "+%m.%d-%H.%M.%S")
 
 nohup python -u relabel.py	                                \
             --sleep ${SLP}                                  \
-            --is-for-no-drift 0                             \
             --retrain-first 1                               \
             --is-only-test-eval-without-al 1                \
             --is-accum-samples-load 0                       \
@@ -54,7 +59,7 @@ nohup python -u relabel.py	                                \
             --margin-between-b-and-m 2                      \
             --kld-scale ${KLD_SCALE}                        \
             --is-enc-kld-custom-mid 1                       \
-            --centroid-type ${CENTROID_TYPE}                          \
+            --centroid-type ${CENTROID_TYPE}                \
             --is-valid 0                                    \
             --data ${DATA}                                  \
             --benign_zero                                   \

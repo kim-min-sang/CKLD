@@ -1,10 +1,3 @@
-#! /bin/bash
-
-#SBATCH -t 04:00:00
-
-#SBATCH -n 1
-
-#SBATCH -c 8
 
 SCH=step
 DECAY=0.5
@@ -13,14 +6,12 @@ TRAIN_START=2019-01
 TRAIN_END=2019-12
 TEST_START=2020-01
 TEST_END=2021-12
-VALID_DATE=2021-02
+VALID_DATE=2020-06
 RESULT_DIR=cade_results
 
 modeldim="512-384-256-128"
 S='triplet'
 B=1536
-
-
 
 ###############################################################
 
@@ -28,22 +19,30 @@ OPT=adam
 E=100
 LR=0.00005
 
-#ENCODER='cae-mlp'
-#CLASSIFIER='cae-mlp'
-ENCODER='cae-kld-ensemble-mlp'
-CLASSIFIER='cae-kld-ensemble-mlp'
+# Encoder for contrastive-only (baseline)
+ENCODER='cae-mlp'
+CLASSIFIER='cae-mlp'
+
+# Encoder for LCKLD-only
 #ENCODER='cae-kld-only-mlp'
 #CLASSIFIER='cae-kld-only-mlp'
 
-#LOSS='triplet-mse-xent'
-LOSS='triplet-mse-kld-ensemble-xent'
+# Encoder for CKLD
+#ENCODER='cae-kld-ensemble-mlp'
+#CLASSIFIER='cae-kld-ensemble-mlp'
 
-CENTROID_TYPE='fam'
+# Loss for Contrastive-only
+LOSS='triplet-mse-xent'
+
+# Loss for LCKLD-only, CKLD
+#LOSS='triplet-mse-kld-ensemble-xent'
+
+CENTROID_TYPE=''
 KLD_SCALE=1.0
 
-CSV_NAME="105_5_6"
+CSV_NAME="1"
 
-SLP=550
+SLP=0
 
 ###############################################################
 
@@ -53,13 +52,12 @@ TS=$(date "+%m.%d-%H.%M.%S")
 nohup python -u relabel.py	                                \
             --sleep ${SLP}                                  \
             --ood                                           \
-            --is-for-no-drift 1                             \
             --retrain-first 1                               \
             --is-only-test-eval-without-al 1                \
             --margin 10                                     \
             --margin-between-b-and-m 2                      \
             --kld-scale ${KLD_SCALE}                        \
-            --centroid-type ${CENTROID_TYPE}                          \
+            --centroid-type ${CENTROID_TYPE}                \
             --is-enc-kld-custom-mid 1                       \
             --is-valid 0                                    \
             --data ${DATA}                                  \

@@ -44,7 +44,6 @@ We provide shell scripts under the `experiments/020_revision` directory to repro
 For example, to set **CKLD applied on the Triplet baseline** on the APIGraph dataset under offline learning:
 
 ```bash
-OPT=adam
 SCH=step
 DECAY=0.95
 DATA=gen_apigraph_drebin
@@ -52,7 +51,7 @@ TRAIN_START=2012-01
 TRAIN_END=2012-12
 TEST_START=2013-01
 TEST_END=2018-12
-VALID_DATE=2018-12
+VALID_DATE=2013-06
 RESULT_DIR=triplet_results
 
 modeldim="512-384-256-128"
@@ -61,22 +60,30 @@ B=1536
 
 ###############################################################
 
-# CNT=100 # used only active learning
-
 OPT=adam
 E=150
 LR=0.0005
 
-#ENCODER='triplet-mlp'
-#CLASSIFIER='triplet-mlp'
-ENCODER='triplet-kld-ensemble-mlp'
-CLASSIFIER='triplet-kld-ensemble-mlp'
+# Encoder for contrastive-only (baseline)
+ENCODER='triplet-mlp'
+CLASSIFIER='triplet-mlp'
 
-#LOSS='triplet-xent'
-LOSS='triplet-kld-ensemble-xent'
+# Encoder for LCKLD-only
+#ENCODER='triplet-kld-only-mlp'
+#CLASSIFIER='triplet-kld-only-mlp'
 
-CENTROID_TYPE='' # used only active learning
-# KLD_SCALE=2.0 # used only active learning
+# Encoder for CKLD
+#ENCODER='triplet-kld-ensemble-mlp'
+#CLASSIFIER='triplet-kld-ensemble-mlp'
+
+# Loss for Contrastive-only
+LOSS='triplet-xent'
+
+# Loss for LCKLD-only, CKLD
+#LOSS='triplet-kld-ensemble-xent'
+
+CENTROID_TYPE=''
+KLD_SCALE=1.0
 
 CSV_NAME="1"
 
@@ -125,7 +132,7 @@ nohup python -u relabel.py	                                \
             --al                                            \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}${CSV_NAME}.csv \
+            --result experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${CSV_NAME}.csv \
             --log_path experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
             >> experiments/020_revision/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
 wait
@@ -134,6 +141,20 @@ wait
 Since our framework is designed in an **end-to-end manner**, the encoder and classifier must be configured consistently.  
 The loss function is also paired with the corresponding encoder/classifier setting.
 
+- **Contrastive-only(Triplet)**
+  ```ini
+  ENCODER='triplet-mlp'
+  CLASSIFIER='triplet-mlp'
+  LOSS='triplet-xent'
+  ```
+
+- **LCKLD-only(Triplet)**
+  ```ini
+  ENCODER='triplet-kld-ensemble-mlp'
+  CLASSIFIER='triplet-kld-ensemble-mlp'
+  LOSS='triplet-kld-ensemble-xent'
+  ```
+
 - **CKLD(Triplet)**
   ```ini
   ENCODER='triplet-kld-ensemble-mlp'
@@ -141,11 +162,18 @@ The loss function is also paired with the corresponding encoder/classifier setti
   LOSS='triplet-kld-ensemble-xent'
   ```
 
-- **Triplet only**
+- **Contrastive-only(CADE)**
   ```ini
-  ENCODER='triplet-mlp'
-  CLASSIFIER='triplet-mlp'
-  LOSS='triplet-xent'
+  ENCODER='cae-mlp'
+  CLASSIFIER='cae-mlp'
+  LOSS='triplet-mse-xent'
+  ```
+
+- **LCKLD-only(CADE)**
+  ```ini
+  ENCODER='cae-kld-only-mlp'
+  CLASSIFIER='cae-kld-only-mlp'
+  LOSS='triplet-mse-kld-ensemble-xent'
   ```
 
 - **CKLD(CADE)**
@@ -155,11 +183,18 @@ The loss function is also paired with the corresponding encoder/classifier setti
   LOSS='triplet-mse-kld-ensemble-xent'
   ```
 
-- **CADE only**
+- **Contrastive-only(HC)**
   ```ini
-  ENCODER='cae-mlp'
-  CLASSIFIER='cae-mlp'
-  LOSS='triplet-mse-xent'
+  ENCODER='simple-enc-mlp'
+  CLASSIFIER='simple-enc-mlp'
+  LOSS='hi-dist-xent'
+  ```
+
+- **LCKLD-only(HC)**
+  ```ini
+  ENCODER='enc-kld-custom-mlp-only6'
+  CLASSIFIER='enc-kld-custom-mlp-only6'
+  LOSS='hi-dist-kld-custom-xent-ensemble6'
   ```
 
 - **CKLD(HC)**
@@ -169,12 +204,10 @@ The loss function is also paired with the corresponding encoder/classifier setti
   LOSS='hi-dist-kld-custom-xent-ensemble6'
   ```
 
-- **HC only**
-  ```ini
-  ENCODER='simple-enc-mlp'
-  CLASSIFIER='simple-enc-mlp'
-  LOSS='hi-dist-xent'
-  ```
+
+In addition, we use the following hyperparameters: OPT denotes the optimizer, E the number of training epochs, and LR the learning rate.
+In the offline learning setting, you can train and test the model in a no-drift (i.e., without concept drift) scenario by setting \texttt{--is-for-no-drift 1}.
+
 
 ## Example Active Learning Setting
 
@@ -188,6 +221,8 @@ Following the offline learning setup, the additional configurations specific to 
 
 - **CNT**  
   Specifies the annotation budget, representing analyst effort as defined in the paper.
+
+In addition, WE denotes the number of epochs used for warm-start retraining, and WLR denotes the learning rate used for warm-start retraining.
 
 ## Running Experiments
 
