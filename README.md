@@ -22,14 +22,17 @@ pip install torch==2.3.1 torchaudio==2.3.1
 ```
 
 ## Datasets
+We provide a downloader script to fetch the datasets required to run CKLD.
+You can download, verify, and optionally extract the preprocessed feature archive with the following command:
 
-This repository already includes the feature files used in our experiments.
-The datasets are located under the following directories:
+```bash
+#python3 downloader.py  --url "https://drive.google.com/file/d/1O0upEcTolGyyvasCPkZFY86FNclk29XO/view"  --dst "data/dataset.zip"  --sha256 "827f36fc5affd58dd31b6393042d92cbe3bae012290a03b6fcccc6355266384d" --extract
+```
+
+After the command finishes, the downloaded and extracted feature files used in our experiments are located under the following directories:
 
 - `data/gen_apigraph_drebin` : DREBIN features of the APIGraph dataset (2012–2018)  
 - `data/gen_androzoo_drebin` : DREBIN features of the AndroZoo dataset (2019–2021)  
-
-No additional download is required.
 
 **Note:** These processed Drebin feature datasets were obtained from the official repository of  
 [Continuous Learning for Android Malware Detection (HC, USENIX Security 2023)](https://github.com/wagner-group/active-learning).  
