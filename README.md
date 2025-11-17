@@ -209,10 +209,10 @@ The loss function is also paired with the corresponding encoder/classifier setti
 
 In addition, we use the following hyperparameters: 
 
-- **E**
+- **E**  
   The number of training epochs.
 
-- **LR**
+- **LR**  
   The learning rate.
 
 - **CENTROID_TYPE**  
