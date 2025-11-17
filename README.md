@@ -26,7 +26,7 @@ We provide a downloader script to fetch the datasets required to run CKLD.
 You can download, verify, and optionally extract the preprocessed feature archive with the following command:
 
 ```bash
-#python3 downloader.py  --url "https://drive.google.com/file/d/1O0upEcTolGyyvasCPkZFY86FNclk29XO/view"  --dst "data/dataset.zip"  --sha256 "827f36fc5affd58dd31b6393042d92cbe3bae012290a03b6fcccc6355266384d" --extract
+#python3 downloader.py --url "https://drive.google.com/file/d/1O0upEcTolGyyvasCPkZFY86FNclk29XO/view" --dst "data/dataset.zip" --sha256 "827f36fc5affd58dd31b6393042d92cbe3bae012290a03b6fcccc6355266384d" --extract
 ```
 
 After the command finishes, the downloaded and extracted feature files used in our experiments are located under the following directories:
