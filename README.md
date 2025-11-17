@@ -284,4 +284,4 @@ For each baseline (Triplet, CADE, HC), the results are organized into separate d
   - `offline/` : Results for offline learning scenario  
   - `active/`  : Results for active learning scenario  
 
-These directories contain the CSV files to reproduce Table 2 and Table 3 (FNR, FPR, F1 score) reported in the paper.
+These directories contain the CSV files to reproduce Table 2, Table 3 and Table 4 (FNR, FPR, F1 score) reported in the paper.
