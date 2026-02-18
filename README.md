@@ -4,6 +4,10 @@ This is the source code accompanying our paper
 submitted to the 2026 IEEE Symposium on Security and Privacy (IEEE S&P 2026).
 
 
+## Note on Repository Status
+This repository is under active development and is not a final, camera-ready release. We will continue to make iterative updates for internal optimization (e.g., code refactoring, configuration cleanup, and reproducibility improvements).
+
+That said, the current version is fully runnable for experiments. The provided scripts/configurations are sufficient to reproduce the main experimental pipeline, and ongoing updates are intended to improve clarity and robustness without breaking core experiment execution.
 
 
 ## Setup
