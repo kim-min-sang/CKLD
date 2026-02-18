@@ -27,6 +27,15 @@ def parse_args():
     p.add_argument('--is-valid', default=0, type=int)
     p.add_argument('--is-draw-tsne', default=0, type=int)
     p.add_argument('--is-ovl', default=0, type=int)
+    p.add_argument('--is-case-study', default=0, type=int)
+    ABLATION_TYPES = ["f_kl","f_all","f_dad","f_cde","f_beta","f"]
+    p.add_argument(
+        "--ablation-types",
+        nargs="*",
+        default=[],
+        choices=ABLATION_TYPES,
+        help="Run multiple ablations in one execution, e.g., --ablation-types f_kl f_all f",
+    )
     p.add_argument('--valid_date', default=None, help='Train start month. e.g., 2012-01')
     p.add_argument('--is-enc-kld-custom-mid', default=0, type=int,
                    help='')
@@ -34,7 +43,7 @@ def parse_args():
                    help='')
     p.add_argument('--kld-beta', default=1, type=float,
                    help='')
-    p.add_argument('--is-only-test-eval-without-al', type = int, default = 0, help='Whether to do active learning.')
+    p.add_argument('--is-offline', type = int, default = 0, help='Whether to do active learning.')
     p.add_argument('--step-month', default=1, type=int, help='year.')
     
     p.add_argument('--is-accum-samples-load', default=0, type=int,

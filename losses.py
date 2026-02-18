@@ -7,13 +7,6 @@ import math
 import random
 import gc
 
-
-
-
-
-
-
-
 class TripletLoss(nn.Module):
     def __init__(self, reduce = 'mean'):
         """
@@ -128,7 +121,7 @@ class TripletMseKldEnsembleXentLoss(nn.Module):
             weight = None,
             split = None,
             is_for_selector = False,
-            is_train_first = False, epoch = None, mids = None, kld_dev_scale = None, mids_for_y_class_batch = None):
+            is_train_first = False, epoch = None, mids = None, kld_dev_scale = None, mids_for_y_class_batch = None, ablation_types = None):
         """
         Args:
             xent_lambda: scale the binary xent loss
@@ -182,10 +175,9 @@ class TripletMseKldEnsembleXentLoss(nn.Module):
             #print("if gap_loss == None error!!!")
             pass
         
-        loss = cae_lambda * supcon_loss + mse_lambda * mse_loss + 1 * kld_loss + xent_lambda * xent_bin_loss + gap_loss
-        
-        
-        
+        kld_lambda = 0 if 'f_kl' in ablation_types else 1
+        gap_lambda = 0 if any(x in ablation_types for x in ('f_cde', 'f_all')) else 1
+        loss = cae_lambda * supcon_loss + mse_lambda * mse_loss + kld_lambda * kld_loss + xent_lambda * xent_bin_loss + gap_lambda * gap_loss
         
         del Triplet
         del KldCustom
@@ -325,7 +317,7 @@ class TripletKldEnsembleXentLoss(nn.Module):
             weight = None,
             split = None,
             is_for_selector = False,
-            is_train_first = False, epoch = None, mids = None, kld_dev_scale = None, mids_for_y_class_batch = None):
+            is_train_first = False, epoch = None, mids = None, kld_dev_scale = None, mids_for_y_class_batch = None, ablation_types = None):
         """
         Args:
             xent_lambda: scale the binary xent loss
@@ -378,7 +370,9 @@ class TripletKldEnsembleXentLoss(nn.Module):
             #print("if gap_loss == None error!!!")
             pass
         
-        loss = triplet_lambda * supcon_loss + 1 * kld_loss + xent_lambda * xent_bin_loss + gap_loss
+        kld_lambda = 0 if 'f_kl' in ablation_types else 1
+        gap_lambda = 0 if any(x in ablation_types for x in ('f_cde', 'f_all')) else 1
+        loss = triplet_lambda * supcon_loss + kld_lambda * kld_loss + xent_lambda * xent_bin_loss + gap_lambda * gap_loss
         #loss = triplet_lambda * supcon_loss + 1 * kld_loss + xent_lambda * xent_bin_loss
         
         del Triplet
@@ -628,7 +622,6 @@ class KldCustomEnsemble6Loss(nn.Module):
 
         # Total loss
         loss = kl_loss
-        
 
         if self.reduce == 'mean':
             loss = loss.mean()
@@ -691,7 +684,7 @@ class HiDistanceKldCustomXentEnsemble6Loss(nn.Module):
             split = None,
             is_for_selector = False,
             is_train_first = False, epoch = None, mids = None, kld_dev_scale = None, kld_beta = None,
-            kld_weights = None, mids_for_y_class_batch = None):
+            kld_weights = None, mids_for_y_class_batch = None, ablation_types = None):
         """
         Args:
             xent_lambda: scale the binary xent loss
@@ -721,6 +714,7 @@ class HiDistanceKldCustomXentEnsemble6Loss(nn.Module):
             else:
                 is_z_mean_static = False
         
+        #kld_beta = 1 if any(x in ablation_types for x in ('f_beta', 'f_all')) else kld_beta
         kld_loss = KldCustom(z_mean, z_log_var, c_encoded, is_z_mean_static = is_z_mean_static, mids = mids, kld_dev_scale = kld_dev_scale, kld_beta = kld_beta, kld_weights = kld_weights, mids_for_y_class_batch = mids_for_y_class_batch)
         
         
@@ -754,7 +748,9 @@ class HiDistanceKldCustomXentEnsemble6Loss(nn.Module):
                 #print("if gap_loss == None error!!!")
                 pass
             
-            loss = supcon_loss + kld_loss + (xent_lambda * xent_bin_loss) + gap_loss
+            kld_lambda = 0 if 'f_kl' in ablation_types else 1
+            gap_lambda = 0 if any(x in ablation_types for x in ('f_cde', 'f_all')) else 1
+            loss = supcon_loss + kld_lambda * kld_loss + (xent_lambda * xent_bin_loss) + gap_lambda * gap_loss
             
             del Dist
             del KldCustom

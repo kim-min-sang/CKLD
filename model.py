@@ -139,7 +139,7 @@ class SimpleEncClassifier(nn.Module):
 
 # EncKldCustomMlpEnsemble6
 class EncKldCustomMlpEnsemble6(nn.Module):
-    def __init__(self, enc_dims, mlp_dims, kld_scale = None, kld_dev_scale = None, dropout=0.2, verbose=1):
+    def __init__(self, enc_dims, mlp_dims, kld_dev_scale = None, dropout=0.2, verbose=1):
         super().__init__()
         self.enc_dims = enc_dims
         self.mlp_dims = mlp_dims
@@ -504,7 +504,7 @@ class EncKldCustomMlpOnly6(nn.Module):
 
 
 class CAEKldEnsembleMlp(nn.Module):
-    def __init__(self, enc_dims, mlp_dims, kld_scale = 2.0, dropout=0.2, verbose=1):
+    def __init__(self, enc_dims, mlp_dims, kld_dev_scale = None, dropout=0.2, verbose=1):
         super().__init__()
         self.enc_dims = enc_dims
         self.mlp_dims = mlp_dims
@@ -524,10 +524,7 @@ class CAEKldEnsembleMlp(nn.Module):
         
         self.verbose = verbose
         
-        self.kld_scale = kld_scale
-        
-        self.dim_last = enc_dims[-1]
-        self.two_x = kld_func.find_exponent_of_two(self.dim_last)
+        self.kld_dev_scale = kld_dev_scale
         
         # encoder
         n_stacks = len(self.enc_dims) - 1
@@ -676,24 +673,22 @@ class CAEKldEnsembleMlp(nn.Module):
         preds = self.out.max(1)[1]
         return preds
     
-    def reparameterize(self, z_mean, z_log_var):
+    def reparameterize(self, z_mean, z_log_var, kld_dev_scale):
         std = torch.exp(0.5*z_log_var)
-        eps = torch.randn_like(std) * (math.sqrt(1/2) ** (self.two_x))
-        eps = eps * self.kld_scale
-        
-        return z_mean + eps*std
+        eps = torch.randn_like(std)
+        return z_mean + (std * kld_dev_scale) * eps
     
     def encode_c(self, x):
         c_encoded = self.encoder_model(x)
         return c_encoded
     
     def encode_kld(self, x):
-        pre_encoded = self.pre_encoder_model(x)
-        z_mean = self.z_mean_fc(pre_encoded)
-        z_log_var = self.z_log_var_fc(pre_encoded)
-        kld_encoded = self.reparameterize(z_mean, z_log_var)
+        self.pre_encoded = self.pre_encoder_model(x)
+        z_mean = self.z_mean_fc(self.pre_encoded)
+        z_log_var = self.z_log_var_fc(self.pre_encoded)
+        self.encoded = self.reparameterize(z_mean, z_log_var, self.kld_dev_scale)
 
-        return kld_encoded, z_mean, z_log_var
+        return self.encoded, z_mean, z_log_var
     
     
     def encode(self, x, is_all_return = False):
@@ -711,7 +706,7 @@ class CAEKldEnsembleMlp(nn.Module):
     
     
 class CAEKldOnlyMlp(nn.Module):
-    def __init__(self, enc_dims, mlp_dims, kld_scale = 2.0, dropout=0.2, verbose=1):
+    def __init__(self, enc_dims, mlp_dims, kld_dev_scale = None, dropout=0.2, verbose=1):
         super().__init__()
         self.enc_dims = enc_dims
         self.mlp_dims = mlp_dims
@@ -731,10 +726,7 @@ class CAEKldOnlyMlp(nn.Module):
         
         self.verbose = verbose
         
-        self.kld_scale = kld_scale
-        
-        self.dim_last = enc_dims[-1]
-        self.two_x = kld_func.find_exponent_of_two(self.dim_last)
+        self.kld_dev_scale = kld_dev_scale
         
         # encoder
         n_stacks = len(self.enc_dims) - 1
@@ -885,24 +877,22 @@ class CAEKldOnlyMlp(nn.Module):
         preds = self.out.max(1)[1]
         return preds
     
-    def reparameterize(self, z_mean, z_log_var):
+    def reparameterize(self, z_mean, z_log_var, kld_dev_scale):
         std = torch.exp(0.5*z_log_var)
-        eps = torch.randn_like(std) * (math.sqrt(1/2) ** (self.two_x))
-        eps = eps * self.kld_scale
-        
-        return z_mean + eps*std
+        eps = torch.randn_like(std)
+        return z_mean + (std * kld_dev_scale) * eps
     
     def encode_c(self, x):
         c_encoded = self.encoder_model(x)
         return c_encoded
     
     def encode_kld(self, x):
-        pre_encoded = self.pre_encoder_model(x)
-        z_mean = self.z_mean_fc(pre_encoded)
-        z_log_var = self.z_log_var_fc(pre_encoded)
-        kld_encoded = self.reparameterize(z_mean, z_log_var)
+        self.pre_encoded = self.pre_encoder_model(x)
+        z_mean = self.z_mean_fc(self.pre_encoded)
+        z_log_var = self.z_log_var_fc(self.pre_encoded)
+        self.encoded = self.reparameterize(z_mean, z_log_var, self.kld_dev_scale)
 
-        return kld_encoded, z_mean, z_log_var
+        return self.encoded, z_mean, z_log_var
     
     
     def encode(self, x, is_all_return = False):
@@ -1188,7 +1178,7 @@ class TripletMlp(nn.Module):
 
 
 class TripletKldEnsembleMlp(nn.Module):
-    def __init__(self, enc_dims, mlp_dims, kld_scale = 2.0, dropout=0.2, verbose=1):
+    def __init__(self, enc_dims, mlp_dims, kld_dev_scale = None, dropout=0.2, verbose=1):
         super().__init__()
         self.enc_dims = enc_dims
         self.mlp_dims = mlp_dims
@@ -1205,10 +1195,7 @@ class TripletKldEnsembleMlp(nn.Module):
         
         self.verbose = verbose
         
-        self.kld_scale = kld_scale
-        
-        self.dim_last = enc_dims[-1]
-        self.two_x = kld_func.find_exponent_of_two(self.dim_last)
+        self.kld_dev_scale = kld_dev_scale
         
         # encoder
         n_stacks = len(self.enc_dims) - 1
@@ -1345,25 +1332,22 @@ class TripletKldEnsembleMlp(nn.Module):
         preds = self.out.max(1)[1]
         return preds
     
-    def reparameterize(self, z_mean, z_log_var):
+    def reparameterize(self, z_mean, z_log_var, kld_dev_scale):
         std = torch.exp(0.5*z_log_var)
-        eps = torch.randn_like(std) * (math.sqrt(1/2) ** (self.two_x))
-        #eps = torch.randn_like(std)
-        eps = eps * self.kld_scale
-        
-        return z_mean + eps*std
+        eps = torch.randn_like(std)
+        return z_mean + (std * kld_dev_scale) * eps
     
     def encode_c(self, x):
         c_encoded = self.encoder_model(x)
         return c_encoded
     
     def encode_kld(self, x):
-        pre_encoded = self.pre_encoder_model(x)
-        z_mean = self.z_mean_fc(pre_encoded)
-        z_log_var = self.z_log_var_fc(pre_encoded)
-        kld_encoded = self.reparameterize(z_mean, z_log_var)
+        self.pre_encoded = self.pre_encoder_model(x)
+        z_mean = self.z_mean_fc(self.pre_encoded)
+        z_log_var = self.z_log_var_fc(self.pre_encoded)
+        self.encoded = self.reparameterize(z_mean, z_log_var, self.kld_dev_scale)
 
-        return kld_encoded, z_mean, z_log_var
+        return self.encoded, z_mean, z_log_var
     
     
     def encode(self, x, is_all_return = False):
@@ -1378,7 +1362,7 @@ class TripletKldEnsembleMlp(nn.Module):
     
     
 class TripletKldOnlyMlp(nn.Module):
-    def __init__(self, enc_dims, mlp_dims, kld_scale = 2.0, dropout=0.2, verbose=1):
+    def __init__(self, enc_dims, mlp_dims, kld_dev_scale = None, dropout=0.2, verbose=1):
         super().__init__()
         self.enc_dims = enc_dims
         self.mlp_dims = mlp_dims
@@ -1395,10 +1379,7 @@ class TripletKldOnlyMlp(nn.Module):
         
         self.verbose = verbose
         
-        self.kld_scale = kld_scale
-        
-        self.dim_last = enc_dims[-1]
-        self.two_x = kld_func.find_exponent_of_two(self.dim_last)
+        self.kld_dev_scale = kld_dev_scale
         
         # encoder
         n_stacks = len(self.enc_dims) - 1
@@ -1538,25 +1519,22 @@ class TripletKldOnlyMlp(nn.Module):
         preds = self.out.max(1)[1]
         return preds
     
-    def reparameterize(self, z_mean, z_log_var):
+    def reparameterize(self, z_mean, z_log_var, kld_dev_scale):
         std = torch.exp(0.5*z_log_var)
-        eps = torch.randn_like(std) * (math.sqrt(1/2) ** (self.two_x))
-        #eps = torch.randn_like(std)
-        eps = eps * self.kld_scale
-        
-        return z_mean + eps*std
+        eps = torch.randn_like(std)
+        return z_mean + (std * kld_dev_scale) * eps
     
     def encode_c(self, x):
         c_encoded = self.encoder_model(x)
         return c_encoded
     
     def encode_kld(self, x):
-        pre_encoded = self.pre_encoder_model(x)
-        z_mean = self.z_mean_fc(pre_encoded)
-        z_log_var = self.z_log_var_fc(pre_encoded)
-        kld_encoded = self.reparameterize(z_mean, z_log_var)
+        self.pre_encoded = self.pre_encoder_model(x)
+        z_mean = self.z_mean_fc(self.pre_encoded)
+        z_log_var = self.z_log_var_fc(self.pre_encoded)
+        self.encoded = self.reparameterize(z_mean, z_log_var, self.kld_dev_scale)
 
-        return kld_encoded, z_mean, z_log_var
+        return self.encoded, z_mean, z_log_var
     
     
     def encode(self, x, is_all_return = False):

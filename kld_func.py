@@ -4,13 +4,13 @@ import numpy as np
 import os
 import math
 
-def get_kld_weights(z_hc, X_train_tensor, y_train_binary_tensor):
+def get_kld_weights(z, X_train_tensor, y_train_binary_tensor):
     y_bin_benign_indices = torch.where(y_train_binary_tensor[:,1] == 0)[0]
     y_bin_malware_indices = torch.where(y_train_binary_tensor[:,1] == 1)[0]
     
     
-    train_benigns = z_hc[y_bin_benign_indices]
-    train_malwares = z_hc[y_bin_malware_indices]
+    train_benigns = z[y_bin_benign_indices]
+    train_malwares = z[y_bin_malware_indices]
     
     ben_means = train_benigns.mean(dim=0)
     mal_means = train_malwares.mean(dim=0)
@@ -25,7 +25,7 @@ def get_kld_weights(z_hc, X_train_tensor, y_train_binary_tensor):
 
 
 
-def get_mids_for_y_class(z_hc, centroid_type, y_train_tensor, y_train_binary_tensor):
+def get_mids_for_y_class(z, centroid_type, y_train_tensor, y_train_binary_tensor):
     if centroid_type == "fam":
         y_cls = y_train_tensor
     elif centroid_type == "bin":
@@ -33,14 +33,14 @@ def get_mids_for_y_class(z_hc, centroid_type, y_train_tensor, y_train_binary_ten
     else:
         raise ValueError(f"Invalid centroid_type: {centroid_type!r}. Expected 'fam' or 'bin'.")
     
-    device = z_hc.device
+    device = z.device
     y_cls = y_cls.to(device)
     
     y_unique, y_inv = torch.unique(y_cls, sorted=True, return_inverse=True)
     
-    C, D = y_unique.size(0), z_hc.size(1)
+    C, D = y_unique.size(0), z.size(1)
     sums = torch.zeros(C, D, device=device)               # (C, D)
-    sums = sums.index_add(0, y_inv, z_hc)                  # sums[c] += z_hc[i] where y_inv[i]==c
+    sums = sums.index_add(0, y_inv, z)                  # sums[c] += z[i] where y_inv[i]==c
     
     counts = torch.bincount(y_inv, minlength=C).unsqueeze(1)  # (C, 1)
     
@@ -83,16 +83,19 @@ def find_exponent_of_two(enc_dims):
         raise ValueError(f"{enc_dims} is not a power of 2")
     
     
-def get_kld_dev_scale(centroid_type, enc_dim_last, kld_scale):
+def get_kld_dev_scale(args, enc_dim_last, kld_scale):
+    centroid_type = args.centroid_type
+    ablation_types = args.ablation_types
+    
+    if centroid_type != "bin" and centroid_type != "fam":
+        raise ValueError(f"get_kld_dev_scale(), centroid_type error")
     
     two_x = find_exponent_of_two(enc_dim_last)
-    kld_dev_scale_before = math.sqrt(1/2) ** (two_x) * kld_scale
     
-    if centroid_type == "bin":
-        kld_dev_scale = kld_dev_scale_before
-    elif centroid_type == "fam":
-        kld_dev_scale = kld_dev_scale_before
-    else:
-        raise ValueError(f"get_kld_dev_scale(), centroid_type error")
+    kld_beta = 1 if any(x in ablation_types for x in ('f_beta', 'f_all')) else kld_scale
+    dad = 1 if any(x in ablation_types for x in ('f_dad', 'f_all')) else math.sqrt(1/2) ** (two_x)
+    
+    kld_dev_scale = dad * kld_beta
+    
     return kld_dev_scale
     

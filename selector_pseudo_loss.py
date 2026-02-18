@@ -35,8 +35,7 @@ class LocalPseudoLossSelector(Selector):
                     all_test_family, \
                     total_count, \
                     y_test = None):
-        
-        X_train_tensor = torch.from_numpy(X_train).float().cuda()
+        X_train_tensor = X_train
         
         z_train = self.encoder.encode(X_train_tensor)
         logging.info(f'Normalizing z_train to unit length...')
@@ -161,10 +160,6 @@ class LocalPseudoLossSelector(Selector):
                 break
         logging.info('Added %s samples...' % (len(self.sample_indices)))
         
-        
-        del X_train_tensor
-        gc.collect()
-        torch.cuda.empty_cache()
         
         return self.sample_indices, self.sample_scores # 10, 4991
 

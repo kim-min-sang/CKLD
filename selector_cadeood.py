@@ -90,7 +90,7 @@ class OODSelector(Selector):
                     budget):
         # Is y_train already binary? No
         self.y_train = y_train
-        X_train_tensor = torch.from_numpy(X_train).float().cuda()
+        X_train_tensor = X_train
         z_train = self.encoder.encode(X_train_tensor)
         z_train = z_train.cpu().detach().numpy()
         self.z_train = z_train
@@ -199,7 +199,7 @@ class OODKldEnsembleSelector(Selector):
                     budget):
         # Is y_train already binary? No
         self.y_train = y_train
-        X_train_tensor = torch.from_numpy(X_train).float().cuda()
+        X_train_tensor = X_train
         _, _, _, kld_mean_train, c_encoded_train = self.encoder.encode(X_train_tensor, is_all_return = True)
         z_train = torch.cat((c_encoded_train, kld_mean_train), dim=1)
         z_train = z_train.cpu().detach().numpy()

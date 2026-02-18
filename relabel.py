@@ -33,6 +33,8 @@ from utils import save_model
 from train import train_encoder
 from sklearn.model_selection import train_test_split
 
+from common import to_categorical
+
 def eval_classifier(args, classifier, cur_month_str, X, y_binary, y_family, train_families, \
                         fout, fam_out, stat_out, gpu = False, multi = False):
     if gpu == True:
@@ -69,7 +71,7 @@ def eval_classifier(args, classifier, cur_month_str, X, y_binary, y_family, trai
             family_cnt[family] += 1
         neg_by_fam = defaultdict(lambda: 0)
         family_to_idx = defaultdict(list)
-        # y_family can be all_train_family since we only care abou False Negatives
+        # y_family can be all_train_family since we only care about False Negatives
         fn_indices = np.where((y_binary != y_pred_bin) & (y_binary != 0))[0]
         for idx in fn_indices:
             family = y_family[idx]
@@ -85,19 +87,222 @@ def eval_classifier(args, classifier, cur_month_str, X, y_binary, y_family, trai
     
     return y_pred
 
+
+def euclid(a: torch.Tensor, b: torch.Tensor) -> torch.Tensor:
+    # a,b: (D,)
+    return torch.norm(a - b, p=2, dim=-1).mean()
+
+
+def eval_classifier_case_study(args, classifier, cur_month_str,
+                               X_train, y_train, y_train_binary,
+                               all_train_family, train_families,
+                               X_test, y_test, y_test_binary, y_test_family,
+                               case_gap_out,
+                               gpu=False, multi=False):
+
+    torch.cuda.empty_cache()
+
+    # Only run case study for selected months
+    target_date = ['2020-11', '2020-12']
+    if cur_month_str not in target_date:
+        # Still return predictions to keep the caller logic unchanged
+        if gpu == True:
+            X_test_tensor = torch.from_numpy(X_test).float()
+            if torch.cuda.is_available():
+                X_test_tensor = X_test_tensor.cuda()
+                y_pred = classifier.cuda().predict(X_test_tensor)
+                y_pred = y_pred.cpu().detach().numpy()
+            else:
+                y_pred = classifier.predict(X_test_tensor).numpy()
+        else:
+            y_pred = classifier.predict(X_test)
+
+        return y_pred
+
+    # ------------------------------
+    # Prediction
+    # ------------------------------
+    if gpu == True:
+        X_train_tensor = torch.from_numpy(X_train).float()
+        y_train_tensor = torch.from_numpy(y_train).type(torch.int64)
+        y_train_binary_tensor = torch.from_numpy(y_train_binary).float()
+        y_train_bin_cat_tensor = torch.from_numpy(to_categorical(y_train_binary, num_classes=2)).float()
+
+        X_test_tensor = torch.from_numpy(X_test).float()
+        y_test_tensor = torch.from_numpy(y_test).type(torch.int64)
+        y_test_binary_tensor = torch.from_numpy(y_test_binary).float()
+        y_test_bin_cat_tensor = torch.from_numpy(to_categorical(y_test_binary, num_classes=2)).float()
+
+        if torch.cuda.is_available():
+            X_train_tensor = X_train_tensor.cuda()
+            y_train_tensor = y_train_tensor.cuda()
+            y_train_binary_tensor = y_train_binary_tensor.cuda()
+            y_train_bin_cat_tensor = y_train_bin_cat_tensor.cuda()
+
+            X_test_tensor = X_test_tensor.cuda()
+            y_test_tensor = y_test_tensor.cuda()
+            y_test_binary_tensor = y_test_binary_tensor.cuda()
+            y_test_bin_cat_tensor = y_test_bin_cat_tensor.cuda()
+
+            y_pred = classifier.cuda().predict(X_test_tensor)
+            y_pred = y_pred.cpu().detach().numpy()
+        else:
+            y_pred = classifier.predict(X_test_tensor).numpy()
+    else:
+        y_pred = classifier.predict(X_test)
+
+    if args.multi_class == True:
+        y_pred_bin = np.where(y_pred == 0, 0, 1)
+    else:
+        y_pred_bin = y_pred
+
+    if args.is_for_no_drift == False:
+        # Count total samples per family in the current test month
+        family_cnt = defaultdict(lambda: 0)
+        for idx, family in enumerate(y_test_family):
+            family_cnt[family] += 1
+
+        neg_by_fam = defaultdict(lambda: 0)
+        family_to_idx = defaultdict(list)
+
+        # ------------------------------------------------------------
+        # Dynamically build targets for this month
+        #   - target_unseen: families appearing in this month's test but not in train_families
+        #   - target_seen:   families appearing in this month's test and in train_families
+        # ------------------------------------------------------------
+        test_families = sorted(set(list(y_test_family)))
+        target_unseen = [f for f in test_families if (f not in train_families)]
+        target_seen   = [f for f in test_families if (f in train_families)]
+        target = target_seen + target_unseen
+
+        # ------------------------------------------------------------
+        # Precompute per-family (New, FNR, Cnt) for this month
+        #   - Cnt: number of mismatches (y_test_binary != y_pred_bin) within this family
+        #   - FNR: Cnt / total_family_samples  (same as the previous case_fnr_out logic)
+        # ------------------------------------------------------------
+        fam_new = {}
+        fam_cnt = {}
+        fam_fnr = {}
+        for fam in target:
+            fam_mask = np.isin(y_test_family, fam)
+            fam_total = int(np.sum(fam_mask))
+
+            cnt = int(np.sum((y_test_binary != y_pred_bin) & fam_mask))
+            fam_cnt[fam] = cnt
+
+            if fam_total == 0:
+                fam_fnr[fam] = 0.0
+            else:
+                fam_fnr[fam] = cnt / float(fam_total)
+
+            fam_new[fam] = (fam not in train_families)
+
+        # --- encode train/test embeddings ---
+        try:
+            z = classifier.encode_c(X_train_tensor)
+            z_test = classifier.encode_c(X_test_tensor)
+        except:
+            z = classifier.encode(X_train_tensor)
+            z_test = classifier.encode(X_test_tensor)
+
+        # --- compute benign centroid (bin centroids) ---
+        normal_mask = np.isin(all_train_family, 'benign')
+        normal_indice = np.where(normal_mask)[0][0]
+        mids_for_y_class_bin, _, _ = kld_func.get_mids_for_y_class(
+            z, 'bin', y_train_tensor, y_train_bin_cat_tensor
+        )
+        normal_centroid = mids_for_y_class_bin[normal_indice]
+
+        # --- compute malware centroid (bin centroids) ---
+        malware_mask = ~np.isin(all_train_family, 'benign')
+        malware_indice = np.where(malware_mask)[0][0]
+        malware_centroid = mids_for_y_class_bin[malware_indice]
+
+        # --- precompute family mids for train/test (fam centroids) ---
+        mids_for_y_class_train_fam, _, _ = kld_func.get_mids_for_y_class(
+            z, 'fam', y_train_tensor, y_train_bin_cat_tensor
+        )
+        mids_for_y_class_test_fam, _, _ = kld_func.get_mids_for_y_class(
+            z_test, 'fam', y_test_tensor, y_test_bin_cat_tensor
+        )
+
+        # ------------------------------------------------------------
+        # 1) Unseen targets: distance to (benign vs malware) anchors
+        # ------------------------------------------------------------
+        for fam in target_unseen:
+            if np.any(np.isin(y_test_family, fam)):
+                test_mask = np.isin(y_test_family, fam)
+                test_indices = np.where(test_mask)[0]
+                fam_test_centroid = mids_for_y_class_test_fam[test_indices]  # (N,D)
+
+                fam_to_normal_gap = euclid(fam_test_centroid, normal_centroid)
+                fam_to_mal_gap    = euclid(fam_test_centroid, malware_centroid)
+                gap_for_fam       = fam_to_normal_gap - fam_to_mal_gap
+
+                # Header expected:
+                # Month\tNew\tFam\ttoNorm\ttoMal\tGap\tFNR\tCnt\n
+                case_gap_out.write('%s\t%s\t%s\t%.2f\t%.2f\t%.2f\t%.4f\t%d\n' %
+                                   (cur_month_str, fam_new[fam], fam,
+                                    float(fam_to_normal_gap),
+                                    float(fam_to_mal_gap),
+                                    float(gap_for_fam),
+                                    float(fam_fnr[fam]),
+                                    int(fam_cnt[fam])))
+
+        # ------------------------------------------------------------
+        # 2) Seen targets: distance to (benign vs family) anchors
+        # ------------------------------------------------------------
+        for fam in target_seen:
+            if np.any(np.isin(y_test_family, fam)):
+                test_mask = np.isin(y_test_family, fam)
+                test_indices = np.where(test_mask)[0]
+                fam_test_centroid = mids_for_y_class_test_fam[test_indices]  # (N,D)
+
+                train_mask = np.isin(all_train_family, fam)
+                if not np.any(train_mask):
+                    continue
+                train_indice = np.where(train_mask)[0][0]
+                fam_centroid = mids_for_y_class_train_fam[train_indice]  # (D,)
+
+                fam_to_normal_gap = euclid(fam_test_centroid, normal_centroid)
+                fam_to_fam_gap    = euclid(fam_test_centroid, fam_centroid)
+                gap_for_fam       = fam_to_normal_gap - fam_to_fam_gap
+
+                # Note: for seen families, "toMal" column actually stores distance to the family centroid
+                case_gap_out.write('%s\t%s\t%s\t%.2f\t%.2f\t%.2f\t%.4f\t%d\n' %
+                                   (cur_month_str, fam_new[fam], fam,
+                                    float(fam_to_normal_gap),
+                                    float(fam_to_fam_gap),
+                                    float(gap_for_fam),
+                                    float(fam_fnr[fam]),
+                                    int(fam_cnt[fam])))
+
+        case_gap_out.flush()
+
+        # We no longer write case_fnr_out, but return the structures for compatibility
+        return y_pred, neg_by_fam, family_to_idx
+
+    return y_pred
+
+
+
+
+
+
+
+
+
 def main():
     """
     Step (0): Init log path and parse args.
     """
     args = utils.parse_args()
-
-    # lr_decay_epochs don't be used
+    
     start_epoch, end_epoch, step = args.lr_decay_epochs.split(',') 
     args.lr_decay_epochs = list([range(int(start_epoch), int(end_epoch), int(step))])
 
     log_file_path = args.log_path
     
-    # verbose means too much talker lol
     if args.verbose == False:
         logging.basicConfig(filename=log_file_path,
                             filemode='a',
@@ -188,9 +393,9 @@ def main():
                             args.enc_hidden, NUM_CLASSES)
         mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
         
-        kld_dev_scale = kld_func.get_kld_dev_scale(args.centroid_type, enc_dims[-1], args.kld_scale)
+        kld_dev_scale = kld_func.get_kld_dev_scale(args, enc_dims[-1], args.kld_scale)
         
-        encoder = EncKldCustomMlpEnsemble6(enc_dims, mlp_dims, kld_scale = args.kld_scale, kld_dev_scale = kld_dev_scale)
+        encoder = EncKldCustomMlpEnsemble6(enc_dims, mlp_dims, kld_dev_scale = kld_dev_scale)
         encoder_name = 'enc-kld-custom-mlp-ensemble6'
     elif args.encoder == 'cae-mlp':
         enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
@@ -202,7 +407,10 @@ def main():
         enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
                             args.enc_hidden, NUM_CLASSES)
         mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
-        encoder = CAEKldEnsembleMlp(enc_dims, mlp_dims, kld_scale = args.kld_scale)
+        
+        kld_dev_scale = kld_func.get_kld_dev_scale(args, enc_dims[-1], args.kld_scale)
+        
+        encoder = CAEKldEnsembleMlp(enc_dims, mlp_dims, kld_dev_scale = kld_dev_scale)
         encoder_name = 'cae-kld-ensemble-mlp'
     elif args.encoder == 'triplet-mlp':
         enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
@@ -214,26 +422,37 @@ def main():
         enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
                             args.enc_hidden, NUM_CLASSES)
         mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
-        encoder = TripletKldEnsembleMlp(enc_dims, mlp_dims, kld_scale = args.kld_scale)
+        
+        kld_dev_scale = kld_func.get_kld_dev_scale(args, enc_dims[-1], args.kld_scale)
+        
+        encoder = TripletKldEnsembleMlp(enc_dims, mlp_dims, kld_dev_scale = kld_dev_scale)
         encoder_name = 'triplet-kld-ensemble-mlp'
     elif args.encoder == 'triplet-kld-only-mlp':
         enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
                             args.enc_hidden, NUM_CLASSES)
         mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
-        encoder = TripletKldOnlyMlp(enc_dims, mlp_dims, kld_scale = args.kld_scale)
+        
+        kld_dev_scale = kld_func.get_kld_dev_scale(args, enc_dims[-1], args.kld_scale)
+        
+        encoder = TripletKldOnlyMlp(enc_dims, mlp_dims, kld_dev_scale = kld_dev_scale)
         encoder_name = 'triplet-kld-only-mlp'
     elif args.encoder == 'cae-kld-only-mlp':
         enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
                             args.enc_hidden, NUM_CLASSES)
         mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
-        encoder = CAEKldOnlyMlp(enc_dims, mlp_dims, kld_scale = args.kld_scale)
+        
+        kld_dev_scale = kld_func.get_kld_dev_scale(args, enc_dims[-1], args.kld_scale)
+        
+        encoder = CAEKldOnlyMlp(enc_dims, mlp_dims, kld_dev_scale = kld_dev_scale)
         encoder_name = 'cae-kld-only-mlp'
     elif args.encoder == 'enc-kld-custom-mlp-only6':
         enc_dims = utils.get_model_dims('Encoder', NUM_FEATURES,
                             args.enc_hidden, NUM_CLASSES)
         mlp_dims = utils.get_model_dims('MLP', enc_dims[-1], args.mlp_hidden, BIN_NUM_CLASSES)
-        kld_dev_scale = kld_func.get_kld_dev_scale(args.centroid_type, enc_dims[-1], args.kld_scale)
-        encoder = EncKldCustomMlpOnly6(enc_dims, mlp_dims, kld_scale = args.kld_scale, kld_dev_scale = kld_dev_scale)
+        
+        kld_dev_scale = kld_func.get_kld_dev_scale(args, enc_dims[-1], args.kld_scale)
+        
+        encoder = EncKldCustomMlpOnly6(enc_dims, mlp_dims, kld_dev_scale = kld_dev_scale)
         encoder_name = 'enc-kld-custom-mlp-only6'
     else:
         raise Exception(f'The encoder {args.encoder} is not supported yet.')
@@ -337,6 +556,9 @@ def main():
     fam_out.write('Month\tNew\tFamily\tFNR\tCnt\n')
     stat_out = open(args.result.split('.csv')[0]+'_stat.csv', 'w')
     stat_out.write('date\tTotal\tTP\tTN\tFP\tFN\n')
+    if args.is_case_study:
+        case_gap_out = open(args.result.split('.csv')[0]+'_case_study_gap.csv', 'w')
+        case_gap_out.write('Month\tNew\tFam\ttoNorm\ttoMal\tGap\tFNR\tCnt\n')
     if args.is_for_no_drift == True:
         eval_classifier(args, classifier, args.train_start + 'to' + args.train_end, X_test_feat, y_test_binary, None, None, \
                     fout, fam_out, stat_out, gpu = cls_gpu, multi = args.eval_multi)
@@ -387,7 +609,6 @@ def main():
             strategy += '_local_pseudo_loss'
             strategy += f'_{args.reduce}'
             selector = LocalPseudoLossSelector(encoder) # this encoder was trained at above
-        # I don't know why encoder will be retrained #?
         if args.encoder_retrain == True: # True
             strategy += '_encretrain'
         strategy += f'_warm_{args.al_optimizer}_wlr{args.al_epochs}_we{args.warm_learning_rate}'
@@ -472,6 +693,11 @@ def main():
         y_test_pred, neg_by_fam, family_to_idx = eval_classifier(args, classifier, cur_month_str, X_test_feat, y_test_binary, all_test_family, train_families, \
                         fout, fam_out, stat_out, gpu = cls_gpu, multi = args.eval_multi)
         
+        if args.is_case_study == True:
+            with torch.no_grad():
+                eval_classifier_case_study(args, classifier, cur_month_str, X_train_final, y_train_final, y_train_binary_final, all_train_family, train_families, X_test_feat, y_test_pred, y_test_binary, all_test_family, \
+                        case_gap_out, gpu = cls_gpu, multi = args.eval_multi)
+        
         if args.accumulate_data == True and month_loop_cnt == 0:
             if cur_month_str == '2013-01':
                 y_test_pred_accum = y_test_pred
@@ -480,57 +706,66 @@ def main():
         elif month_loop_cnt == 0:
             y_test_pred_accum = y_test_pred
             
-        if args.is_only_test_eval_without_al:
+        if args.is_offline:
             cur_month += relativedelta(months=args.step_month)
             continue
         
-        if torch.cuda.is_available():
-            X_train_tensor = torch.from_numpy(X_train_final).float()
-            X_train_tensor = X_train_tensor.cuda()
-            kld_encoded_tensor, _, _, _, c_encoded_tensor = encoder.cuda().encode(X_train_tensor, is_all_return=True)
-            c_encoded = c_encoded_tensor.cpu().detach().numpy()
-            try:
-                kld_encoded = kld_encoded_tensor.cpu().detach().numpy()
-            except Exception as e:
-                pass
-            
+        with torch.no_grad():
+            if torch.cuda.is_available():
+                X_train_tensor = torch.from_numpy(X_train_final).float()
+                X_train_tensor = X_train_tensor.cuda()
+                
+                '''
+                kld_encoded_tensor, _, _, _, c_encoded_tensor = encoder.cuda().encode(X_train_tensor, is_all_return=True)
+                c_encoded = c_encoded_tensor.cpu().detach().numpy()
+                try:
+                    kld_encoded = kld_encoded_tensor.cpu().detach().numpy()
+                except Exception as e:
+                    pass
+                '''
         """
         Step (7): Pick samples. Expand the training set.
         """
         if args.al == True and cur_month != end:
-            if cls_gpu == True:
-                X_test_accum_feat_tensor = torch.from_numpy(X_test_accum_feat).float()
-                if torch.cuda.is_available():
-                    pred_scores_accum = classifier.cuda().predict_proba(X_test_accum_feat_tensor.cuda())
-                    pred_scores_accum = pred_scores_accum.cpu().detach().numpy()
+            
+            with torch.no_grad():
+                if cls_gpu == True:
+                    X_test_accum_feat_tensor = torch.from_numpy(X_test_accum_feat).float()
+                    if torch.cuda.is_available():
+                        pred_scores_accum = classifier.cuda().predict_proba(X_test_accum_feat_tensor.cuda())
+                        pred_scores_accum = pred_scores_accum.cpu().detach().numpy()
+                    else:
+                        pred_scores_accum = classifier.predict_proba(X_test_accum_feat_tensor)
                 else:
-                    pred_scores_accum = classifier.predict_proba(X_test_accum_feat_tensor)
-            else:
-                pred_scores_accum = classifier.predict_proba(X_test_accum_feat)
-            test_offset = prev_train_size
+                    pred_scores_accum = classifier.predict_proba(X_test_accum_feat)
+                test_offset = prev_train_size
             
-            if args.ood == True:
-                sample_indices, sample_scores = selector.select_samples(X_train, y_train, \
-                                                                X_test_accum, \
-                                                                args.count)
-            elif args.transcend == True:
-                sample_indices, sample_scores = selector.select_samples(X_train, y_train, \
-                                                                X_test_accum, \
-                                                                args.count)
-            elif args.unc == True:
-                sample_indices, sample_scores = selector.select_samples(args, X_test_feat, y_test_pred_accum, args.count)
-            elif args.local_pseudo_loss == True:
-                total_epochs = 10
-                sample_indices, sample_scores = selector.select_samples(args, \
-                                                                X_train, y_train, y_train_binary, \
-                                                                X_test_accum, y_test_pred_accum, \
-                                                                total_epochs, \
-                                                                test_offset, \
-                                                                all_test_family_accum, \
-                                                                args.count)
-            else:
-                raise ValueError('Unknown sampling method')
+            with torch.no_grad():
+                if args.ood == True:
+                    sample_indices, sample_scores = selector.select_samples(X_train_tensor, y_train, \
+                                                                    X_test_accum, \
+                                                                    args.count)
+                elif args.transcend == True:
+                    sample_indices, sample_scores = selector.select_samples(X_train, y_train, \
+                                                                    X_test_accum, \
+                                                                    args.count)
+                elif args.unc == True:
+                    sample_indices, sample_scores = selector.select_samples(args, X_test_feat, y_test_pred_accum, args.count)
+                elif args.local_pseudo_loss == True:
+                    total_epochs = 10
+                    sample_indices, sample_scores = selector.select_samples(args, \
+                                                                    X_train_tensor, y_train, y_train_binary, \
+                                                                    X_test_accum, y_test_pred_accum, \
+                                                                    total_epochs, \
+                                                                    test_offset, \
+                                                                    all_test_family_accum, \
+                                                                    args.count)
+                else:
+                    raise ValueError('Unknown sampling method')
             
+            del X_train_tensor
+            torch.cuda.empty_cache()
+                
             """
             Step (8): expand the training set: X_train, y_train, etc.
             """
@@ -678,6 +913,8 @@ def main():
     stat_out.close()
     # sample_score_out.close()
     sample_explanation.close()
+    if args.is_case_study:
+        case_gap_out.close()
     return
 
 if __name__ == "__main__":

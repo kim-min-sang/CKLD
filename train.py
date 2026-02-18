@@ -178,9 +178,6 @@ def train_encoder(args, encoder, X_train, y_train, y_train_binary,
                 pl_pretrain = False,
                 weight = None, is_first_train = None):
     
-    gc.collect()
-    torch.cuda.empty_cache()
-    
     device = (torch.device('cuda')
                 if torch.cuda.is_available()
                 else torch.device('cpu'))
@@ -198,7 +195,6 @@ def train_encoder(args, encoder, X_train, y_train, y_train_binary,
         weight_tensor = torch.from_numpy(weight).float()
     
     ckld_encoders = ['enc-kld-custom-mlp-ensemble6', 'cae-kld-ensemble-mlp', 'triplet-kld-ensemble-mlp', 'triplet-kld-only-mlp', 'enc-kld-custom-mlp-only6', 'cae-kld-only-mlp']
-    
     
     if args.encoder in ckld_encoders:
         train_data = data.CustomDataset(X_train_tensor, y_train_tensor, y_train_binary_cat_tensor, weight_tensor, mids_for_y_class=None)
@@ -286,6 +282,10 @@ def train_encoder_one_epoch(args, encoder, train_loader, optimizer, epoch, X_tra
     xent_multi_losses = AverageMeter()
     xent_bin_losses = AverageMeter()
     end = time.time()
+    
+    ablation_types = args.ablation_types
+    
+    torch.cuda.empty_cache()
 
     device = (torch.device('cuda')
                 if torch.cuda.is_available()
@@ -363,11 +363,8 @@ def train_encoder_one_epoch(args, encoder, train_loader, optimizer, epoch, X_tra
                 
         elif args.loss_func == 'triplet-mse-kld-ensemble-xent':
             features, x_origin, x_recon, z_mean, z_log_var, c_encoded, y_pred = encoder(x_batch)
-            two_x = kld_func.find_exponent_of_two(c_encoded.shape[1])
-            kld_dev_scale = math.sqrt(1/2) ** (two_x)
             
             TripletMseKldEnsembleXent = TripletMseKldEnsembleXentLoss().cuda() # reduce = mean
-            
             loss, supcon_loss, mse_loss, kld_loss, xent_loss, gap_loss = TripletMseKldEnsembleXent(args.cae_lambda, args.xent_lambda, args.mse_lambda, \
                                             y_pred, y_bin_batch, \
                                             features, c_encoded, labels = y_batch, \
@@ -376,7 +373,7 @@ def train_encoder_one_epoch(args, encoder, train_loader, optimizer, epoch, X_tra
                                             margin = args.margin, \
                                             margin_btw = args.margin_between_b_and_m, \
                                             weight = weight_batch, \
-                                            epoch = epoch, mids = mids, kld_dev_scale = kld_dev_scale, mids_for_y_class_batch = mids_for_y_class_batch)
+                                            epoch = epoch, mids = mids, kld_dev_scale = encoder.kld_dev_scale, mids_for_y_class_batch = mids_for_y_class_batch, ablation_types = ablation_types)
             
             # update metric
             losses.update(loss.item(), bsz)
@@ -511,12 +508,8 @@ def train_encoder_one_epoch(args, encoder, train_loader, optimizer, epoch, X_tra
         
         elif args.loss_func == 'triplet-kld-ensemble-xent':
             features, x_origin, z_mean, z_log_var, c_encoded, y_pred = encoder(x_batch)
-
-            two_x = kld_func.find_exponent_of_two(c_encoded.shape[1])
-            kld_dev_scale = math.sqrt(1/2) ** (two_x)
             
             TripletKldEnsembleXent = TripletKldEnsembleXentLoss().cuda() # reduce = mean
-            
             loss, supcon_loss, kld_loss, xent_loss, gap_loss = TripletKldEnsembleXent(args.triplet_lambda, args.xent_lambda, \
                                             y_pred, y_bin_batch, \
                                             features, c_encoded, labels = y_batch, \
@@ -525,7 +518,7 @@ def train_encoder_one_epoch(args, encoder, train_loader, optimizer, epoch, X_tra
                                             margin = args.margin, \
                                             margin_btw = args.margin_between_b_and_m, \
                                             weight = weight_batch, \
-                                            epoch = epoch, mids = mids, kld_dev_scale = kld_dev_scale, mids_for_y_class_batch = mids_for_y_class_batch)
+                                            epoch = epoch, mids = mids, kld_dev_scale = encoder.kld_dev_scale, mids_for_y_class_batch = mids_for_y_class_batch, ablation_types = ablation_types)
             
             # update metric
             losses.update(loss.item(), bsz)
@@ -614,7 +607,7 @@ def train_encoder_one_epoch(args, encoder, train_loader, optimizer, epoch, X_tra
                 margin_btw = args.margin_between_b_and_m, \
                 epoch = epoch, mids = mids, kld_beta = args.kld_beta, \
                 kld_weights = None, mids_for_y_class_batch = mids_for_y_class_batch,
-                kld_dev_scale = encoder.kld_dev_scale)
+                kld_dev_scale = encoder.kld_dev_scale, ablation_types = ablation_types)
             
             # update metric
             losses.update(loss.item(), bsz)
