@@ -1,0 +1,15 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	0	50	0	50	2	lockscreen,iconhider	packed,execdownload,lockscreen,robtes,resharer,clicks,smsreg,iconhider,styricka,ewind,adware,triada,smspay,benign
+2020-02	0	50	0	50	2	payvideo	hiddad,execdownload,smsreg,adware,packed,unknown,payvideo,wapron,virtualapp,infosteal,fakeapp,boogr,dnotua,benign
+2020-03	0	50	0	50	1	leadbolt	infosteal,leadbolt,robtes,packed,fakeapp,wapron,adware,payvideo,triada,smsreg,virtualapp,dnotua,spynote,resharer,clicks,benign
+2020-04	0	50	0	50	1	fakeinst	robtes,packed,adware,fakeapp,smsreg,infosteal,spyware,clicks,wapron,execdownload,hiddad,smspay,resharer,fakeinst,dnotua,benign
+2020-05	0	50	0	50	4	mobby,generickdz	robtes,hiddad,infosteal,wapron,packed,smsreg,mobby,adware,ewind,boogr,resharer,tool,execdownload,generickdz,benign
+2020-06	0	50	0	50	2	fakeadblocker,vuad	robtes,adware,joker,dnotua,fakeadblocker,packed,infosteal,smsreg,execdownload,hiddad,jocker,resharer,ransomware,fakeapp,tool,vuad,clicks,styricka,benign
+2020-07	0	50	0	50	1	hiddenapp	adware,hiddenapp,mobby,fakeadblocker,ewind,styricka,execdownload,infosteal,tool,benign
+2020-08	0	50	0	50	0		adware,execdownload,jocker,ewind,infosteal,benign
+2020-09	0	50	0	50	3	funpay	hiddad,execdownload,hiddenads,adware,infosteal,packed,funpay,linux,hqwar,windows,benign
+2020-10	0	50	0	50	1	fakecop	execdownload,joker,adware,dnotua,smspay,hqwar,infosteal,fakecop,ewind,fakeadblocker,benign
+2020-11	0	50	0	50	0		execdownload,packed,ewind,adware,mobtool,fakeadblocker,infosteal,fakecop,smspay,benign
+2020-12	0	50	0	50	41	geinimi	geinimi,adware,windows,ewind,packed,infosteal,spyware,clicks,benign
+2021-01	0	50	0	50	1	kmin	adware,kmin,execdownload,infosteal,packed,geinimi,unknown,server,benign
+2021-02	9	41	9	41	0		fakeapp,infosteal,adware,joker,ransomware,smsreg,smspay,execdownload,packed,spyware,spyagent,jocker,benign

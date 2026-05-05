@@ -1,7 +1,7 @@
 
 SCH=step
 DECAY=0.5
-DATA=gen_androzoo_drebin
+DATA=androzoo
 TRAIN_START=2019-01
 TRAIN_END=2019-12
 TEST_START=2020-01

@@ -175,7 +175,7 @@ class TripletSampler(Sampler):
         n = len(self.all_indices) # 30533
         perm_indices = torch.randperm(n).numpy()
         i = 0 # index the idx_list # anchor, pos, neg index
-        k = 0 # index the perm_indices # anchor 기준 index
+        k = 0 # index the perm_indices # anchor based index
         for bcnt in range(num_iters):
             if bcnt < num_iters - 1:
                 step =  self.length_of_single_pass

@@ -668,3 +668,122 @@ def train_encoder_one_epoch(args, encoder, train_loader, optimizer, epoch, X_tra
     
         
     return losses.avg
+
+
+def train_classifier(args, classifier, X_train, y_train, y_train_binary, 
+                    optimizer, total_epochs, model_path,
+                    weight = None, multi = False,
+                    save_best_loss = False,
+                    save_snapshot = False):
+    # contruct the dataset loader
+    # y_train is multi-class, y_train_binary is binary class
+    X_train_tensor = torch.from_numpy(X_train).float()
+    y_train_tensor = torch.from_numpy(y_train).long()
+    if weight is None:
+        weight_tensor = torch.ones(X_train_tensor.shape[0])
+    else:
+        weight_tensor = torch.from_numpy(weight).float()
+
+    if multi == False:
+        y_train_binary_cat_tensor = torch.from_numpy(to_categorical(y_train_binary)).float()
+        train_data = TensorDataset(X_train_tensor, y_train_tensor, y_train_binary_cat_tensor, weight_tensor)
+        train_loader = DataLoader(dataset=train_data, batch_size=args.mlp_batch_size, shuffle=True)
+    else:
+        y_train_cat_tensor = torch.from_numpy(to_categorical(y_train)).float()
+        train_data = TensorDataset(X_train_tensor, y_train_tensor, y_train_cat_tensor, weight_tensor)
+        # train_loader = DataLoader(dataset=train_data, batch_size=args.mlp_batch_size, shuffle=True)
+        if args.sampler == 'mperclass':
+            bsize = args.sample_per_class * len(np.unique(y_train))
+            train_loader = DataLoader(dataset=train_data, batch_size=bsize, \
+                sampler = MPerClassSampler(y_train, args.sample_per_class))
+        elif args.sampler == 'proportional':
+            bsize = args.mlp_batch_size
+            train_loader = DataLoader(dataset=train_data, batch_size=bsize, \
+                sampler = ProportionalClassSampler(y_train, args.min_per_class, bsize))
+        elif args.sampler == 'random':
+            bsize = args.mlp_batch_size
+            train_loader = DataLoader(dataset=train_data, batch_size=bsize, shuffle=True)
+        else:
+            raise Exception(f'Sampler {args.sampler} not implemented yet.')
+
+    best_loss = np.inf
+    for epoch in range(1, total_epochs + 1):
+        # train one epoch
+        time1 = time.time()
+        loss = train_classifier_one_epoch(args, classifier, train_loader,
+                                        optimizer, epoch, multi = multi)
+        time2 = time.time()
+        for param_group in optimizer.param_groups:
+            new_lr = param_group['lr']
+            break
+        logging.info('epoch {}, b {}, lr {}, loss {}, total time {:.2f}'.format(epoch, args.mlp_batch_size, new_lr, loss, time2 - time1))
+
+        if save_best_loss == True:
+            if loss < best_loss:
+                best_loss = loss
+                logging.info(f'Saving the best loss {loss} model from epoch {epoch}...')
+                save_model(classifier, optimizer, args, args.epochs, model_path)
+        
+        if save_snapshot == True and epoch % 25 == 0:
+            save_path = model_path.replace("e%s" % total_epochs, "e%d" % epoch)
+            logging.info(f'Saving the model from epoch {epoch} loss {loss} at {save_path}...')
+            save_model(classifier, optimizer, args, args.epochs, save_path)
+    
+    return
+
+def train_classifier_one_epoch(args, classifier, train_loader, optimizer, epoch, multi = False):
+    """ Train one epoch for the model """
+    batch_time = AverageMeter()
+    data_time = AverageMeter()
+    losses = AverageMeter()
+    end = time.time()
+
+    device = (torch.device('cuda')
+                if torch.cuda.is_available()
+                else torch.device('cpu'))
+    classifier = classifier.to(device)
+
+    idx = 0
+    for idx, (x_batch, y_batch, y_cat_batch, weight_batch) in enumerate(train_loader):
+        data_time.update(time.time() - end)
+
+        x_batch = x_batch.to(device)
+        y_batch = y_batch.to(device)
+        y_cat_batch = y_cat_batch.to(device)
+        weight_batch = weight_batch.to(device)
+
+        bsz = y_batch.shape[0]
+
+        if multi == False:
+            y_pred = classifier.predict_proba(x_batch)[:, 1]
+            target = y_cat_batch[:, 1]
+            loss_ele = torch.nn.functional.binary_cross_entropy(y_pred, target, reduction = 'none')
+            loss = loss_ele * weight_batch
+            loss = loss.mean()
+        else:
+            y_multi_pred = classifier.predict_proba(x_batch)
+            loss = torch.nn.functional.cross_entropy(y_multi_pred, y_batch)
+        
+        # update metric
+        losses.update(loss.item(), bsz)
+
+        # SGD
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+        
+        # measure elapsed time
+        batch_time.update(time.time() - end)
+        end = time.time()
+
+        # print info, print every mlp_display_interval batches.
+        if (idx + 1) % args.mlp_display_interval == 0:
+            logging.info('Train: [{0}][{1}/{2}]\t'
+                'BT {batch_time.val:.3f} ({batch_time.avg:.3f})  '
+                'DT {data_time.val:.3f} ({data_time.avg:.3f})  '
+                'loss {loss.val:.4f} ({loss.avg:.4f})'.format(
+                epoch, idx + 1, len(train_loader), batch_time=batch_time,
+                data_time=data_time,
+                loss=losses))
+        
+    return losses.avg

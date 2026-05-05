@@ -111,8 +111,28 @@ def parse_args():
 
     # encoder model
     p.add_argument('--encoder', default=None, \
-                    choices=['cae', 'enc', 'mlp', \
-                            'simple-enc-mlp', 'enc-kld-custom-mlp-ensemble2', 'enc-vae-custom-mlp-ensemble3', 'enc-kld-custom-mlp-ensemble4', 'cae-kld-ensemble-mlp', 'cae-mlp', 'enc-kld-custom-mlp-ensemble5', 'enc-kld-custom-mlp-ensemble6', 'enc-kld-custom-mlp-ensemble7', 'enc-kld-custom-mlp-ensemble8', 'triplet-mlp', 'triplet-kld-ensemble-mlp', 'triplet-kld-only-mlp', 'enc-kld-custom-mlp-only6', 'cae-kld-only-mlp'], \
+                    choices=['cae', 
+                             'enc', 
+                             'mlp', 
+                             'simple-enc-mlp', 
+                             
+                             'ae-mlp',
+                             'vae-mlp',
+                             
+                             'enc-kld-custom-mlp-ensemble2', 
+                             'enc-vae-custom-mlp-ensemble3', 
+                             'enc-kld-custom-mlp-ensemble4', 
+                             'cae-kld-ensemble-mlp', 
+                             'cae-mlp', 
+                             'enc-kld-custom-mlp-ensemble5', 
+                             'enc-kld-custom-mlp-ensemble6', 
+                             'enc-kld-custom-mlp-ensemble7', 
+                             'enc-kld-custom-mlp-ensemble8', 
+                             'triplet-mlp', 
+                             'triplet-kld-ensemble-mlp', 
+                             'triplet-kld-only-mlp', 
+                             'enc-kld-custom-mlp-only6', 
+                             'cae-kld-only-mlp'], \
                     help='The encoder model to get embeddings of the input.')
     p.add_argument('--encoder-retrain', action='store_true',
                    help='Whether to train the encoder again.')
@@ -121,18 +141,34 @@ def parse_args():
 
     # classifier
     p.add_argument('-c', '--classifier', default='svm',
-                   choices=['mlp', 'svm', 'gbdt', \
-                            'simple-enc-mlp', 'enc-kld-custom-mlp-ensemble2', 'enc-vae-custom-mlp-ensemble3', 'enc-kld-custom-mlp-ensemble4','cae-kld-ensemble-mlp', 'cae-mlp', 'enc-kld-custom-mlp-ensemble5', 'enc-kld-custom-mlp-ensemble6', 'enc-kld-custom-mlp-ensemble7', 'enc-kld-custom-mlp-ensemble8', 'triplet-mlp', 'triplet-kld-ensemble-mlp', 'triplet-kld-only-mlp', 'enc-kld-custom-mlp-only6', 'cae-kld-only-mlp'],
+                   choices=['mlp', 
+                            'svm', 
+                            'xgb',
+                            'simple-enc-mlp', 
+                            'enc-kld-custom-mlp-ensemble2', 
+                            'enc-vae-custom-mlp-ensemble3', 
+                            'enc-kld-custom-mlp-ensemble4',
+                            'cae-kld-ensemble-mlp', 
+                            'cae-mlp', 
+                            'enc-kld-custom-mlp-ensemble5', 
+                            'enc-kld-custom-mlp-ensemble6', 
+                            'enc-kld-custom-mlp-ensemble7', 
+                            'enc-kld-custom-mlp-ensemble8', 
+                            'triplet-mlp', 
+                            'triplet-kld-ensemble-mlp', 
+                            'triplet-kld-only-mlp', 
+                            'enc-kld-custom-mlp-only6', 
+                            'cae-kld-only-mlp'],
                    help='The target classifier to use.')
     p.add_argument('--svm-c', default=1.0, type=float,
                    help='Regularization parameter for SVM.' \
                     'The strength of the regularization is inversely proportional to C.')
     p.add_argument('--max_depth', default=6, type=int,
-                   help='GBDT: max_depth in the tree ensemble.')
+                   help='XGBoost: max_depth in the tree ensemble.')
     p.add_argument('--num_round', default=10, type=int,
-                   help='GBDT: number of boosting rounds / trees.')
+                   help='XGBoost: number of boosting rounds / trees.')
     p.add_argument('--eta', default=0.3, type=float,
-                help='GBDT: learning rate.')
+                help='XGBoost: learning rate.')
     
     # arguments for the SVM classifier.
     p.add_argument('--multi_class', action='store_true', help='train multi-class.')

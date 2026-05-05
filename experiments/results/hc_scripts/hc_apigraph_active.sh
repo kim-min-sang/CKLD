@@ -9,7 +9,7 @@
 SCH=step
 DECAY=0.95
 
-DATA=gen_apigraph_drebin
+DATA=apigraph
 TRAIN_START=2012-01
 TRAIN_END=2012-12
 TEST_START=2013-01
@@ -110,8 +110,8 @@ nohup python -u relabel.py	                                \
             --local_pseudo_loss                             \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/results/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${CSV_NAME}.csv \
-            --log_path experiments/results/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log \
-            >> experiments/results/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log 2>&1 &
+            --result experiments/results/${RESULT_DIR}/${ENCODER}_${DATA}_${CENTROID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${CSV_NAME}.csv \
+            --log_path experiments/results/${RESULT_DIR}/${ENCODER}_${DATA}_${CENTROID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log \
+            >> experiments/results/${RESULT_DIR}/${ENCODER}_${DATA}_${CENTROID_TYPE}_active_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_${AL_OPT}_wlr${WLR}_we${WE}_test_${TEST_START}_${TEST_END}_cnt${CNT}_${TS}.log 2>&1 &
 
 wait

@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	38	12	33	17	1	iconhider	dnotua,benign,triada,execdownload,adware,umpay,syringe,iconhider,packed,virtualapp
+2020-02	27	23	18	32	3	congur,kuguo,yuanpay	virtualapp,adware,hiddad,dnotua,execdownload,yuanpay,benign,smsreg,triada,spyware,kuguo,congur
+2020-03	46	4	35	15	0		infosteal,benign,execdownload,smsreg,cyfin,adware
+2020-04	45	5	28	22	0		benign,infosteal,wapron,robtes,dnotua,fakeapp,spyware,execdownload
+2020-05	41	9	36	14	1	fakeadblocker	benign,hiddad,adware,smforw,infosteal,fakeadblocker,packed,resharer,execdownload,boogr
+2020-06	39	11	31	19	1	teddad	infosteal,benign,hiddad,dnotua,hqwar,execdownload,packed,resharer,jocker,teddad,fakeadblocker,fakeapp,smsreg,adware
+2020-07	46	4	38	12	1	hiddenapp	benign,execdownload,adware,hiddenapp,styricka,fakeadblocker,infosteal
+2020-08	47	3	32	18	0		adware,benign,infosteal
+2020-09	42	8	33	17	0		hiddad,benign,infosteal,adware,hqwar,fakeadblocker,mobidash
+2020-10	44	6	34	16	3	fakecop,multiple	benign,execdownload,adware,fakeadblocker,infosteal,multiple,fakecop,dnotua
+2020-11	31	19	22	28	0		benign,ewind,adware,infosteal,fakeadblocker
+2020-12	29	21	9	41	36	geinimi	geinimi,adware,benign,packed
+2021-01	38	12	37	13	7	droidkungfu,droiddreamlight	geinimi,benign,droidkungfu,droiddreamlight
+2021-02	43	7	37	13	0		benign,adware,spyagent,ransomware,infosteal
+2021-03	47	3	47	3	0		benign,adware,blacklister,infosteal
+2021-04	40	10	40	10	3	ibec,polph	benign,execdownload,ibec,infosteal,polph,resharer,packed
+2021-05	44	6	41	9	2	fakedoc,twmobo	benign,boogr,wroba,adware,packed,joker,execdownload,fakedoc,twmobo,fakeapp
+2021-06	44	6	39	11	2	lockscreen	benign,lockscreen,infosteal,execdownload,triada,joker
+2021-07	47	3	45	5	1	exploit	lockscreen,benign,exploit,execdownload
+2021-08	45	5	44	6	0		benign,clicks,infosteal,blacklister,execdownload,spyware
+2021-09	43	7	41	9	0		benign,execdownload,infosteal
+2021-10	48	2	44	6	0		benign,execdownload,infosteal,hqwar
+2021-11	46	4	43	7	0		benign,wroba,piom,infosteal,spyware,smsreg

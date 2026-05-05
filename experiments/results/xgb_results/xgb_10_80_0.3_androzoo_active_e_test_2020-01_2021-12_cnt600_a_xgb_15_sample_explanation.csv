@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	585	15	507	93	18	lockscreen,iconhider,cimsci	execdownload,benign,umpay,iconhider,windows,virtualapp,packed,lockscreen,adware,triada,syringe,fakeapp,dnotua,ewind,clicks,styricka,spyware,spymax,resharer,cimsci,smsreg,hiddad,wapron
+2020-02	439	161	366	234	5	goldeneagle,glodeagl,yuanpay,kuguo,congur	hiddad,virtualapp,execdownload,benign,goldeneagle,glodeagl,clicks,infosteal,kuguo,adware,spyware,ewind,hiddapp,triada,dnotua,unknown,styricka,congur,fakeapp,yuanpay,smsreg,shedun
+2020-03	575	25	507	93	1	leadbolt	benign,infosteal,adware,wapron,ewind,spynote,execdownload,resharer,smsreg,hiddad,ransomware,booster,fakeapp,packed,hypay,styricka,spyware,dnotua,virtualapp,boogr,triada,cyfin,leadbolt,tool,clicks,unknown
+2020-04	582	18	465	135	1	fakeinst	benign,resharer,execdownload,adware,glodeagl,goldeneagle,infosteal,spynote,spyware,robtes,clicks,smforw,lockscreen,hiddad,fakeapp,smsreg,fakeinst,wapron,unknown,packed,tool,sandr,boogr
+2020-05	578	22	399	201	27	mobilehunter,fakeadblocker,cerberus,mobby,gsreg	benign,execdownload,hiddad,infosteal,hqwar,resharer,adware,ewind,smforw,boogr,fakeapp,smsreg,mobby,unknown,dnotua,gsreg,mobilehunter,packed,fakeadblocker,styricka,wapron,cerberus,spymax,tool
+2020-06	562	38	470	130	3	vuad,teddad,funpay	adware,infosteal,benign,execdownload,hqwar,spyware,smforw,wroba,fakeapp,boogr,ewind,vuad,styricka,spynote,dnotua,hiddad,packed,teddad,fakeadblocker,ramnit,smsreg,ransomware,jocker,wapron,mobtool,resharer,joker,blacklister,unknown,tool,funpay,smspay,mobok,clicks
+2020-07	326	274	140	460	3	hiddenapp,simpo	execdownload,benign,mobby,adware,simpo,ewind,infosteal,smforw,hiddenads,styricka,spyware,hiddenapp,fakeadblocker,mobtool,wapron
+2020-08	587	13	143	457	0		benign,infosteal,execdownload,adware,mobby,ewind,spyware,jocker,hqwar,blacklister,joker,styricka
+2020-09	415	185	351	249	7	vmvol,mcalprotect,monitorminor,smsfactory,rogueware	execdownload,vmvol,infosteal,benign,adware,ewind,hiddenads,mcalprotect,hqwar,hiddad,windows,smforw,mobidash,jocker,rogueware,mobby,fakeadblocker,packed,linux,monitorminor,resharer,funpay,smssend,smsfactory
+2020-10	535	65	434	166	5	multiple,fakecop	execdownload,infosteal,hqwar,fakecop,boogr,benign,spyware,unknown,multiple,smforw,brata,adware,ewind,dnotua,blacklister,fakeadblocker,joker,linux
+2020-11	594	6	475	125	0		execdownload,infosteal,benign,fakecop,boogr,ewind,adware,smforw,fakeadblocker,mobtool,joker,smsreg,styricka,smspay
+2020-12	595	5	242	358	310	geinimi	adware,benign,execdownload,geinimi,packed,windows,spynote,smforw,ewind,infosteal,hiddad
+2021-01	568	32	194	406	9	droidkungfu,droiddreamlight	benign,geinimi,execdownload,adware,ewind,hiddad,droiddreamlight,droidkungfu,spyware,windows,smforw,brata,server,infosteal,blacklister,packed,jocker
+2021-02	382	21	362	41	0		benign,spyware,spyagent,adware,joker,infosteal,jocker,execdownload,fakeapp,packed,smspay,ransomware,smsreg
+2021-03	564	36	480	120	10	gustuff	execdownload,infosteal,benign,adware,mobby,ewind,spyware,blacklister,joker,jocker,smsreg,fakeapp,gustuff,clicks,packed
+2021-04	587	13	527	73	5	ibec,polph	infosteal,benign,execdownload,adware,polph,packed,resharer,smsthief,joker,fakeapp,spymax,ibec,clicks
+2021-05	577	23	532	68	3	fakedoc,ogel,twmobo	benign,execdownload,infosteal,server,ogel,smforw,boogr,polph,joker,fakedoc,unknown,wroba,spynote,adware,smspay,twmobo,packed,jocker,clicks,fakeapp
+2021-06	440	19	415	44	0		benign,execdownload,infosteal,droidkungfu,adware,lockscreen,packed,triada,joker,jocker,smspay,hiddad
+2021-07	577	23	362	238	2	exploit	benign,droidkungfu,execdownload,exploit,spynote,adware,infosteal,lockscreen,packed,wapron,spyware,sandr,piom,jocker
+2021-08	551	49	436	164	0		benign,adware,spynote,spyware,unknown,infosteal,execdownload,smsreg,clicks,blacklister
+2021-09	555	45	520	80	0		benign,execdownload,infosteal,hiddad,wroba,adware,packed,piom,styricka
+2021-10	599	1	482	118	0		benign,infosteal,execdownload,smsreg,hqwar,wroba
+2021-11	465	12	423	54	0		execdownload,benign,infosteal,wroba,piom,server,unknown,spyware,smsreg,clicks,wapron,packed,adware

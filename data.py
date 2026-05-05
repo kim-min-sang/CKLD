@@ -11,7 +11,7 @@ import os
 import torch
 import math
 from collections import Counter
-
+import joblib
 
 
 def load_range_dataset_w_benign(
@@ -24,11 +24,15 @@ def load_range_dataset_w_benign(
     saved_data_file = os.path.join(
         folder, data_name, f'{dataset_name}_selected.npz'
     )
-
+    
     data = np.load(saved_data_file, allow_pickle=True)
     X_train = data['X_train']
     y_train = data['y_train']
     y_mal_family = data['y_mal_family']
+    
+    if data_name == 'bodmas':
+        robust_minmax_scaler = joblib.load("data/bodmas/scalers/bodmas_robust_minmax_scaler_for_2train.pkl")
+        X_train = robust_minmax_scaler.transform(X_train)
         
     return X_train, y_train, y_mal_family
 

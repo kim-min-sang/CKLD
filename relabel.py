@@ -15,7 +15,9 @@ from dateutil.relativedelta import relativedelta
 #from pprint import pformat
 #from sklearn.calibration import CalibratedClassifierCV
 from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.calibration import CalibratedClassifierCV
 from sklearn.svm import LinearSVC
+from joblib import dump
 from collections import Counter, defaultdict
 # local imports
 import data
@@ -25,12 +27,15 @@ from common import get_model_stats
 #from common import draw_tsne,draw_tsne_concat,draw_tsne_split
 from model import SimpleEncClassifier
 from model import EncKldCustomMlpEnsemble6, CAEKldEnsembleMlp, CAEMlp, TripletMlp, TripletKldEnsembleMlp,TripletKldOnlyMlp, CAEKldOnlyMlp, EncKldCustomMlpOnly6
+from model import MLPClassifier
+from xgboost_wrapper import xgboost_wrapper
+import xgboost as xgb
 
 from selector_pseudo_loss import LocalPseudoLossSelector
 from selector_cadeood import OODSelector, OODKldEnsembleSelector
 from selector_simple import UncertainPredScoreSelector
 from utils import save_model
-from train import train_encoder
+from train import train_encoder, train_classifier
 from sklearn.model_selection import train_test_split
 
 from common import to_categorical
@@ -52,7 +57,7 @@ def eval_classifier(args, classifier, cur_month_str, X, y_binary, y_family, trai
         y_pred_bin = np.where(y_pred == 0, 0, 1)
     else:
         y_pred_bin = y_pred
-
+        
     tpr, tnr, fpr, fnr, acc, precision, f1 = get_model_stats(y_binary, y_pred_bin, multi_class = multi)
     fout.write('%s\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\t%.4f\n' % \
                 (cur_month_str, tpr, tnr, fpr, fnr, acc, precision, f1))
@@ -459,25 +464,27 @@ def main():
 
     MODEL_DIR = os.path.join(SAVED_MODEL_FOLDER, train_dataset_name)
     utils.create_folder(MODEL_DIR)
-    if args.optimizer == 'adam':
-        optimizer_func = torch.optim.Adam
-        optimizer = torch.optim.Adam(encoder.parameters(), lr=args.learning_rate)
-    elif args.optimizer == 'sgd':
-        optimizer_func = torch.optim.SGD
-        optimizer = torch.optim.SGD(encoder.parameters(), lr=args.learning_rate)
-    else:
-        raise Exception(f'The optimizer {args.optimizer} is not supported yet.')
     
-    enc_dims_str = str(enc_dims).replace(' ', '').replace(',', '-').replace('[', '').replace(']', '') 
-    
-    ENC_MODEL_PATH = os.path.join(MODEL_DIR, f'{encoder_name}_{args.centroid_type}_{enc_dims_str}_{args.loss_func}' + \
-                                f'_xent{args.xent_lambda}' + \
-                                f'_mselambda{args.mse_lambda}' + \
-                                f'_caelambda{args.cae_lambda}' + \
-                                f'_{args.optimizer}_{args.scheduler}' + \
-                                f'_lr{args.learning_rate}_decay{args.lr_decay_rate}' + \
-                                f'_{args.sampler}_b{args.bsize}_e{args.epochs}.pth')
-    logging.info(f'Initial encoder model: ENC_MODEL_PATH {ENC_MODEL_PATH}')
+    if args.encoder != None:
+        if args.optimizer == 'adam':
+            optimizer_func = torch.optim.Adam
+            optimizer = torch.optim.Adam(encoder.parameters(), lr=args.learning_rate)
+        elif args.optimizer == 'sgd':
+            optimizer_func = torch.optim.SGD
+            optimizer = torch.optim.SGD(encoder.parameters(), lr=args.learning_rate)
+        else:
+            raise Exception(f'The optimizer {args.optimizer} is not supported yet.')
+        
+        enc_dims_str = str(enc_dims).replace(' ', '').replace(',', '-').replace('[', '').replace(']', '') 
+        
+        ENC_MODEL_PATH = os.path.join(MODEL_DIR, f'{encoder_name}_{args.centroid_type}_{enc_dims_str}_{args.loss_func}' + \
+                                    f'_xent{args.xent_lambda}' + \
+                                    f'_mselambda{args.mse_lambda}' + \
+                                    f'_caelambda{args.cae_lambda}' + \
+                                    f'_{args.optimizer}_{args.scheduler}' + \
+                                    f'_lr{args.learning_rate}_decay{args.lr_decay_rate}' + \
+                                    f'_{args.sampler}_b{args.bsize}_e{args.epochs}.pth')
+        logging.info(f'Initial encoder model: ENC_MODEL_PATH {ENC_MODEL_PATH}')
 
     X_train_final = X_train
     y_train_final = y_train
@@ -504,27 +511,28 @@ def main():
         logging.info(f'After removing singleton families: X_train_final.shape, {X_train_final.shape}, y_train_final.shape, {y_train_final.shape}')
         logging.info(f'After removing singleton families: {Counter(y_train_final)}')
 
-    try:
-        if args.retrain_first == True or not os.path.exists(ENC_MODEL_PATH):
-            s1 = time.time()
-            train_encoder_func(args, encoder, X_train_final, y_train_final, y_train_binary_final, \
-                            optimizer, args.epochs, ENC_MODEL_PATH, adjust = True, save_best_loss = False, \
-                            save_snapshot = args.snapshot, is_first_train = True)
-            e1 = time.time()
-            logging.info(f'Training Encoder model time: {(e1 - s1):.3f} seconds')
-            logging.info('Saving the model...')
-            save_model(encoder, optimizer, args, args.epochs, ENC_MODEL_PATH)
-            logging.info(f'Training Encoder model finished: {ENC_MODEL_PATH}')
-        else:
-            logging.info('Loading the model...')
-            state_dict = torch.load(ENC_MODEL_PATH)
-            encoder.load_state_dict(state_dict['model'])
-    except Exception as e:
-        print(e)
-        import traceback
-        traceback.print_exc()
-        time.sleep(3)
-        return False
+    if args.encoder != None:
+        try:
+            if args.retrain_first == True or not os.path.exists(ENC_MODEL_PATH):
+                s1 = time.time()
+                train_encoder_func(args, encoder, X_train_final, y_train_final, y_train_binary_final, \
+                                optimizer, args.epochs, ENC_MODEL_PATH, adjust = True, save_best_loss = False, \
+                                save_snapshot = args.snapshot, is_first_train = True)
+                e1 = time.time()
+                logging.info(f'Training Encoder model time: {(e1 - s1):.3f} seconds')
+                logging.info('Saving the model...')
+                save_model(encoder, optimizer, args, args.epochs, ENC_MODEL_PATH)
+                logging.info(f'Training Encoder model finished: {ENC_MODEL_PATH}')
+            else:
+                logging.info('Loading the model...')
+                state_dict = torch.load(ENC_MODEL_PATH)
+                encoder.load_state_dict(state_dict['model'])
+        except Exception as e:
+            print(e)
+            import traceback
+            traceback.print_exc()
+            time.sleep(3)
+            return False
 
     """
     Select the classifier model.
@@ -546,6 +554,58 @@ def main():
         classifier = encoder
         CLS_MODEL_PATH = ENC_MODEL_PATH
         cls_gpu = True
+    elif args.classifier == 'svm':
+        ### Train a binary-class linear classifier
+        classifier = CalibratedClassifierCV(LinearSVC(random_state=0, max_iter=10000, C=args.svm_c)).fit(X_train_feat, y_train_binary)
+        MODEL_DIR = os.path.join(SAVED_MODEL_FOLDER, train_dataset_name)
+        CLS_MODEL_PATH = os.path.join(MODEL_DIR, f'svm_classifier_{args.cls_feat}_c{args.svm_c}_{args.mdate}.joblib')
+        logging.info(f'Saving linear SVM model to {CLS_MODEL_PATH}...')
+        dump(classifier, CLS_MODEL_PATH)
+        cls_gpu = False
+        
+    elif args.classifier == 'xgb':
+        # assume binary
+        dtrain = xgb.DMatrix(X_train_feat, label=y_train_binary)
+        param = {'objective': 'binary:logistic', 'max_depth': args.max_depth, 'eta': args.eta, 'eval_metric': ['error', 'logloss']}
+        evallist = [(dtrain, 'train'), ]
+        xgbmodel = xgb.train(param, dtrain, num_boost_round = args.num_round, \
+                            evals = evallist)
+        classifier = xgboost_wrapper(xgbmodel, binary = True)
+        CLS_MODEL_PATH = os.path.join(MODEL_DIR, f'xgb_{args.cls_feat}_maxdepth{args.max_depth}_round{args.num_round}_eta{args.eta}_{args.mdate}.json')
+        logging.info(f'Saving XGBoost model to {CLS_MODEL_PATH}...')
+        xgbmodel.save_model(CLS_MODEL_PATH)
+        cls_gpu = False
+        
+    elif args.classifier == 'mlp':
+        output_dim = BIN_NUM_CLASSES
+        mlp_dims = utils.get_model_dims('MLP', NUM_FEATURES, args.mlp_hidden, output_dim)
+        classifier = MLPClassifier(mlp_dims)
+        
+        # set Adam optimizer
+        mlp_optimizer = torch.optim.Adam(classifier.parameters(), lr=args.mlp_lr)
+
+        MODEL_DIR = os.path.join(SAVED_MODEL_FOLDER, train_dataset_name)
+        utils.create_folder(MODEL_DIR)
+        mlp_dims_str = str(mlp_dims).replace(' ', '').replace(',', '-').replace('[', '').replace(']', '') # remove extra symbols
+
+        CLS_MODEL_PATH = os.path.join(MODEL_DIR, f'MLP_{mlp_dims_str}_feat_{args.cls_feat}' + \
+                                    f'_dropout{args.mlp_dropout}' + \
+                                    f'_lr{args.mlp_lr}' + \
+                                    f'_b{args.mlp_batch_size}_e{args.mlp_epochs}_mdate{args.mdate}.pth')
+        logging.info(f'Initial MLP Classifier model: CLS_MODEL_PATH {CLS_MODEL_PATH}')
+        cls_gpu = True
+        
+        if args.cls_retrain == 1 or not os.path.exists(CLS_MODEL_PATH):
+            s1 = time.time()
+            train_classifier(args, classifier, X_train_feat, y_train, \
+                            y_train_binary, mlp_optimizer, args.mlp_epochs, \
+                            CLS_MODEL_PATH, save_best_loss = False, multi = args.multi_class)
+            e1 = time.time()
+            logging.info(f'Training Classifier model time: {(e1 - s1):.3f} seconds')
+            logging.info('Saving the model...')
+            save_model(classifier, mlp_optimizer, args, args.mlp_epochs, CLS_MODEL_PATH)
+            logging.info(f'Training Classifier model finished: {CLS_MODEL_PATH}')
+        
     else:
         raise Exception(f'The classifier {args.classifier} is not supported yet.')
 
@@ -611,7 +671,12 @@ def main():
             selector = LocalPseudoLossSelector(encoder) # this encoder was trained at above
         if args.encoder_retrain == True: # True
             strategy += '_encretrain'
-        strategy += f'_warm_{args.al_optimizer}_wlr{args.al_epochs}_we{args.warm_learning_rate}'
+        
+        # cold or warm setup
+        if args.cold_start == True:
+            strategy += '_cold'
+        else:
+            strategy += f'_warm_{args.al_optimizer}_wlr{args.al_epochs}_we{args.warm_learning_rate}'
         strategy += f'_count{args.count}'
 
         if args.encoder != None:
@@ -769,6 +834,62 @@ def main():
             """
             Step (8): expand the training set: X_train, y_train, etc.
             """
+            
+            
+            cnt = 0
+            correct_pred = 0
+            wrong_pred = 0
+            fam_dict = defaultdict(lambda: 0)
+
+            for idx in sample_indices:
+                try:
+                    fam_label = all_test_family_accum[idx]
+                except IndexError:
+                    fam_label = 'benign'
+
+                true_label = y_test_binary_accum[idx]
+                pred_label = int(y_test_pred_accum[idx])
+                
+                if args.classifier == 'xgb':
+                    pred_score = pred_scores_accum[idx]
+                else:
+                    pred_score = pred_scores_accum[idx][pred_label]
+
+                sample_out.write('%s\t%d\t%d\t%s\t%.4f\t%s\t%.4f\n' % (
+                    cur_month_str, cnt, idx, true_label, pred_score, fam_label, sample_scores[idx]
+                ))
+
+                logging.info(f'{idx}, {fam_label}, {true_label}, {pred_label}, {pred_score}')
+
+                if true_label == pred_label:
+                    correct_pred += 1
+                else:
+                    wrong_pred += 1
+
+                fam_dict[fam_label] += 1
+                cnt += 1
+
+            sample_out.flush()
+
+            benign_num = fam_dict['benign']
+            mal_num = cnt - benign_num
+            new_families_lst = list(set(fam_dict.keys()) - set(all_train_family.flatten()))
+            uniq_families_lst = list(fam_dict.keys())
+            uniq_families = ",".join(uniq_families_lst)
+
+            new_fam_cnt = 0
+            for fam in new_families_lst:
+                new_fam_cnt += fam_dict[fam]
+
+            new_families_selected = ",".join(new_families_lst)
+            sample_explanation.write('%s\t%d\t%d\t%d\t%d\t%d\t%s\t%s\n' % (
+                cur_month_str, correct_pred, wrong_pred, benign_num, mal_num,
+                new_fam_cnt, new_families_selected, uniq_families
+            ))
+            sample_explanation.flush()
+            
+            
+            '''
             cnt = 0
             for idx in sample_indices:
                 try:
@@ -776,7 +897,7 @@ def main():
                 except IndexError:
                     fam_label = 'benign'
                 pred_label = int(y_test_pred_accum[idx])
-                if args.classifier == 'gbdt':
+                if args.classifier == 'xgb':
                     sample_out.write('%s\t%d\t%d\t%s\t%.4f\t%s\t%.4f\n' % \
                                 (cur_month_str, cnt, idx, y_test_binary_accum[idx], pred_scores_accum[idx], fam_label, sample_scores[idx]))
                 else:
@@ -814,7 +935,7 @@ def main():
             sample_explanation.write('%s\t%d\t%d\t%d\t%d\t%d\t%s\t%s\n' % \
                 (cur_month_str, correct_pred, wrong_pred, benign_num, mal_num, new_fam_cnt, new_families_selected, uniq_families))
             sample_explanation.flush()
-            
+            '''
             X_train = np.concatenate((X_train, X_test_accum[sample_indices]), axis=0)
             y_train_binary = np.concatenate((y_train_binary, y_test_binary_accum[sample_indices]), axis=0)
             original_y = y_test_accum[sample_indices] 
@@ -897,6 +1018,44 @@ def main():
                     X_train_feat = encoder.encode(X_train_tensor).numpy()
             else:
                 X_train_feat = X_train
+                
+            if args.classifier == 'svm':
+                classifier.fit(X_train_feat, y_train_binary)
+                logging.info(f'Saving linear SVM model to {NEW_CLS_MODEL_PATH}...')
+                dump(classifier, NEW_CLS_MODEL_PATH)
+            elif args.classifier == 'xgb':
+                # assume binary
+                dtrain = xgb.DMatrix(X_train_feat, label=y_train_binary)
+                param = {'objective': 'binary:logistic', 'max_depth': args.max_depth, 'eta': args.eta, 'eval_metric': ['error', 'logloss']}
+                evallist = [(dtrain, 'train'), ]
+                xgbmodel = xgb.train(param, dtrain, num_boost_round = args.num_round, \
+                                    evals = evallist)
+                classifier = xgboost_wrapper(xgbmodel, binary = True)
+                logging.info(f'Saving XGBoost model to {NEW_CLS_MODEL_PATH}...')
+                xgbmodel.save_model(NEW_CLS_MODEL_PATH)
+            elif args.classifier == 'mlp':
+                s1 = time.time()
+                # Retraining from scratch with sample weights
+                if args.cold_start == True:
+                    output_dim = BIN_NUM_CLASSES
+                    mlp_dims = utils.get_model_dims('MLP', NUM_FEATURES, args.mlp_hidden, output_dim)
+                    classifier = MLPClassifier(mlp_dims)
+                    mlp_optimizer = torch.optim.Adam(classifier.parameters(), lr=args.mlp_lr)
+                    mlp_total_epochs = args.mlp_epochs
+                else:
+                    mlp_optimizer = torch.optim.Adam(classifier.parameters(), lr=args.mlp_warm_lr)
+                    mlp_total_epochs = args.mlp_warm_epochs
+                logging.info('Training Classifier model...')
+                train_classifier(args, classifier, X_train_feat, y_train, y_train_binary, \
+                                mlp_optimizer, mlp_total_epochs, NEW_CLS_MODEL_PATH, \
+                                weight = None, save_best_loss = False, multi = args.multi_class)
+                e1 = time.time()
+                logging.info(f'Training Classifier model time: {(e1 - s1):.3f} seconds')
+                if args.encoder != 'cae' and args.encoder != 'enc':
+                    logging.info('Saving the model...')
+                    save_model(classifier, mlp_optimizer, args, args.mlp_epochs, NEW_CLS_MODEL_PATH)
+                    logging.info(f'Training Classifier model finished: {NEW_CLS_MODEL_PATH}')
+            else:
                 logging.info('Classifier model is the same as the encoder...')
                 NEW_CLS_MODEL_PATH = NEW_ENC_MODEL_PATH
         prev_train_size = X_train.shape[0]

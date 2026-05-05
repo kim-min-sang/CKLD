@@ -35,22 +35,30 @@ python3 downloader.py --url "https://drive.google.com/file/d/1O0upEcTolGyyvasCPk
 
 After the command finishes, the downloaded and extracted feature files used in our experiments are located under the following directories:
 
-- `data/gen_apigraph_drebin` : DREBIN features of the APIGraph dataset (2012–2018)  
-- `data/gen_androzoo_drebin` : DREBIN features of the AndroZoo dataset (2019–2021)  
+- `data/apigraph` : DREBIN features of the APIGraph dataset (2012–2018)  
+- `data/androzoo` : DREBIN features of the AndroZoo dataset (2019–2021)  
 
 **Note:** These processed Drebin feature datasets were obtained from the official repository of  
 [Continuous Learning for Android Malware Detection (HC, USENIX Security 2023)](https://github.com/wagner-group/active-learning).  
 The original raw datasets are APIGraph and AndroZoo, but we use the preprocessed versions released by HC for reproducibility.
 
-## Example Offline Learning Setting
+### Generating A-AUT Training Splits
+For A-AUT offline learning evaluation on APIGraph, first download and extract the APIGraph dataset. Then, run the following command:
 
+```bash
+python3 generate_a_aut_splits.py
+```
+
+This script creates temporal training splits for A-AUT based on the downloaded APIGraph feature files.
+
+## Example Offline Learning Setting
 We provide shell scripts under the `experiments/results` directory to reproduce our experiments.  
 For example, to set **CKLD applied on the Triplet baseline** on the APIGraph dataset under offline learning:
 
 ```bash
 SCH=step
 DECAY=0.95
-DATA=gen_apigraph_drebin
+DATA=apigraph
 TRAIN_START=2012-01
 TRAIN_END=2012-12
 TEST_START=2013-01
@@ -138,9 +146,9 @@ nohup python -u relabel.py	                                \
             --al                                            \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/results/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${CSV_NAME}.csv \
-            --log_path experiments/results/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
-            >> experiments/results/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
+            --result experiments/results/${RESULT_DIR}/${ENCODER}_${DATA}_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${CSV_NAME}.csv \
+            --log_path experiments/results/${RESULT_DIR}/${ENCODER}_${DATA}_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
+            >> experiments/results/${RESULT_DIR}/${ENCODER}_${DATA}_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
 wait
 ```
 

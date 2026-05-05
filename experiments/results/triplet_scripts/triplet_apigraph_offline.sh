@@ -1,14 +1,29 @@
 
 SCH=step
 DECAY=0.95
-DATA=gen_apigraph_drebin
+DATA=apigraph
+
+### Train ###
+#TRAIN_START=2013-07
+#TRAIN_END=2014-06
+
+#TRAIN_START=2015-01
+#TRAIN_END=2015-12
 
 TRAIN_START=2016-07
 TRAIN_END=2017-06
 
+### Test ###
+#TEST_START=2014-07
+#TEST_END=2016-06
+
+#TEST_START=2016-01
+#TEST_END=2017-12
+
 TEST_START=2017-07
 TEST_END=2018-12
 
+### Valid ###
 VALID_DATE=2016-06
 RESULT_DIR=triplet_results
 
@@ -19,35 +34,35 @@ B=1536
 ###############################################################
 
 OPT=adam
-E=150
-LR=0.0005
+E=50
+LR=0.001
 
 # Encoder for contrastive-only (baseline)
-ENCODER='triplet-mlp'
-CLASSIFIER='triplet-mlp'
+#ENCODER='triplet-mlp'
+#CLASSIFIER='triplet-mlp'
 
 # Encoder for LCKLD-only
 #ENCODER='triplet-kld-only-mlp'
 #CLASSIFIER='triplet-kld-only-mlp'
 
 # Encoder for CKLD
-#ENCODER='triplet-kld-ensemble-mlp'
-#CLASSIFIER='triplet-kld-ensemble-mlp'
+ENCODER='triplet-kld-ensemble-mlp'
+CLASSIFIER='triplet-kld-ensemble-mlp'
 
 # Loss for Contrastive-only
-LOSS='triplet-xent'
+#LOSS='triplet-xent'
 
 # Loss for LCKLD-only, CKLD
-#LOSS='triplet-kld-ensemble-xent'
+LOSS='triplet-kld-ensemble-xent'
 
 # one of: '', 'bin', 'fam'
-CENTROID_TYPE=''
+CENTROID_TYPE='fam'
 # Set the beta (β)
 KLD_SCALE=1.0
 
-CSV_NAME="1"
+CSV_NAME="val_6-6"
 
-SLP=0
+SLP=50
 
 ###############################################################
 
@@ -92,7 +107,7 @@ nohup python -u relabel.py	                                \
             --al                                            \
             --reduce "none"                                 \
             --sample_reduce 'mean'                          \
-            --result experiments/results/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${CSV_NAME}.csv \
-            --log_path experiments/results/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
-            >> experiments/results/${RESULT_DIR}/${ENCODER}_apigraph_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
+            --result experiments/results/${RESULT_DIR}/${ENCODER}_${DATA}_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${CSV_NAME}.csv \
+            --log_path experiments/results/${RESULT_DIR}/${ENCODER}_${DATA}_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log \
+            >> experiments/results/${RESULT_DIR}/${ENCODER}_${DATA}_${CENTROID_TYPE}_offline_lr${LR}_${OPT}_${SCH}_${DECAY}_e${E}_test_${TEST_START}_${TEST_END}_${TS}.log 2>&1 &
 wait

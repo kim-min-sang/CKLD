@@ -1,0 +1,24 @@
+date	Correct	Wrong	Benign	Mal	New_fam_cnt	New_fam	Unique_fam
+2020-01	79	21	75	25	1	iconhider	benign,packed,smsreg,triada,adware,iconhider,execdownload,virtualapp,syringe,dnotua,fakeapp,umpay
+2020-02	52	48	31	69	3	congur,kuguo,yuanpay	benign,smsreg,virtualapp,packed,hiddad,execdownload,adware,triada,kuguo,congur,infosteal,yuanpay,spyware
+2020-03	91	9	68	32	1	leadbolt	benign,packed,execdownload,infosteal,hiddad,boogr,smsreg,cyfin,fakeapp,tool,triada,styricka,leadbolt,wapron,adware
+2020-04	83	17	67	33	0		fakeapp,benign,infosteal,spyware,clicks,adware,smsreg,wapron,dnotua,execdownload
+2020-05	86	14	73	27	1	fakeadblocker	benign,adware,smsreg,execdownload,infosteal,hiddad,resharer,packed,fakeadblocker,ewind,boogr
+2020-06	87	13	63	37	0		infosteal,fakeadblocker,dnotua,wapron,benign,hqwar,packed,mobtool,smsreg,adware,boogr,execdownload,fakeapp,styricka,hiddad,resharer
+2020-07	71	29	48	52	12	mobby	benign,fakeadblocker,adware,wapron,mobby,mobtool,hiddenads
+2020-08	94	6	33	67	0		adware,benign,infosteal,ewind,smsreg
+2020-09	88	12	60	40	3	monitorminor,rogueware	adware,ewind,benign,packed,fakeadblocker,infosteal,hiddad,mobidash,hqwar,execdownload,windows,rogueware,resharer,monitorminor,jocker
+2020-10	91	9	82	18	4	fakecop,multiple	benign,fakeadblocker,execdownload,multiple,brata,infosteal,fakecop,blacklister,adware
+2020-11	74	26	63	37	0		adware,benign,mobtool,ewind,fakeadblocker,execdownload,fakecop,infosteal
+2020-12	96	4	9	91	88	geinimi	geinimi,benign,packed,adware
+2021-01	77	23	75	25	11	droiddreamlight,droidkungfu,kmin	benign,droiddreamlight,hiddad,geinimi,droidkungfu,infosteal,kmin
+2021-02	96	4	86	14	0		benign,adware,spyagent,jocker,infosteal,joker
+2021-03	93	7	89	11	2	gustuff	benign,smsreg,infosteal,spyware,execdownload,blacklister,gustuff,adware,joker
+2021-04	92	8	78	22	3	polph,ibec	benign,infosteal,smsthief,polph,execdownload,resharer,ibec,adware
+2021-05	95	5	91	9	1	fakedoc	benign,packed,adware,fakedoc,execdownload,joker,wroba,boogr,fakeapp
+2021-06	93	7	89	11	2	lockscreen	lockscreen,infosteal,benign,execdownload,triada,joker
+2021-07	94	6	87	13	2	exploit	benign,lockscreen,exploit,droidkungfu,execdownload,wapron,sandr,infosteal
+2021-08	95	5	94	6	0		benign,spynote,blacklister,infosteal,spyware,execdownload
+2021-09	88	12	72	28	0		benign,execdownload,hiddad,infosteal,smsreg
+2021-10	98	2	93	7	0		benign,execdownload,hqwar,infosteal
+2021-11	96	4	89	11	0		piom,benign,smsreg,unknown,clicks,infosteal,wroba

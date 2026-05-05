@@ -16,7 +16,7 @@ class UncertainPredScoreSelector(Selector):
                     max_count = None):
         offset = 0
         self.sample_indices = []
-        if args.classifier not in ['svm', 'gbdt']:
+        if args.classifier not in ['svm', 'xgb']:
             self.classifier = self.classifier.cuda()
             X_test_tensor = torch.from_numpy(X_test).float().cuda()
             pred_scores = self.classifier.predict_proba(X_test_tensor)[:, 1].cpu().detach().numpy()
@@ -62,7 +62,7 @@ class MultiUncertainPredScoreSelector(Selector):
         # we will sort prediction scores of all test samples
         offset = 0
         self.sample_indices = []
-        if args.classifier not in ['svm', 'gbdt']:
+        if args.classifier not in ['svm', 'xgb']:
             # e.g., 'mlp' and other neural network models:
             self.classifier = self.classifier.cuda()
             X_test_tensor = torch.from_numpy(X_test).float().cuda()
@@ -71,8 +71,8 @@ class MultiUncertainPredScoreSelector(Selector):
         elif args.classifier == 'svm':
             pred_scores = self.classifier.predict_proba(X_test)
         else:
-            # 'gbdt', not implemented yet
-            raise Exception('Multi-class uncertainty sample selector for GBDT model not implemented yet.')
+            # 'xgb', not implemented yet
+            raise Exception('Multi-class uncertainty sample selector for XGBoost model not implemented yet.')
         
         # get max prediction probability for each sample
         pred_scores = pred_scores.max(axis=1)
