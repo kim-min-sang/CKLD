@@ -1,7 +1,7 @@
-# CCR: More Effective Concept Drift Adaptation Method with KLD on Contrastive Learning
+# CCR: Contrastive-based Centroid Regularization for Concept Drift Robustness in Android Malware Detection
 This is the source code accompanying our paper
-"CCR: More Effective Concept Drift Adaptation Framework with KLD on Contrastive Learning",
-submitted to the 2026 IEEE Symposium on Security and Privacy (IEEE S&P 2026).
+"CCR: Contrastive-based Centroid Regularization for Concept Drift Robustness in Android Malware Detection",
+submitted to the Network and Distributed System Security Symposium (NDSS) 2027.
 
 
 ## Note on Repository Status
