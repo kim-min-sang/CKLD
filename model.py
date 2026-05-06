@@ -167,7 +167,7 @@ class SimpleEncClassifier(nn.Module):
                 #plt.show()
                 
                 directory_path = "./maps/hc/"+ str(x_encoded.shape[1]) + "/epoch_" + str(epoch)
-                # 디렉토리 생성
+                
                 if not os.path.exists(directory_path):
                     os.makedirs(directory_path)
                 
@@ -273,7 +273,7 @@ class EncKldCustomMlpEnsemble6(nn.Module):
                 #plt.show()
                 
                 directory_path = "./maps/hc_kld/"+ str(c_encoded.shape[1]) + "/epoch_" + str(epoch)
-                # 디렉토리 생성
+                
                 if not os.path.exists(directory_path):
                     os.makedirs(directory_path)
                 
