@@ -27,25 +27,25 @@ LR=0.001
 WLR=0.0001
 
 # Encoder for contrastive-only (baseline)
-ENCODER='triplet-mlp'
-CLASSIFIER='triplet-mlp'
+#ENCODER='triplet-mlp'
+#CLASSIFIER='triplet-mlp'
 
-# Encoder for LCKLD-only
+# Encoder for CR-only
 #ENCODER='triplet-kld-only-mlp'
 #CLASSIFIER='triplet-kld-only-mlp'
 
-# Encoder for CKLD
-#ENCODER='triplet-kld-ensemble-mlp'
-#CLASSIFIER='triplet-kld-ensemble-mlp'
+# Encoder for CCR
+ENCODER='triplet-kld-ensemble-mlp'
+CLASSIFIER='triplet-kld-ensemble-mlp'
 
 # Loss for Contrastive-only
-LOSS='triplet-xent'
+#LOSS='triplet-xent'
 
-# Loss for LCKLD-only, CKLD
-#LOSS='triplet-kld-ensemble-xent'
+# Loss for CR-only, CCR
+LOSS='triplet-kld-ensemble-xent'
 
 # one of: '', 'bin', 'fam'
-CENTROID_TYPE=''
+CENTROID_TYPE='fam'
 # Set the beta (β)
 KLD_SCALE=1.0
 

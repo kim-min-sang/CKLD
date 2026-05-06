@@ -104,7 +104,7 @@ def download_file(url: str, dst_path: str, chunk_size: int = 8192) -> Path:
     Automatically handles Google Drive confirm-token logic.
     """
     session = requests.Session()
-    session.headers.update({"User-Agent": "Mozilla/5.0 (compatible; CKLD-downloader/1.0)"})
+    session.headers.update({"User-Agent": "Mozilla/5.0 (compatible; CCR-downloader/1.0)"})
 
     if is_google_drive_url(url):
         print("[*] Google Drive URL detected. Resolving download URL...")

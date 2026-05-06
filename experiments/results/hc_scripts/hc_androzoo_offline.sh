@@ -28,27 +28,27 @@ E=100
 LR=0.00005
 
 # Encoder for contrastive-only (baseline)
-ENCODER='simple-enc-mlp'
-CLASSIFIER='simple-enc-mlp'
+#ENCODER='simple-enc-mlp'
+#CLASSIFIER='simple-enc-mlp'
 
-# Encoder for LCKLD-only
+# Encoder for CR-only
 #ENCODER='enc-kld-custom-mlp-only6'
 #CLASSIFIER='enc-kld-custom-mlp-only6'
 
-# Encoder for CKLD
-#ENCODER='enc-kld-custom-mlp-ensemble6'
-#CLASSIFIER='enc-kld-custom-mlp-ensemble6'
+# Encoder for CCR
+ENCODER='enc-kld-custom-mlp-ensemble6'
+CLASSIFIER='enc-kld-custom-mlp-ensemble6'
 
 # Loss for Contrastive-only
-LOSS='hi-dist-xent'
+#LOSS='hi-dist-xent'
 
-# Loss for LCKLD-only, CKLD
-#LOSS='hi-dist-kld-custom-xent-ensemble6'
+# Loss for CR-only, CCR
+LOSS='hi-dist-kld-custom-xent-ensemble6'
 
 # one of: '', 'bin', 'fam'
-CENTROID_TYPE=''
+CENTROID_TYPE='fam'
 # Set the beta (β)
-KLD_SCALE=1.0
+KLD_SCALE=2.0
 
 CSV_NAME="1"
 

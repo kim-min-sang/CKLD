@@ -1,6 +1,6 @@
-# CKLD: More Effective Concept Drift Adaptation Method with KLD on Contrastive Learning
+# CCR: More Effective Concept Drift Adaptation Method with KLD on Contrastive Learning
 This is the source code accompanying our paper
-"CKLD: More Effective Concept Drift Adaptation Framework with KLD on Contrastive Learning",
+"CCR: More Effective Concept Drift Adaptation Framework with KLD on Contrastive Learning",
 submitted to the 2026 IEEE Symposium on Security and Privacy (IEEE S&P 2026).
 
 
@@ -26,7 +26,7 @@ pip install torch==2.3.1 torchaudio==2.3.1
 ```
 
 ## Datasets
-We provide a downloader script to fetch the datasets required to run CKLD.
+We provide a downloader script to fetch the datasets required to run CCR.
 You can download, verify, and optionally extract the preprocessed feature archive with the following command:
 
 ```bash
@@ -53,7 +53,7 @@ This script creates temporal training splits for A-AUT based on the downloaded A
 
 ## Example Offline Learning Setting
 We provide shell scripts under the `experiments/results` directory to reproduce our experiments.  
-For example, to set **CKLD applied on the Triplet baseline** on the APIGraph dataset under offline learning:
+For example, to set **CCR applied on the Triplet baseline** on the APIGraph dataset under offline learning:
 
 ```bash
 SCH=step
@@ -80,18 +80,18 @@ LR=0.0005
 ENCODER='triplet-mlp'
 CLASSIFIER='triplet-mlp'
 
-# Encoder for LCKLD-only
+# Encoder for CR-only
 #ENCODER='triplet-kld-only-mlp'
 #CLASSIFIER='triplet-kld-only-mlp'
 
-# Encoder for CKLD
+# Encoder for CCR
 #ENCODER='triplet-kld-ensemble-mlp'
 #CLASSIFIER='triplet-kld-ensemble-mlp'
 
 # Loss for Contrastive-only
 LOSS='triplet-xent'
 
-# Loss for LCKLD-only, CKLD
+# Loss for CR-only, CCR
 #LOSS='triplet-kld-ensemble-xent'
 
 # one of: '', 'bin', 'fam'
@@ -162,14 +162,14 @@ The loss function is also paired with the corresponding encoder/classifier setti
   LOSS='triplet-xent'
   ```
 
-- **LCKLD-only(Triplet)**
+- **CR-only(Triplet)**
   ```ini
   ENCODER='triplet-kld-only-mlp'
   CLASSIFIER='triplet-kld-only-mlp'
   LOSS='triplet-kld-ensemble-xent'
   ```
 
-- **CKLD(Triplet)**
+- **CCR(Triplet)**
   ```ini
   ENCODER='triplet-kld-ensemble-mlp'
   CLASSIFIER='triplet-kld-ensemble-mlp'
@@ -183,14 +183,14 @@ The loss function is also paired with the corresponding encoder/classifier setti
   LOSS='triplet-mse-xent'
   ```
 
-- **LCKLD-only(CADE)**
+- **CR-only(CADE)**
   ```ini
   ENCODER='cae-kld-only-mlp'
   CLASSIFIER='cae-kld-only-mlp'
   LOSS='triplet-mse-kld-ensemble-xent'
   ```
 
-- **CKLD(CADE)**
+- **CCR(CADE)**
   ```ini
   ENCODER='cae-kld-ensemble-mlp'
   CLASSIFIER='cae-kld-ensemble-mlp'
@@ -204,14 +204,14 @@ The loss function is also paired with the corresponding encoder/classifier setti
   LOSS='hi-dist-xent'
   ```
 
-- **LCKLD-only(HC)**
+- **CR-only(HC)**
   ```ini
   ENCODER='enc-kld-custom-mlp-only6'
   CLASSIFIER='enc-kld-custom-mlp-only6'
   LOSS='hi-dist-kld-custom-xent-ensemble6'
   ```
 
-- **CKLD(HC)**
+- **CCR(HC)**
   ```ini
   ENCODER='enc-kld-custom-mlp-ensemble6'
   CLASSIFIER='enc-kld-custom-mlp-ensemble6'
@@ -258,7 +258,7 @@ Following the offline learning setup, the additional configurations specific to 
 
 After setting the configuration as described above, you can run the experiments using the provided shell scripts.  
 
-For example, to run **CKLD applied on the Triplet baseline**:
+For example, to run **CCR applied on the Triplet baseline**:
 
 - Dataset: **APIGraph**, Scenario: **offline**  
   ```bash

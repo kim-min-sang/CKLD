@@ -20,34 +20,34 @@ CNT=100
 
 OPT=adam
 
-E=5
-WE=5
+E=100
+WE=100
 
-LR=0.001
-WLR=0.00001
+LR=0.0005
+WLR=0.00005
 
 # Encoder for contrastive-only (baseline)
-ENCODER='cae-mlp'
-CLASSIFIER='cae-mlp'
+#ENCODER='cae-mlp'
+#CLASSIFIER='cae-mlp'
 
-# Encoder for LCKLD-only
+# Encoder for CR-only
 #ENCODER='cae-kld-only-mlp'
 #CLASSIFIER='cae-kld-only-mlp'
 
-# Encoder for CKLD
-#ENCODER='cae-kld-ensemble-mlp'
-#CLASSIFIER='cae-kld-ensemble-mlp'
+# Encoder for CCR
+ENCODER='cae-kld-ensemble-mlp'
+CLASSIFIER='cae-kld-ensemble-mlp'
 
 # Loss for Contrastive-only
-LOSS='triplet-mse-xent'
+#LOSS='triplet-mse-xent'
 
-# Loss for LCKLD-only, CKLD
-#LOSS='triplet-mse-kld-ensemble-xent'
+# Loss for CR-only, CCR
+LOSS='triplet-mse-kld-ensemble-xent'
 
 # one of: '', 'bin', 'fam'
-CENTROID_TYPE=''
+CENTROID_TYPE='bin'
 # Set the beta (β)
-KLD_SCALE=1.0
+KLD_SCALE=2.0
 
 CSV_NAME="a_1"
 

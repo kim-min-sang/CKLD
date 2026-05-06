@@ -4,28 +4,28 @@ DECAY=0.95
 DATA=apigraph
 
 ### Train ###
-#TRAIN_START=2013-07
-#TRAIN_END=2014-06
+TRAIN_START=2013-07
+TRAIN_END=2014-06
 
-TRAIN_START=2015-01
-TRAIN_END=2015-12
+#TRAIN_START=2015-01
+#TRAIN_END=2015-12
 
 #TRAIN_START=2016-07
 #TRAIN_END=2017-06
 
 ### Test ###
-#TEST_START=2014-07
-#TEST_END=2016-06
+TEST_START=2014-07
+TEST_END=2016-06
 
-TEST_START=2016-01
-TEST_END=2017-12
+#TEST_START=2016-01
+#TEST_END=2017-12
 
 #TEST_START=2017-07
 #TEST_END=2018-12
 
 ### Valid ###
 VALID_DATE=2016-06
-RESULT_DIR=A-AUT
+RESULT_DIR=hc_results
 
 modeldim="512-384-256-128"
 S='half'
@@ -34,25 +34,25 @@ B=1024
 ###############################################################
 
 OPT=adam
-E=200
-LR=0.001
+E=100
+LR=0.0005
 
 # Encoder for contrastive-only (baseline)
 #ENCODER='simple-enc-mlp'
 #CLASSIFIER='simple-enc-mlp'
 
-# Encoder for LCKLD-only
+# Encoder for CR-only
 #ENCODER='enc-kld-custom-mlp-only6'
 #CLASSIFIER='enc-kld-custom-mlp-only6'
 
-# Encoder for CKLD
+# Encoder for CCR
 ENCODER='enc-kld-custom-mlp-ensemble6'
 CLASSIFIER='enc-kld-custom-mlp-ensemble6'
 
 # Loss for Contrastive-only
 #LOSS='hi-dist-xent'
 
-# Loss for LCKLD-only, CKLD
+# Loss for CR-only, CCR
 LOSS='hi-dist-kld-custom-xent-ensemble6'
 
 # one of: '', 'bin', 'fam'
