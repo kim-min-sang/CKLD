@@ -16,7 +16,7 @@ To reproduce the results, please install the dependencies as follows:
 
 ```bash
 conda env create -f environment.yml
-conda activate ckld
+conda activate ccr
 
 # For CUDA 11.8
 pip install torch==2.0.0 torchaudio==2.0.1 --index-url https://download.pytorch.org/whl/cu118
